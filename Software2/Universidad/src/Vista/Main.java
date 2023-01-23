@@ -44,10 +44,21 @@ public class Main {
         System.out.print("Ingrese la PROFESIÓN: ");
         objUser.setProfesion(sc.next());
         
-        if (objControl.modificarUsuario(objUser)) {
+        if (objControl.modificarUsuario(objUser,"ORACLE")) {
             System.out.println("\nMODIFICADO EXITOSAMENTE");
         } else {
             System.out.println("\nERROR AL MODIFICAR");
+        }
+    }
+    
+    void eliminarUsuario(){
+        System.out.print("Ingrese el ID del usuario a eliminar: ");
+        int id;
+        id = sc.nextInt();
+        if (objControl.eliminarUsuario(id, "ORACLE")){
+            System.out.println("Usuario con id " + id + " eliminado correctamente");
+        } else {
+            System.out.println("NO FUE POSIBLE ELIMINAR EL USUARIO");
         }
     }
 

@@ -237,7 +237,7 @@ public class DataBaseORA {
         return usuarios;
     }
 
-    public boolean insertar(Usuario user) {
+    public boolean insertarUsuario(Usuario user) {
         PreparedStatement stm;
         try {
             stm = con.prepareStatement("INSERT INTO usuario VALUES (AUTO_INC.NEXTVAL,?,?,?)");
@@ -254,7 +254,7 @@ public class DataBaseORA {
         return false;
     }
 
-    public boolean modificar(Usuario user) {
+    public boolean modificarUsuario(Usuario user) {
         PreparedStatement stm;
 
         if (existeUsuario(user.getId())) {
@@ -274,7 +274,7 @@ public class DataBaseORA {
                 Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            System.out.println("\n:::: EL USUARIO CON ID " + user.getId() + " NO EXISTE\n");
+            System.err.println("\n:::: EL USUARIO CON ID " + user.getId() + " NO EXISTE\n");
         }
         return false;
     }
@@ -298,7 +298,7 @@ public class DataBaseORA {
         return false;
     }
 
-    public boolean eliminar(int id) {
+    public boolean eliminarUsuario(int id) {
         PreparedStatement stm;
         if (existeUsuario(id)) {
             String sql = "DELETE FROM usuario WHERE id=?";
@@ -313,7 +313,7 @@ public class DataBaseORA {
                 Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            System.out.println("\n:::: EL USUARIO CON ID " + id + " NO EXISTE\n");
+            System.err.println("\n:::: EL USUARIO CON ID " + id + " NO EXISTE\n");
         }
         return false;
     }

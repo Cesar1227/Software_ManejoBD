@@ -42,7 +42,7 @@ public class Controlador {
 
     }
 
-    public List<Usuario> consultar() {
+    public List<Usuario> consultarUsuarios() {
         List<Usuario> usuarios = objDbORA.consultarDatos();
         /*usuarios.forEach(user -> {
             System.out.println(user.toString());
@@ -50,38 +50,48 @@ public class Controlador {
         return usuarios;
     }
 
-    public boolean insertar() {
+    public boolean insertarUsuario() {
         Usuario objUser;
         objUser = new Usuario();
         objUser.llenarAleatorio();
-        
+
         //System.out.println(objUser.toString());
-        return objDbORA.insertar(objUser);
+        return objDbORA.insertarUsuario(objUser);
     }
 
-    public boolean insertar(Usuario user) {
-        if(user != null){
-            return objDbORA.insertar(user);
-        }else{
+    public boolean insertarUsuario(Usuario user) {
+        if (user != null) {
+            return objDbORA.insertarUsuario(user);
+        } else {
             System.err.println("El objeto usuario no puede ser NULL");
             return false;
         }
     }
 
-    public boolean modificarUsuario(Usuario user) {
-       
-        
+    public boolean modificarUsuario(Usuario user, String motor) {
+        switch (motor) {
+            case "ORACLE":
+                return objDbORA.modificarUsuario(user);
+            case "SQLSERVER":
+                break;
+            default:
+                System.err.println("Opción incorrecta");
+                break;
+        }
+        return false;
     }
 
-    void eliminar() {
-        System.out.print("Ingrese el ID del usuario a eliminar: ");
-        int id;
-        id = sc.nextInt();
-        if (objDbORA.eliminar(id)) {
-            System.out.println("Usuario con id " + id + " eliminado correctamente");
-        } else {
-            System.out.println("NO FUE POSIBLE ELIMINAR EL USUARIO");
+    public boolean eliminarUsuario(int id, String motor) {
+        switch (motor) {
+            case "ORACLE":
+                return objDbORA.eliminarUsuario(id);
+            case "SQLSERVER":
+                break;
+            default:
+                System.err.println("Opción incorrecta");
+                break;
         }
+        return false;
     }
 
     void aplicarTransacion() {
@@ -208,11 +218,11 @@ public class Controlador {
             switch (entrada) {
                 //Consultar datos
                 case 1:
-                    consultar();
+                    consultarUsuarios();
                     break;
                 //Insertar 
                 case 2:
-                    this.insertar();
+                    this.insertarUsuario();
                     break;
                 //Actualizar registro
                 case 3:
