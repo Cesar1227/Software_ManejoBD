@@ -8,7 +8,6 @@ package Vista;
 import Control.ControladorORA;
 import Control.ControladorSQLS;
 import Modelo.Usuario;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 

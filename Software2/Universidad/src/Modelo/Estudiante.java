@@ -27,6 +27,7 @@ public class Estudiante {
 
     public Estudiante() {
         objDbORA = new DataBaseORA();
+        objDbSQLS = new DataBaseSQLS();
     }
 
     public Estudiante(int codigo, String nombres, String apellido1, String apellido2, String telefono, int facultad, int programa, Date fecha_inicio) {

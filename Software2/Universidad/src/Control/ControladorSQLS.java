@@ -21,6 +21,7 @@ public class ControladorSQLS {
 
     public ControladorSQLS() {
         objDbSQLS = new DataBaseSQLS();
+        objEstu = new Estudiante();
         if (!objDbSQLS.isConected()) {
             System.err.println("HA OCURRIDO UN ERROR, NO FUE POSIBLE CONECTARSE A LA BASE DE DATOS DE SQLSERVER");
         }
