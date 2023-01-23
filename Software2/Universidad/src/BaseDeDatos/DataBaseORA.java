@@ -7,7 +7,6 @@ package BaseDeDatos;
 
 import Modelo.Usuario;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,9 +23,11 @@ import java.util.logging.Logger;
 public class DataBaseORA {
 
     Connection con;
+    ConexionORA objCone;
 
     public DataBaseORA() {
-        con = conexion();
+        objCone = new ConexionORA();
+        con = objCone.conexion();
         try {
             con.setAutoCommit(false);
         } catch (SQLException ex) {
@@ -45,27 +46,6 @@ public class DataBaseORA {
         } catch (SQLException ex) {
             Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    /**
-     * Conexión al motor de base de datos de Oracle
-     *
-     * @return Objeto de la conexión
-     */
-    public Connection conexion() {
-
-        String url = "jdbc:oracle:thin:@localhost:1521:xe";  //jdbc:oracle:thin:[ip/localhost/]:[puerto]:xe
-        String user = "cesar";
-        String pass = "sistemas";
-        Connection con = null;
-        try {
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-            con = DriverManager.getConnection(url, user, pass);
-
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return con;
     }
 
     /**
@@ -257,7 +237,7 @@ public class DataBaseORA {
         return usuarios;
     }
 
-    public void insertar(Usuario user) {
+    public boolean insertar(Usuario user) {
         PreparedStatement stm;
         try {
             stm = con.prepareStatement("INSERT INTO usuario VALUES (AUTO_INC.NEXTVAL,?,?,?)");
@@ -265,13 +245,13 @@ public class DataBaseORA {
             stm.setInt(2, user.getEdad());
             stm.setString(3, user.getProfesion());
 
-            stm.executeUpdate();
+            return (stm.executeUpdate()>0);
 
         } catch (SQLException ex) {
             Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
             //con.rollback();
         }
-
+        return false;
     }
 
     public boolean modificar(Usuario user) {

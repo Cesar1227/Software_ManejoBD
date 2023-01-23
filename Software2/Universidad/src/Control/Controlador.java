@@ -1,6 +1,5 @@
 package Control;
 
-
 import BaseDeDatos.DataBaseORA;
 import BaseDeDatos.DataBaseSQLS;
 import Modelo.Usuario;
@@ -18,10 +17,9 @@ import java.util.Scanner;
  */
 public class Controlador {
 
-    DataBaseORA objDb;
+    DataBaseORA objDbORA;
     DataBaseSQLS objDbSQLS;
     Scanner sc;
-    Object motorDB;
 
     public static void main(String[] args) {
         Controlador obj = new Controlador();
@@ -30,65 +28,56 @@ public class Controlador {
     }
 
     public void init() {
-        objDb = new DataBaseORA();
+        objDbORA = new DataBaseORA();
         objDbSQLS = new DataBaseSQLS();
-        if (!objDb.isConected() && !objDbSQLS.isConected()) {
-            if (!objDb.isConected()) {
-                System.out.println("NO FUE POSIBLE CONECTARSE A LA BASE DE DATOS DE ORACLE");
+        if (!objDbORA.isConected() && !objDbSQLS.isConected()) {
+            if (!objDbORA.isConected()) {
+                System.out.println("HA OCURRIDO UN ERROR, NO FUE POSIBLE CONECTARSE A LA BASE DE DATOS DE ORACLE");
             } else {
-                System.out.println("NO FUE POSIBLE CONECTARSE A LA BASE DE DATOS DE SQLSERVER");
+                System.out.println("HA OCURRIDO UN ERROR, NO FUE POSIBLE CONECTARSE A LA BASE DE DATOS DE SQLSERVER");
             }
         } else {
-            operar(objDb, objDbSQLS);
+            operar(objDbORA, objDbSQLS);
         }
 
     }
 
-    void consultar() {
-        List<Usuario> usuarios = objDb.consultarDatos();
-        usuarios.forEach(user -> {
+    public List<Usuario> consultar() {
+        List<Usuario> usuarios = objDbORA.consultarDatos();
+        /*usuarios.forEach(user -> {
             System.out.println(user.toString());
-        });
+        });*/
+        return usuarios;
     }
 
-    void insertar() {
+    public boolean insertar() {
         Usuario objUser;
         objUser = new Usuario();
         objUser.llenarAleatorio();
-        System.out.println(objUser.toString());
-        objDb.insertar(objUser);
-        System.out.println(objUser.toString());
+        
+        //System.out.println(objUser.toString());
+        return objDbORA.insertar(objUser);
     }
 
-    void modificar() {
-        Usuario objUser;
-        objUser = new Usuario();
-        String nombre;
-        sc = new Scanner(System.in);
-        System.out.print("Ingrese el ID del usuario a modificar: ");
-        objUser.setId((sc.nextInt()));
-        System.out.print("Ingrese el NOMBRE: ");
-        nombre = sc.next();
-        System.out.print("Ingrese el APELLIDO: ");
-        nombre = nombre + " " + sc.next();
-        objUser.setNombre(nombre);
-        System.out.print("Ingrese la EDAD: ");
-        objUser.setEdad((sc.nextInt()));
-        System.out.print("Ingrese la PROFESIÓN: ");
-        objUser.setProfesion(sc.next());
-
-        if (objDb.modificar(objUser)) {
-            System.out.println("\nMODIFICADO EXITOSAMENTE");
-        } else {
-            System.out.println("\nERROR AL MODIFICAR");
+    public boolean insertar(Usuario user) {
+        if(user != null){
+            return objDbORA.insertar(user);
+        }else{
+            System.err.println("El objeto usuario no puede ser NULL");
+            return false;
         }
+    }
+
+    public boolean modificarUsuario(Usuario user) {
+       
+        
     }
 
     void eliminar() {
         System.out.print("Ingrese el ID del usuario a eliminar: ");
         int id;
         id = sc.nextInt();
-        if (objDb.eliminar(id)) {
+        if (objDbORA.eliminar(id)) {
             System.out.println("Usuario con id " + id + " eliminado correctamente");
         } else {
             System.out.println("NO FUE POSIBLE ELIMINAR EL USUARIO");
@@ -96,11 +85,11 @@ public class Controlador {
     }
 
     void aplicarTransacion() {
-        System.out.println(objDb.realizarCommit());
+        System.out.println(objDbORA.realizarCommit());
     }
 
     void descartarTransacion() {
-        System.out.println(objDb.realizarRollBack());
+        System.out.println(objDbORA.realizarRollBack());
     }
 
     /**
@@ -117,19 +106,19 @@ public class Controlador {
             num1 = sc.nextInt();
             System.out.print("Ingrese el segundo número a comparar: ");
             num2 = sc.nextInt();
-            respuesta = objDb.llamarProcedimiento1(num1, num2);
+            respuesta = objDbORA.llamarProcedimiento1(num1, num2);
             if (respuesta.equals("iguales")) {
                 System.out.println("Los números son iguales");
             } else {
                 System.out.println("El número " + respuesta + " es el mayor");
             }
-        } 
+        }
     }
 
     void funcionesORA(int func) {
         String respuesta;
         if (func == 1) {
-            boolean correct=true;
+            boolean correct = true;
             System.out.println("Seleccion la operación sobre la que desea consultar");
             System.out.println("1. INSERT\n"
                     + "2. UPDATE\n"
@@ -139,7 +128,7 @@ public class Controlador {
             String operacion = null;
             switch (opc) {
                 case 1:
-                    operacion= "INSERT";
+                    operacion = "INSERT";
                     break;
                 case 2:
                     operacion = "UPDATE";
@@ -149,11 +138,11 @@ public class Controlador {
                     break;
                 default:
                     System.out.println("Opción incorrecta");
-                    correct=false;
+                    correct = false;
                     break;
             }
-            if(correct){
-                respuesta = String.valueOf(objDb.llamarFuncion1(operacion));
+            if (correct) {
+                respuesta = String.valueOf(objDbORA.llamarFuncion1(operacion));
                 System.out.println("SE HAN REALIZADO " + respuesta + " operaciones DML sobre la tabla auditorias");
             }
         } else if (func == 2) {
@@ -161,7 +150,7 @@ public class Controlador {
             sc = new Scanner(System.in);
             System.out.print("Ingrese el código del estudiante: ");
             codigo = sc.nextInt();
-            respuesta = objDb.llamarFuncion2(codigo);
+            respuesta = objDbORA.llamarFuncion2(codigo);
             System.out.println("El nombre del estudiante con código " + codigo + " es " + respuesta);
         }
 
@@ -194,7 +183,7 @@ public class Controlador {
     }
 
     void salir() {
-        objDb.cerrarConexion();
+        objDbORA.cerrarConexion();
         System.exit(0);
     }
 
@@ -227,7 +216,7 @@ public class Controlador {
                     break;
                 //Actualizar registro
                 case 3:
-                    modificar();
+                    modificarUsuario();
                     break;
                 //Eliminar registro
                 case 4:
@@ -304,11 +293,9 @@ public class Controlador {
                     salir();
                     break;
                 case 1:
-                    motorDB = objDbORA;
                     opcionesOracle();
                     break;
                 case 2:
-                    motorDB = objDbSQLS;
                     opcionesSQLSERVER();
                     break;
                 default:
