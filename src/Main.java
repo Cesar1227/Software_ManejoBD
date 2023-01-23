@@ -34,7 +34,7 @@ public class Main {
             if (!objDb.isConected()) {
                 System.out.println("NO FUE POSIBLE CONECTARSE A LA BASE DE DATOS DE ORACLE");
             } else {
-                System.out.println("NO FUE POSIBLE CONECTARSE A LA BASE DE DATOS DE SQLSERVER");
+                System.out.println("NO FUE POSIBLE CONECTARSE A LA BASE DE DATOS DE SQLSERVER XD");
             }
         } else {
             operar(objDb, objDbSQLS);
