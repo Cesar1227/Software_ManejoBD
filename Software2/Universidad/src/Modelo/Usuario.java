@@ -34,7 +34,7 @@ public class Usuario {
         String[] nombres = {"DANIEL","FELIPE","DAYANA","MARCELA","JULIAN","SANDRA","MARLON","JHOANA","ADRIAN","MARTA"};
         String[] apellidos = {"DUARTE","OLAYA","VALVUENA","ZAPATA","CETINA","ROMERO","FLOREZ","CUARTAS","LOPEZ","SALGADO"};
         String[] profesiones = {"ESTUDIANTE","DOCENTE","FUNCIONARIO","ADMINISTRATIVO"};
-        r= new Random();
+        r = new Random();
         this.setNombre(nombres[r.nextInt(nombres.length)]+" "+apellidos[r.nextInt(apellidos.length)]);
         this.setProfesion(profesiones[r.nextInt(profesiones.length)]);
         this.setEdad(r.nextInt(20)+20);

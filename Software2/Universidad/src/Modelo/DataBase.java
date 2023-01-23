@@ -149,62 +149,10 @@ public class DataBase {
         return res;
     }
 
-    /**
-     * LLamar un procedimiento almacenado en la base de datos de Oracle
-     * Procedimiento que calcula las raices reales de una ecuación cuadratica
-     *
-     * @param coefA coeficiente A de la función cuadratica
-     * @param coefB coeficiente B de la función cuadratica
-     * @param coefC coeficiente C de la función cuadratica
-     * @return String que contiene la respuesta del procedimiento
-     * 
-     */
-    
-    /*
-    create or replace PROCEDURE ecuacionGrado2 (coeA number, coeB number, coeC number, res out varchar2) is 
-            inRaiz float:=0;
-            res1 float:=0;
-            res2 float:=0;
-        begin
-            inRaiz:=power(coeB,2) - 4*coeA*coeC;
-            if coeA=0 then
-                dbms_output.put_line('COEFICIENTE A NO PUEDE SER 0');
-                res:='COEFICIENTE A NO PUEDE SER 0';
-            elsif inRaiz < 0 then
-                dbms_output.put_line('LAS RAICES SON IMAGINARIAS');
-                res:='LAS RAICES SON IMAGINARIAS';
-            else
-                res1:=((-coeB+sqrt(inRaiz))/(2*coeA));
-                res2:=((-coeB-sqrt(inRaiz))/(2*coeA));
-                dbms_output.put_line('LA SOLUCIÓN 1 ES: '|| res1);
-                dbms_output.put_line('LA SOLUCIÓN 2 ES: '|| res2);
-                res:='LA SOLUCIÓN 1 ES: '|| res1 || ' LA SOLUCIÓN 2 ES: '|| res2;
-            end if;
-        end ecuacionGrado2;
-    */
-    public String llamarProcedimiento2(int coefA, int coefB, int coefC) {
-        String res = null;
-        try {
-            CallableStatement cstmt = con.prepareCall("{call ecuacionGrado2(?,?,?,?)}");
-
-            cstmt.setInt(1, coefA);
-            cstmt.setInt(2, coefB);
-            cstmt.setInt(3, coefC);
-            cstmt.registerOutParameter(4, java.sql.Types.VARCHAR);
-            cstmt.execute();
-            //aca retorna el valor del procedimiento almacenado.
-
-            res = cstmt.getString(4);
-            //System.out.println(res);
-            //con.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return res;
-    }
 
     /**
      * Retorna la cantidad de operaciones DML realizadas (INSERT, UPDATE, DELETE)
+     * @param oper
      * @return 
      */
     
@@ -220,13 +168,13 @@ public class DataBase {
         end cant_DML;
         /
     */
-    public int llamarFuncion1() {
+    public int llamarFuncion1(String oper) {
         int res = 0;
         try {
             CallableStatement cstmt = con.prepareCall("{? = call cant_DML(?)}");
 
             cstmt.registerOutParameter(1, oracle.jdbc.OracleType.NUMBER);
-            cstmt.setString(2, "INSERT");
+            cstmt.setString(2, oper);
             cstmt.execute();
             //aca retorna el valor del procedimiento almacenado.
 
@@ -280,11 +228,12 @@ public class DataBase {
         ResultSet rslt = null;
         List<Usuario> usuarios = null;
         try {
-            PreparedStatement stmt = con.prepareStatement("SELECT IDENTIFICACION,NOMBRE_1,APELLIDO_2 FROM EMPLEADOS");
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM USUARIO");
             rslt = stmt.executeQuery();
 
             usuarios = new ArrayList<>();
             Usuario user;
+            //System.out.println(usuarios.size()+" size");
             while (rslt.next()) {
                 user = new Usuario();
                 user.setId(rslt.getInt(1));
@@ -293,7 +242,7 @@ public class DataBase {
                 user.setProfesion(rslt.getString(4));
                 usuarios.add(user);
             }
-            //System.out.println(usuarios.size()+" size");
+            
         } catch (SQLException ex) {
             Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
