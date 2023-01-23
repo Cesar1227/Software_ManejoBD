@@ -5,6 +5,8 @@
  */
 package Modelo;
 
+import BaseDeDatos.DataBaseORA;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -18,6 +20,8 @@ public class Usuario {
     private int edad;
     private String profesion;
     private Random r;
+    
+    private DataBaseORA objDbORA;
 
     public Usuario() {
     }
@@ -27,9 +31,10 @@ public class Usuario {
         this.nombre = nombre;
         this.edad = edad;
         this.profesion = profesion;
+        this.objDbORA = new DataBaseORA();
     }
     
-    public void llenarAleatorio(){
+    void llenarAleatorio(){
         
         String[] nombres = {"DANIEL","FELIPE","DAYANA","MARCELA","JULIAN","SANDRA","MARLON","JHOANA","ADRIAN","MARTA"};
         String[] apellidos = {"DUARTE","OLAYA","VALVUENA","ZAPATA","CETINA","ROMERO","FLOREZ","CUARTAS","LOPEZ","SALGADO"};
@@ -39,6 +44,11 @@ public class Usuario {
         this.setProfesion(profesiones[r.nextInt(profesiones.length)]);
         this.setEdad(r.nextInt(20)+20);
         
+    }
+    
+    public List<Usuario> consultarUsuarios(){
+        List<Usuario> usuarios = objDbORA.consultarDatos();
+        return usuarios;
     }
 
     public int getId() {

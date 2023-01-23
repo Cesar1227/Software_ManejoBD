@@ -18,17 +18,19 @@ import java.util.Scanner;
 public class ControladorORA {
 
     DataBaseORA objDbORA;
+    Usuario objUsuario;
     Scanner sc;
 
     public ControladorORA() {
         objDbORA = new DataBaseORA();
+        objUsuario = new Usuario();
         if (!objDbORA.isConected()) {
             System.err.println("HA OCURRIDO UN ERROR, NO FUE POSIBLE CONECTARSE A LA BASE DE DATOS DE ORACLE");
         }
     }
 
     public List<Usuario> consultarUsuarios() {
-        List<Usuario> usuarios = objDbORA.consultarDatos();
+        
         /*usuarios.forEach(user -> {
             System.out.println(user.toString());
         });*/
@@ -96,65 +98,6 @@ public class ControladorORA {
         return respuesta;   
     }
 
-    public void opcionesOracle() {
-        int entrada;
-        do {
-            System.out.println("\nDIGITE EL NÚMERO DE LA OPERACIÓN QUE DESEA EJECUTAR:\n"
-                    + "1. CONSULTAR USUARIOS\n"
-                    + "2. INSERTAR USUARIO\n"
-                    + "3. ACTUALIZAR USUARIO\n"
-                    + "4. ELIMINAR USUARIO\n"
-                    + "5. APLICAR TRANSACIÓN\n"
-                    + "6. DESCARTAR TRANSACIÓN\n"
-                    + "7. LLAMAR PROCEDIMIENTO 1\n"
-                    + "8. LLAMAR FUNCIÓN 1\n"
-                    + "9. LLAMAR FUNCIÓN 2\n"
-                    + "0. VOLVER\n");
-
-            System.out.print(">>: ");
-            entrada = sc.nextInt();
-            System.out.println("");
-            switch (entrada) {
-                //Consultar datos
-                case 1:
-                    consultarUsuarios();
-                    break;
-                //Insertar 
-                case 2:
-                    this.insertarUsuario();
-                    break;
-                //Actualizar registro
-                case 3:
-                    modificarUsuario();
-                    break;
-                //Eliminar registro
-                case 4:
-                    eliminar();
-                    break;
-                //Aplicar transación
-                case 5:
-                    aplicarTransacionORA();
-                    break;
-                case 6:
-                    descartarTransacionORA();
-                    break;
-                case 0:
-                    entrada = 0;
-                    break;
-                case 7:
-                    procedimientosORA(1);
-                    break;
-                case 8:
-                    funcion1(1);
-                    break;
-                case 9:
-                    funcion1(2);
-                    break;
-                default:
-                    System.out.println("OPCIÓN NO VALIDA");
-                    break;
-            }
-        } while (entrada != 0);
-    }
+    
 
 }

@@ -65,6 +65,7 @@ public class Main {
         System.out.print("Ingrese el ID del usuario a eliminar: ");
         int id;
         id = sc.nextInt();
+        
         if (objControlORA.eliminarUsuario(id)) {
             System.out.println("Usuario con id " + id + " eliminado correctamente");
         } else {
@@ -76,8 +77,10 @@ public class Main {
         int num1, num2;
         System.out.print("Ingrese el primer número a comparar: ");
         num1 = sc.nextInt();
+        
         System.out.print("Ingrese el segundo número a comparar: ");
         num2 = sc.nextInt();
+        
         String res = objControlORA.procedimiento1(num1, num2);
         System.out.println(res);
     }
@@ -89,6 +92,7 @@ public class Main {
                 + "2. UPDATE\n"
                 + "3. DELETE\n");
         int opc = sc.nextInt();
+        
         String operacion = null;
         switch (opc) {
             case 1:
@@ -108,13 +112,130 @@ public class Main {
         String respuesta = objControlORA.funcion1(operacion);
         System.out.println("SE HAN REALIZADO " + respuesta + " operaciones DML sobre la tabla auditorias");
     }
-    
-    void funcion2(){
+
+    void funcionORA2() {
         int codigo;
+        
         System.out.print("Ingrese el código del estudiante: ");
         codigo = sc.nextInt();
+        
         String respuesta = objControlORA.funcion2(codigo);
         System.out.println("El nombre del estudiante con código " + codigo + " es " + respuesta);
+    }
+
+    void procedimientoSSER1() {
+        int num1, num2;
+        String respuesta;
+        
+        System.out.print("Ingrese el primer número a comparar: ");
+        num1 = sc.nextInt();
+
+        System.out.print("Ingrese el segundo número a comparar: ");
+        num2 = sc.nextInt();
+
+        respuesta = objControlSQLS.procedimiento1(num1, num2);
+        if (respuesta.equals("iguales")) {
+            System.out.println("Los números son iguales");
+        } else {
+            System.out.println("El número " + respuesta + " es el mayor");
+        }
+    }
+
+    void funcionSSER1() {
+        String respuesta;
+        int codigo;
+        
+        System.out.print("Ingrese el código del estudiante: ");
+        codigo = sc.nextInt();
+        
+        respuesta = String.valueOf(objControlSQLS.funcion1(codigo));
+        System.out.println("El promedio del estudiante con código " + codigo + " es " + respuesta);
+    }
+
+    public void opcionesOracle() {
+        int entrada;
+        do {
+            System.out.println("\nDIGITE EL NÚMERO DE LA OPERACIÓN QUE DESEA EJECUTAR:\n"
+                    + "1. CONSULTAR USUARIOS\n"
+                    + "2. INSERTAR USUARIO\n"
+                    + "3. ACTUALIZAR USUARIO\n"
+                    + "4. ELIMINAR USUARIO\n"
+                    + "5. APLICAR TRANSACIÓN\n"
+                    + "6. DESCARTAR TRANSACIÓN\n"
+                    + "7. LLAMAR PROCEDIMIENTO 1\n"
+                    + "8. LLAMAR FUNCIÓN 1\n"
+                    + "9. LLAMAR FUNCIÓN 2\n"
+                    + "0. VOLVER\n");
+
+            System.out.print(">>: ");
+            entrada = sc.nextInt();
+            
+            System.out.println("");
+            switch (entrada) {
+                case 1:
+                    objControlORA.consultarUsuarios();
+                    break;
+                case 2:
+                    objControlORA.insertarUsuario();
+                    break;
+                case 3:
+                    this.modificarUsuario();
+                    break;
+                case 4:
+                    this.eliminarUsuario();
+                    break;
+                case 5:
+                    objControlORA.aplicarTransacionORA();
+                    break;
+                case 6:
+                    objControlORA.descartarTransacionORA();
+                    break;
+                case 7:
+                    this.procedimientoORA1();
+                    break;
+                case 8:
+                    this.funcionORA1();
+                    break;
+                case 9:
+                    this.funcionORA2();
+                    break;
+                case 0:
+                    entrada = 0;
+                    break;
+                default:
+                    System.out.println("OPCIÓN NO VALIDA");
+                    break;
+            }
+        } while (entrada != 0);
+    }
+
+    public void opcionesSQLSERVER() {
+        int entrada;
+        do {
+            System.out.println("\nDIGITE EL NÚMERO DE LA OPERACIÓN QUE DESEA EJECUTAR:\n"
+                    + "1. LLAMAR PROCEDIMIENTO 1\n"
+                    + "2. LLAMAR FUNCIÓN 1\n"
+                    + "0. VOLVER\n");
+
+            System.out.print(">>: ");
+            entrada = sc.nextInt();
+            
+            System.out.println("");
+            switch (entrada) {
+                case 1:
+                    procedimientoSSER1();
+                    break;
+                case 2:
+                    funcionSSER1();
+                    break;
+                case 0:
+                    entrada = 0;
+                    break;
+                default:
+                    System.out.println("OPCIÓN NO VALIDA");
+                    break;
+            }
+        } while (entrada != 0);
     }
 
     void salir() {
@@ -139,10 +260,10 @@ public class Main {
                     salir();
                     break;
                 case 1:
-                    objControlORA.opcionesOracle();
+                    this.opcionesOracle();
                     break;
                 case 2:
-                    objControlSQLS.opcionesSQLSERVER();
+                    this.opcionesSQLSERVER();
                     break;
                 default:
                     System.out.println("OPCIÓN NO VALIDA");
