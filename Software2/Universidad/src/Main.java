@@ -1,5 +1,6 @@
 
 import Modelo.DataBase;
+import Modelo.DataBaseSQLS;
 import Modelo.Usuario;
 import java.util.List;
 import java.util.Scanner;
@@ -16,7 +17,9 @@ import java.util.Scanner;
 public class Main {
 
     DataBase objDb;
+    DataBaseSQLS objDbSQLS;
     Scanner sc;
+    Object motorDB;
 
     public static void main(String[] args) {
         Main obj = new Main();
@@ -26,11 +29,17 @@ public class Main {
 
     public void init() {
         objDb = new DataBase();
-        if (!objDb.isConected()) {
-            System.out.println("NO FUE POSIBLE CONECTARSE A LA BASE DE DATOS");
+        objDbSQLS = new DataBaseSQLS();
+        if (!objDb.isConected() && !objDbSQLS.isConected()) {
+            if (!objDb.isConected()) {
+                System.out.println("NO FUE POSIBLE CONECTARSE A LA BASE DE DATOS DE ORACLE");
+            } else {
+                System.out.println("NO FUE POSIBLE CONECTARSE A LA BASE DE DATOS DE SQLSERVER");
+            }
         } else {
-            operar(objDb);
+            operar(objDb, objDbSQLS);
         }
+
     }
 
     void consultar() {
@@ -44,6 +53,7 @@ public class Main {
         Usuario objUser;
         objUser = new Usuario();
         objUser.llenarAleatorio();
+        System.out.println(objUser.toString());
         objDb.insertar(objUser);
         System.out.println(objUser.toString());
     }
@@ -97,7 +107,7 @@ public class Main {
      * @param procedimiento procedimiento a llamar
      */
     void procedimientosORA(int procedimiento) {
-        if (procedimiento==(1)) {
+        if (procedimiento == (1)) {
             int num1, num2;
             String respuesta;
             sc = new Scanner(System.in);
@@ -106,55 +116,89 @@ public class Main {
             System.out.print("Ingrese el segundo número a comparar: ");
             num2 = sc.nextInt();
             respuesta = objDb.llamarProcedimiento1(num1, num2);
-            System.out.println("El número " + respuesta + " es el mayor");
-        } else if (procedimiento==(2)) {
-            int coefA, coefB, coefC;
-            String respuesta;
-            sc = new Scanner(System.in);
-            System.out.print("Ingrese el coeficiente A de la ecuación: ");
-            coefA = sc.nextInt();
-            System.out.print("Ingrese el coeficiente B de la ecuación: ");
-            coefB = sc.nextInt();
-            System.out.print("Ingrese el coeficiente C de la ecuación: ");
-            coefC = sc.nextInt();
-            respuesta = objDb.llamarProcedimiento2(coefA, coefB, coefC);
-            System.out.println(respuesta);
-        }
+            if (respuesta.equals("iguales")) {
+                System.out.println("Los números son iguales");
+            } else {
+                System.out.println("El número " + respuesta + " es el mayor");
+            }
+        } 
     }
-    
-    void funcionesORA(int func){
+
+    void funcionesORA(int func) {
         String respuesta;
-        if(func == 1){
-            respuesta = String.valueOf(objDb.llamarFuncion1());
-            System.out.println("SE HAN REALIZADO "+respuesta+" operaciones DML sobre la tabla auditorias");
-        }else if(func == 2){
+        if (func == 1) {
+            boolean correct=true;
+            System.out.println("Seleccion la operación sobre la que desea consultar");
+            System.out.println("1. INSERT\n"
+                    + "2. UPDATE\n"
+                    + "3. DELETE\n");
+            sc = new Scanner(System.in);
+            int opc = sc.nextInt();
+            String operacion = null;
+            switch (opc) {
+                case 1:
+                    operacion= "INSERT";
+                    break;
+                case 2:
+                    operacion = "UPDATE";
+                    break;
+                case 3:
+                    operacion = "DELETE";
+                    break;
+                default:
+                    System.out.println("Opción incorrecta");
+                    correct=false;
+                    break;
+            }
+            if(correct){
+                respuesta = String.valueOf(objDb.llamarFuncion1(operacion));
+                System.out.println("SE HAN REALIZADO " + respuesta + " operaciones DML sobre la tabla auditorias");
+            }
+        } else if (func == 2) {
             int codigo;
             sc = new Scanner(System.in);
             System.out.print("Ingrese el código del estudiante: ");
             codigo = sc.nextInt();
             respuesta = objDb.llamarFuncion2(codigo);
-            System.out.println("El nombre del estudiante con código "+codigo+ " es "+respuesta);
+            System.out.println("El nombre del estudiante con código " + codigo + " es " + respuesta);
         }
-        
-        
+
     }
-    
-    void procedimientosSSER(){
-        
+
+    void procedimientosSSER() {
+        int num1, num2;
+        String respuesta;
+        sc = new Scanner(System.in);
+        System.out.print("Ingrese el primer número a comparar: ");
+        num1 = sc.nextInt();
+        System.out.print("Ingrese el segundo número a comparar: ");
+        num2 = sc.nextInt();
+        respuesta = objDbSQLS.llamarProcedimiento1(num1, num2);
+        if (respuesta.equals("iguales")) {
+            System.out.println("Los números son iguales");
+        } else {
+            System.out.println("El número " + respuesta + " es el mayor");
+        }
     }
-    
-    void funcionesSSER(){
-        
+
+    void funcionesSSER() {
+        String respuesta;
+        int codigo;
+        sc = new Scanner(System.in);
+        System.out.print("Ingrese el código del estudiante: ");
+        codigo = sc.nextInt();
+        respuesta = Float.toString(objDbSQLS.llamarFuncion1(codigo));
+        System.out.println("El promedio del estudiante con código " + codigo + " es " + respuesta);
     }
 
     void salir() {
         objDb.cerrarConexion();
         System.exit(0);
     }
-    
-    void opcionesOracle(){
+
+    void opcionesOracle() {
         int entrada;
-        do{
+        do {
             System.out.println("\nDIGITE EL NÚMERO DE LA OPERACIÓN QUE DESEA EJECUTAR:\n"
                     + "1. CONSULTAR USUARIOS\n"
                     + "2. INSERTAR USUARIO\n"
@@ -162,10 +206,9 @@ public class Main {
                     + "4. ELIMINAR USUARIO\n"
                     + "5. APLICAR TRANSACIÓN\n"
                     + "6. DESCARTAR TRANSACIÓN\n"
-                    + "8. LLAMAR PROCEDIMIENTO 1\n"
-                    + "9. LLAMAR PROCEDIMIENTO 2\n"
-                    + "10. LLAMAR FUNCIÓN 1\n"
-                    + "11. LLAMAR FUNCIÓN 2\n"
+                    + "7. LLAMAR PROCEDIMIENTO 1\n"
+                    + "8. LLAMAR FUNCIÓN 1\n"
+                    + "9. LLAMAR FUNCIÓN 2\n"
                     + "0. VOLVER\n");
 
             System.out.print(">>: ");
@@ -196,32 +239,53 @@ public class Main {
                     descartarTransacion();
                     break;
                 case 0:
-                    entrada=0;
+                    entrada = 0;
                     break;
-                case 8:
+                case 7:
                     procedimientosORA(1);
                     break;
-                case 9:
-                    procedimientosORA(2);
-                    break;
-                case 10:
+                case 8:
                     funcionesORA(1);
                     break;
-                case 11:
+                case 9:
                     funcionesORA(2);
                     break;
                 default:
                     System.out.println("OPCIÓN NO VALIDA");
                     break;
             }
-        }while(entrada!=0);
+        } while (entrada != 0);
     }
-    
+
     void opcionesSQLSERVER() {
-        
+        int entrada;
+        do {
+            System.out.println("\nDIGITE EL NÚMERO DE LA OPERACIÓN QUE DESEA EJECUTAR:\n"
+                    + "1. LLAMAR PROCEDIMIENTO 1\n"
+                    + "2. LLAMAR FUNCIÓN 1\n"
+                    + "0. VOLVER\n");
+
+            System.out.print(">>: ");
+            entrada = sc.nextInt();
+            System.out.println("");
+            switch (entrada) {
+                case 1:
+                    procedimientosSSER();
+                    break;
+                case 2:
+                    funcionesSSER();
+                    break;
+                case 0:
+                    entrada = 0;
+                    break;
+                default:
+                    System.out.println("OPCIÓN NO VALIDA");
+                    break;
+            }
+        } while (entrada != 0);
     }
-    
-    public void operar(DataBase objDb) {
+
+    public void operar(DataBase objDbORA, DataBaseSQLS objDbSQLS) {
         int entrada;
         while (true) {
 
@@ -232,15 +296,17 @@ public class Main {
             System.out.print(">>: ");
             entrada = sc.nextInt();
             System.out.println("");
-            
-            switch (entrada){
+
+            switch (entrada) {
                 case 0:
                     salir();
                     break;
                 case 1:
+                    motorDB = objDbORA;
                     opcionesOracle();
                     break;
                 case 2:
+                    motorDB = objDbSQLS;
                     opcionesSQLSERVER();
                     break;
                 default:
@@ -248,11 +314,7 @@ public class Main {
                     break;
             }
 
-            
-
         }
     }
-
-
 
 }
