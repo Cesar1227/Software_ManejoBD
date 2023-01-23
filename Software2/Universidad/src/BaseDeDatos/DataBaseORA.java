@@ -5,6 +5,7 @@
  */
 package BaseDeDatos;
 
+import Modelo.Estudiante;
 import Modelo.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -238,6 +239,25 @@ public class DataBaseORA {
             Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
         }
         return res;
+    }
+    
+    public String llamarProcedimiento2(){
+        String res = null;
+        try {
+            CallableStatement cstmt = con.prepareCall("{call info_usuarios(?)}");
+
+            cstmt.registerOutParameter(1, java.sql.Types.VARCHAR);
+            cstmt.execute();
+            //aca retorna el valor del procedimiento almacenado.
+
+            res = cstmt.getString(1);
+            //System.out.println(res);
+            //con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return res;      
     }
 
     /**

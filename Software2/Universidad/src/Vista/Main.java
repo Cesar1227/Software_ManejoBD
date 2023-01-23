@@ -22,7 +22,7 @@ public class Main {
     ControladorORA objControlORA;
     ControladorSQLS objControlSQLS;
 
-    public static void Main(String[] args) {
+    public static void main(String[] args) {
         Main objMain = new Main();
     }
 
@@ -30,6 +30,7 @@ public class Main {
         objControlORA = new ControladorORA();
         objControlSQLS = new ControladorSQLS();
         sc = new Scanner(System.in);
+        this.operar();
     }
 
     void modificarUsuario() {
@@ -119,7 +120,7 @@ public class Main {
         System.out.print("Ingrese el código del estudiante: ");
         codigo = sc.nextInt();
         
-        String respuesta = objControlORA.funcion2(codigo);
+        String respuesta = objControlORA.obtenerNomEstudiante(codigo);
         System.out.println("El nombre del estudiante con código " + codigo + " es " + respuesta);
     }
 
@@ -165,18 +166,26 @@ public class Main {
                     + "7. LLAMAR PROCEDIMIENTO 1\n"
                     + "8. LLAMAR FUNCIÓN 1\n"
                     + "9. LLAMAR FUNCIÓN 2\n"
+                    + "10. LLAMAR PROCEDIMIENTO 2\n"
                     + "0. VOLVER\n");
 
             System.out.print(">>: ");
             entrada = sc.nextInt();
             
             System.out.println("");
+            String resp;
             switch (entrada) {
                 case 1:
-                    objControlORA.consultarUsuarios();
+                    List<Usuario> usuarios;
+                    usuarios=objControlORA.consultarUsuarios();
+                    System.out.println(usuarios.toString());
                     break;
                 case 2:
-                    objControlORA.insertarUsuario();
+                    if(objControlORA.insertarUsuario()){
+                        System.out.println("Usuario ingresado correctamente");
+                    }else{
+                        System.out.println("No fue posible ingresar el usuario");
+                    }
                     break;
                 case 3:
                     this.modificarUsuario();
@@ -185,10 +194,18 @@ public class Main {
                     this.eliminarUsuario();
                     break;
                 case 5:
-                    objControlORA.aplicarTransacionORA();
+                    if(objControlORA.aplicarTransacionORA()){
+                        System.out.println("Transacción realizada");
+                    }else{
+                        System.out.println("No fue posible realizar la transacción");
+                    }
                     break;
                 case 6:
-                    objControlORA.descartarTransacionORA();
+                    if(objControlORA.descartarTransacionORA()){
+                        System.out.println("Rollback realizada");
+                    }else{
+                        System.out.println("No fue posible realizar el rollback");
+                    }
                     break;
                 case 7:
                     this.procedimientoORA1();
@@ -201,6 +218,9 @@ public class Main {
                     break;
                 case 0:
                     entrada = 0;
+                    break;
+                case 10:
+                    System.out.println(objControlORA.informacionEstudiantes());
                     break;
                 default:
                     System.out.println("OPCIÓN NO VALIDA");

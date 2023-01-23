@@ -2,6 +2,7 @@ package Control;
 
 import BaseDeDatos.DataBaseORA;
 import BaseDeDatos.DataBaseSQLS;
+import Modelo.Estudiante;
 import Modelo.Usuario;
 import java.util.List;
 import java.util.Scanner;
@@ -19,48 +20,39 @@ public class ControladorORA {
 
     DataBaseORA objDbORA;
     Usuario objUsuario;
+    Estudiante objEstu;
     Scanner sc;
 
     public ControladorORA() {
         objDbORA = new DataBaseORA();
         objUsuario = new Usuario();
+        objEstu = new Estudiante();
         if (!objDbORA.isConected()) {
             System.err.println("HA OCURRIDO UN ERROR, NO FUE POSIBLE CONECTARSE A LA BASE DE DATOS DE ORACLE");
         }
     }
 
     public List<Usuario> consultarUsuarios() {
-        
         /*usuarios.forEach(user -> {
             System.out.println(user.toString());
         });*/
-        return usuarios;
+        return objUsuario.consultar();
     }
 
     public boolean insertarUsuario() {
-        Usuario objUser;
-        objUser = new Usuario();
-        objUser.llenarAleatorio();
-
-        //System.out.println(objUser.toString());
-        return objDbORA.insertarUsuario(objUser);
+        return objUsuario.insertar();
     }
 
     public boolean insertarUsuario(Usuario user) {
-        if (user != null) {
-            return objDbORA.insertarUsuario(user);
-        } else {
-            System.err.println("El objeto usuario no puede ser NULL");
-            return false;
-        }
+        return objUsuario.insertar(user);
     }
 
     public boolean modificarUsuario(Usuario user) {
-        return objDbORA.modificarUsuario(user);
+        return objUsuario.modificar(user);
     }
 
     public boolean eliminarUsuario(int id) {
-        return objDbORA.eliminarUsuario(id);
+        return objUsuario.eliminar(id);
     }
 
     public boolean aplicarTransacionORA() {
@@ -72,7 +64,7 @@ public class ControladorORA {
     }
 
     /**
-     * LLamar procedimiento de Oracle
+     * LLamar procedimiento de Oracle información de Estudiantes
      *
      * @param num1
      * @param num2
@@ -87,14 +79,20 @@ public class ControladorORA {
             return ("El número " + respuesta + " es el mayor");
         }
     }
+    
+    public String informacionEstudiantes(){
+        return objEstu.obtenerInformacion();
+    }
 
+    //FUNCIÓN 1
     public String funcion1(String oper) {
         String respuesta = String.valueOf(objDbORA.llamarFuncion1(oper));
         return respuesta;
     }
 
-    public String funcion2(int codigo) {
-        String respuesta = String.valueOf(objDbORA.llamarFuncion2(codigo));
+    //FUNCIÓN 2
+    public String obtenerNomEstudiante(int codigo) {
+        String respuesta = objEstu.obtenerNombreEstudiante(codigo);
         return respuesta;   
     }
 

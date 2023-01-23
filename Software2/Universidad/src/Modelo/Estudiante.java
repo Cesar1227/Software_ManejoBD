@@ -5,6 +5,7 @@
  */
 package Modelo;
 
+import BaseDeDatos.DataBaseORA;
 import java.util.Date;
 
 /**
@@ -20,6 +21,11 @@ public class Estudiante {
     private int facultad;
     private int programa;
     private Date fecha_inicio;
+    private DataBaseORA objDbORA;
+
+    public Estudiante() {
+        objDbORA = new DataBaseORA();
+    }
 
     public Estudiante(int codigo, String nombres, String apellido1, String apellido2, String telefono, int facultad, int programa, Date fecha_inicio) {
         this.codigo = codigo;
@@ -30,9 +36,16 @@ public class Estudiante {
         this.facultad = facultad;
         this.programa = programa;
         this.fecha_inicio = fecha_inicio;
+        objDbORA = new DataBaseORA();
     }
     
+    public String obtenerInformacion(){
+        return objDbORA.llamarProcedimiento2();
+    }
     
+    public String obtenerNombreEstudiante(int codigo){
+        return String.valueOf(objDbORA.llamarFuncion2(codigo));
+    }
 
     public int getCodigo() {
         return codigo;
@@ -97,6 +110,10 @@ public class Estudiante {
     public void setFecha_inicio(Date fecha_inicio) {
         this.fecha_inicio = fecha_inicio;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Estudiante{" + "codigo=" + codigo + ", nombres=" + nombres + ", apellido1=" + apellido1 + ", apellido2=" + apellido2 + ", telefono=" + telefono + ", facultad=" + facultad + ", programa=" + programa + ", fecha_inicio=" + fecha_inicio + ", objDbORA=" + objDbORA + '}';
+    }
     
 }
