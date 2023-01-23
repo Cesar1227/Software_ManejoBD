@@ -6,6 +6,7 @@
 package Control;
 
 import BaseDeDatos.DataBaseSQLS;
+import Modelo.Estudiante;
 import java.util.Scanner;
 
 /**
@@ -15,6 +16,7 @@ import java.util.Scanner;
 public class ControladorSQLS {
 
     DataBaseSQLS objDbSQLS;
+    Estudiante objEstu;
     Scanner sc;
 
     public ControladorSQLS() {
@@ -35,7 +37,7 @@ public class ControladorSQLS {
     }
 
     public Float funcion1(int codigo){
-        return objDbSQLS.llamarFuncion1(codigo);
+        return objEstu.obtenerPromedio(codigo, "SQLS");
     }
     
 

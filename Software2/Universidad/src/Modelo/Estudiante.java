@@ -6,6 +6,7 @@
 package Modelo;
 
 import BaseDeDatos.DataBaseORA;
+import BaseDeDatos.DataBaseSQLS;
 import java.util.Date;
 
 /**
@@ -22,6 +23,7 @@ public class Estudiante {
     private int programa;
     private Date fecha_inicio;
     private DataBaseORA objDbORA;
+    private DataBaseSQLS objDbSQLS;
 
     public Estudiante() {
         objDbORA = new DataBaseORA();
@@ -37,6 +39,7 @@ public class Estudiante {
         this.programa = programa;
         this.fecha_inicio = fecha_inicio;
         objDbORA = new DataBaseORA();
+        objDbSQLS = new DataBaseSQLS();
     }
     
     public String obtenerInformacion(){
@@ -45,6 +48,18 @@ public class Estudiante {
     
     public String obtenerNombreEstudiante(int codigo){
         return String.valueOf(objDbORA.llamarFuncion2(codigo));
+    }
+    
+    //FUNCIÓN SQLSERVER
+    public float obtenerPromedio(int codigo, String motor){ 
+        if(motor.equals("SQLS")){
+            return objDbSQLS.llamarFuncion1(codigo);   
+        }else if(motor.equals("ORA")){
+            return 0.0f;
+        }else{
+            System.err.println("Motor de base de datos no reconocido.");
+            return 0.0f;
+        }        
     }
 
     public int getCodigo() {
