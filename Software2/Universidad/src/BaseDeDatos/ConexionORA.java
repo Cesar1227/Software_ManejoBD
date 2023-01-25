@@ -11,10 +11,6 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Cesar Bonilla
- */
 public class ConexionORA {
 
     /**
@@ -25,8 +21,8 @@ public class ConexionORA {
     public Connection conexion() {
 
         String url = "jdbc:oracle:thin:@localhost:1521:xe";  //jdbc:oracle:thin:[ip/localhost/]:[puerto]:xe
-        String user = "cesar";
-        String pass = "sistemas";
+        String user = "REY";
+        String pass = "root";
         Connection con = null;
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
