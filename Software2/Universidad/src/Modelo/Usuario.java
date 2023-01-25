@@ -112,5 +112,4 @@ public class Usuario {
     public String toString() {
         return "{" + "id= " + id + ", nombre= " + nombre + ", edad= " + edad + ", profesion= " + profesion + "}";
     }
-
 }
