@@ -29,6 +29,7 @@ public class DataBaseSQLS {
     public DataBaseSQLS() {
         objCone = new ConexionSQLS();
         con = objCone.conexion();
+        this.trasaccionesImplicitas();
     }
 
     public boolean isConected() {
@@ -232,6 +233,7 @@ public class DataBaseSQLS {
         }
         return false;
     }
+    
     public boolean insertarUsuario(Usuario user) {
         PreparedStatement stm;
         try {
@@ -247,6 +249,16 @@ public class DataBaseSQLS {
             //con.rollback();
         }
         return false;
+    }
+
+    public void trasaccionesImplicitas() {
+        PreparedStatement stm;
+        try {
+            stm = con.prepareStatement("SET IMPLICIT_TRANSACTIONS ON");
+            stm.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(DataBaseSQLS.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }

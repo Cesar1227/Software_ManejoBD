@@ -246,10 +246,11 @@ public class Main {
                     + "2. INSERTAR USUARIO\n"
                     + "3. ACTUALIZAR USUARIO\n"
                     + "4. ELIMINAR USUARIO\n"
-                    + "5. APLICAR TRANSACIÓN\n"
-                    + "6. DESCARTAR TRANSACIÓN\n"
-                    + "7. LLAMAR PROCEDIMIENTO 1\n"
-                    + "8. LLAMAR FUNCIÓN 1\n"
+                    + "5. INICIAR TRANSACCIÓN"
+                    + "6. APLICAR TRANSACIÓN\n"
+                    + "7. DESCARTAR TRANSACIÓN\n"
+                    + "8. LLAMAR PROCEDIMIENTO 1\n"
+                    + "9. LLAMAR FUNCIÓN 1\n"
                     + "0. VOLVER\n");
 
             System.out.print(">>: ");
@@ -279,11 +280,15 @@ public class Main {
                     
                     break;
                 case 6:
+                    
                     break;
                 case 7:
-                    procedimientoSSER1();
+                    
                     break;
                 case 8:
+                    procedimientoSSER1();
+                    break;
+                case 9:
                     funcionSSER1();
                     break;
                 case 0:

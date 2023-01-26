@@ -27,6 +27,10 @@ public class ControladorSQLS {
             System.err.println("HA OCURRIDO UN ERROR, NO FUE POSIBLE CONECTARSE A LA BASE DE DATOS DE SQLSERVER");
         }
     }
+    
+    public void iniciarTransaccion(){
+       objDbSQLS.trasaccionesImplicitas(); 
+    }
 
     public String procedimiento1(int num1, int num2){
         String respuesta;
