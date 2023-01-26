@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 Software2/Universidad/build/
 Software2/Universidad/dist/
 Software2/Universidad/nbproject/
-Software2/Universidad/src/BaseDeDatos/
-Software2/Universidad/src/BaseDeDatos/
-=======
-/Software2/Universidad/build/
-
->>>>>>> parent of 22dffa2 (Update .gitignore)
+Software2/Universidad/src/BaseDeDatos/ConexionORA
+Software2/Universidad/src/BaseDeDatos/ConexionSQLS
