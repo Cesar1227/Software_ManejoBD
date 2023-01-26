@@ -21,7 +21,7 @@ public class ConexionORA {
     public Connection conexion() {
 
         String url = "jdbc:oracle:thin:@localhost:1521:xe";  //jdbc:oracle:thin:[ip/localhost/]:[puerto]:xe
-        String user = "REY";
+        String user = "TALLER3";
         String pass = "root";
         Connection con = null;
         try {

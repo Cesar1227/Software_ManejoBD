@@ -11,10 +11,6 @@ import Modelo.Usuario;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- *
- * @author Cesar Bonilla
- */
 public class Main {
 
     Scanner sc;
@@ -53,11 +49,18 @@ public class Main {
 
         System.out.print("Ingrese la PROFESIÓN: ");
         objUser.setProfesion(sc.next());
-
-        if (objControlORA.modificarUsuario(objUser)) {
-            System.out.println("\nMODIFICADO EXITOSAMENTE");
-        } else {
-            System.out.println("\nERROR AL MODIFICAR");
+        if (objControlORA!=null){
+            if (objControlORA.modificarUsuario(objUser)) {
+                System.out.println("\nMODIFICADO EXITOSAMENTE");
+            } else {
+                System.out.println("\nERROR AL MODIFICAR");
+            }
+        }else{
+            if (objControlSQLS.modificarUsuario(objUser)) {
+                System.out.println("\nMODIFICADO EXITOSAMENTE");
+            } else {
+                System.out.println("\nERROR AL MODIFICAR");
+            }
         }
     }
 
@@ -65,11 +68,18 @@ public class Main {
         System.out.print("Ingrese el ID del usuario a eliminar: ");
         int id;
         id = sc.nextInt();
-        
-        if (objControlORA.eliminarUsuario(id)) {
-            System.out.println("Usuario con id " + id + " eliminado correctamente");
-        } else {
-            System.out.println("NO FUE POSIBLE ELIMINAR EL USUARIO");
+        if (objControlORA!=null){
+            if (objControlORA.eliminarUsuario(id)) {
+                System.out.println("Usuario con id " + id + " eliminado correctamente");
+            } else {
+                System.out.println("NO FUE POSIBLE ELIMINAR EL USUARIO");
+            }
+        }else{
+            if (objControlSQLS.eliminarUsuario(id)) {
+                System.out.println("Usuario con id " + id + " eliminado correctamente");
+            } else {
+                System.out.println("NO FUE POSIBLE ELIMINAR EL USUARIO");
+            }
         }
     }
 
@@ -232,8 +242,14 @@ public class Main {
         int entrada;
         do {
             System.out.println("\nDIGITE EL NÚMERO DE LA OPERACIÓN QUE DESEA EJECUTAR:\n"
-                    + "1. LLAMAR PROCEDIMIENTO 1\n"
-                    + "2. LLAMAR FUNCIÓN 1\n"
+                    + "1. CONSULTAR USUARIOS\n"
+                    + "2. INSERTAR USUARIO\n"
+                    + "3. ACTUALIZAR USUARIO\n"
+                    + "4. ELIMINAR USUARIO\n"
+                    + "5. APLICAR TRANSACIÓN\n"
+                    + "6. DESCARTAR TRANSACIÓN\n"
+                    + "7. LLAMAR PROCEDIMIENTO 1\n"
+                    + "8. LLAMAR FUNCIÓN 1\n"
                     + "0. VOLVER\n");
 
             System.out.print(">>: ");
@@ -242,9 +258,32 @@ public class Main {
             System.out.println("");
             switch (entrada) {
                 case 1:
-                    procedimientoSSER1();
+                    List<Usuario> usuarios;
+                    usuarios=objControlSQLS.consultarUsuarios();
+                    System.out.println(usuarios.toString());
                     break;
                 case 2:
+                    if(objControlSQLS.insertarUsuario()){
+                        System.out.println("Usuario ingresado correctamente");
+                    }else{
+                        System.out.println("No fue posible ingresar el usuario");
+                    }
+                    break;
+                case 3:
+                    this.modificarUsuario();
+                    break;
+                case 4:
+                    this.eliminarUsuario();
+                    break;
+                case 5:
+                    
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    procedimientoSSER1();
+                    break;
+                case 8:
                     funcionSSER1();
                     break;
                 case 0:

@@ -3,10 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/CesarBonilla/Unillanos/Software2/Universidad/src/Modelo/DataBase.java</file>
-            <file>file:/D:/CesarBonilla/Unillanos/Software2/Universidad/src/Modelo/DataBaseSQLS.java</file>
-            <file>file:/D:/CesarBonilla/Unillanos/Software2/Universidad/src/Modelo/Usuario.java</file>
-            <file>file:/D:/CesarBonilla/Unillanos/Software2/Universidad/src/Main.java</file>
+            <file>file:/C:/Users/milto/Documents/UNIVERSIDAD/IX/Software%202/PROYECTO/TrabajosSoftware/Software2/Universidad/src/BaseDeDatos/DataBaseSQLS.java</file>
+            <file>file:/C:/Users/milto/Documents/UNIVERSIDAD/IX/Software%202/PROYECTO/TrabajosSoftware/Software2/Universidad/src/Vista/Main.java</file>
+            <file>file:/C:/Users/milto/Documents/UNIVERSIDAD/IX/Software%202/PROYECTO/TrabajosSoftware/Software2/Universidad/src/BaseDeDatos/DataBaseORA.java</file>
+            <file>file:/C:/Users/milto/Documents/UNIVERSIDAD/IX/Software%202/PROYECTO/TrabajosSoftware/Software2/Universidad/src/BaseDeDatos/ConexionORA.java</file>
+            <file>file:/C:/Users/milto/Documents/UNIVERSIDAD/IX/Software%202/PROYECTO/TrabajosSoftware/Software2/Universidad/src/Control/ControladorSQLS.java</file>
         </group>
     </open-files>
 </project-private>

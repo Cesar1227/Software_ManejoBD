@@ -12,10 +12,7 @@ import java.util.Scanner;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-/**
- *
- * @author Cesar Bonilla
- */
+
 public class ControladorORA {
 
     DataBaseORA objDbORA;
@@ -36,23 +33,23 @@ public class ControladorORA {
         /*usuarios.forEach(user -> {
             System.out.println(user.toString());
         });*/
-        return objUsuario.consultar();
+        return objUsuario.consultar("oracle");
     }
 
     public boolean insertarUsuario() {
-        return objUsuario.insertar();
+        return objUsuario.insertar("oracle");
     }
 
     public boolean insertarUsuario(Usuario user) {
-        return objUsuario.insertar(user);
+        return objUsuario.insertar(user,"oracle");
     }
 
     public boolean modificarUsuario(Usuario user) {
-        return objUsuario.modificar(user);
+        return objUsuario.modificar(user,"oracle");
     }
 
     public boolean eliminarUsuario(int id) {
-        return objUsuario.eliminar(id);
+        return objUsuario.eliminar(id,"oracle");
     }
 
     public boolean aplicarTransacionORA() {

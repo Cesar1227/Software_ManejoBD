@@ -7,20 +7,21 @@ package Control;
 
 import BaseDeDatos.DataBaseSQLS;
 import Modelo.Estudiante;
+import Modelo.Usuario;
+import java.util.List;
 import java.util.Scanner;
 
-/**
- *
- * @author Cesar Bonilla
- */
+
 public class ControladorSQLS {
 
     DataBaseSQLS objDbSQLS;
+    Usuario objUsuario;
     Estudiante objEstu;
     Scanner sc;
 
     public ControladorSQLS() {
         objDbSQLS = new DataBaseSQLS();
+        objUsuario = new Usuario();
         objEstu = new Estudiante();
         if (!objDbSQLS.isConected()) {
             System.err.println("HA OCURRIDO UN ERROR, NO FUE POSIBLE CONECTARSE A LA BASE DE DATOS DE SQLSERVER");
@@ -40,6 +41,27 @@ public class ControladorSQLS {
     public Float funcion1(int codigo){
         return objEstu.obtenerPromedio(codigo, "SQLS");
     }
-    
+    public List<Usuario> consultarUsuarios() {
+        /*usuarios.forEach(user -> {
+            System.out.println(user.toString());
+        });*/
+        return objUsuario.consultar("sqlsserver");
+    }
+
+    public boolean insertarUsuario() {
+        return objUsuario.insertar("sqlsserver");
+    }
+
+    public boolean insertarUsuario(Usuario user) {
+        return objUsuario.insertar(user,"sqlsserver");
+    }
+
+    public boolean modificarUsuario(Usuario user) {
+        return objUsuario.modificar(user,"sqlsserver");
+    }
+
+    public boolean eliminarUsuario(int id) {
+        return objUsuario.eliminar(id,"sqlsserver");
+    }
 
 }

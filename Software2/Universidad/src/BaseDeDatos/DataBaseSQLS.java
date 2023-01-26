@@ -5,10 +5,15 @@
  */
 package BaseDeDatos;
 
+import Modelo.Usuario;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -137,4 +142,111 @@ public class DataBaseSQLS {
         }
         return res;
     }
+    //Métodos para tabla usuarios
+    
+    //Consultar 
+    public List<Usuario> consultarDatos() {
+        //Connection con = conexion();
+        ResultSet rslt = null;
+        List<Usuario> usuarios = null;
+        try {
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM USUARIO");
+            rslt = stmt.executeQuery();
+
+            usuarios = new ArrayList<>();
+            Usuario user;
+            //System.out.println(usuarios.size()+" size");
+            while (rslt.next()) {
+                user = new Usuario();
+                user.setId(rslt.getInt(1));
+                user.setNombre(rslt.getString(2));
+                user.setEdad(rslt.getInt(3));
+                user.setProfesion(rslt.getString(4));
+                usuarios.add(user);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return usuarios;
+    }
+    public boolean modificarUsuario(Usuario user) {
+        PreparedStatement stm;
+
+        if (existeUsuario(user.getId())) {
+            String sql = "UPDATE usuario SET nombre=?, edad=?, profesion=? "
+                    + "WHERE id=?";
+
+            try {
+                stm = con.prepareStatement(sql);
+                stm.setString(1, user.getNombre());
+                stm.setInt(2, user.getEdad());
+                stm.setString(3, user.getProfesion());
+                stm.setInt(4, user.getId());
+
+                return stm.executeUpdate() > 0;
+
+            } catch (SQLException ex) {
+                Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            System.err.println("\n:::: EL USUARIO CON ID " + user.getId() + " NO EXISTE\n");
+        }
+        return false;
+    }
+    boolean existeUsuario(int id) {
+        PreparedStatement stm;
+        String sql = "SELECT * FROM usuario WHERE id=?";
+        ResultSet rslt = null;
+
+        try {
+            stm = con.prepareStatement(sql);
+            stm.setInt(1, id);
+            rslt = stm.executeQuery();
+
+            return rslt.next();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return false;
+    }
+    
+    public boolean eliminarUsuario(int id) {
+        PreparedStatement stm;
+        if (existeUsuario(id)) {
+            String sql = "DELETE FROM usuario WHERE id=?";
+            try {
+
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, id);
+
+                return stm.executeUpdate() > 0;
+
+            } catch (SQLException ex) {
+                Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            System.err.println("\n:::: EL USUARIO CON ID " + id + " NO EXISTE\n");
+        }
+        return false;
+    }
+    public boolean insertarUsuario(Usuario user) {
+        PreparedStatement stm;
+        try {
+            stm = con.prepareStatement("INSERT INTO usuario VALUES (AUTO_INC.NEXTVAL,?,?,?)");
+            stm.setString(1, user.getNombre());
+            stm.setInt(2, user.getEdad());
+            stm.setString(3, user.getProfesion());
+
+            return (stm.executeUpdate() > 0);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
+            //con.rollback();
+        }
+        return false;
+    }
+    
 }

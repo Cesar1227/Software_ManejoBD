@@ -6,6 +6,7 @@
 package Modelo;
 
 import BaseDeDatos.DataBaseORA;
+import BaseDeDatos.DataBaseSQLS;
 import java.util.List;
 import java.util.Random;
 
@@ -22,9 +23,10 @@ public class Usuario {
     private Random r;
 
     private DataBaseORA objDbORA;
-
+    private DataBaseSQLS objDbSQLS;
     public Usuario() {
-         this.objDbORA = new DataBaseORA();
+        this.objDbORA = new DataBaseORA();
+        this.objDbSQLS = new DataBaseSQLS();
     }
 
     public Usuario(int id, String nombre, int edad, String profesion) {
@@ -33,6 +35,7 @@ public class Usuario {
         this.edad = edad;
         this.profesion = profesion;
         this.objDbORA = new DataBaseORA();
+        this.objDbSQLS = new DataBaseSQLS();
     }
 
     void llenarAleatorio() {
@@ -47,33 +50,56 @@ public class Usuario {
 
     }
 
-    public List<Usuario> consultar() {
-        List<Usuario> usuarios = objDbORA.consultarDatos();
-        return usuarios;
+    public List<Usuario> consultar(String aux) {
+        if("oracle".equals(aux)){
+            List<Usuario> usuarios = objDbORA.consultarDatos();
+            return usuarios;
+        }else{
+            List<Usuario> usuarios = objDbSQLS.consultarDatos();
+            return usuarios;
+        }
+        
     }
 
-    public boolean insertar() {
+    public boolean insertar(String aux) {
         Usuario objUser;
         objUser = new Usuario();
         objUser.llenarAleatorio();
-        return objDbORA.insertarUsuario(objUser);
+        if("oracle".equals(aux)){
+            return objDbORA.insertarUsuario(objUser);
+        }else{
+            return objDbSQLS.insertarUsuario(objUser);
+        }
     }
     
-    public boolean insertar(Usuario user) {
+    public boolean insertar(Usuario user,String aux) {
         if (user != null) {
-            return objDbORA.insertarUsuario(user);
+            if("oracle".equals(aux)){
+                return objDbORA.insertarUsuario(user);
+            }else{
+                return objDbSQLS.insertarUsuario(user);
+            }
         } else {
             System.err.println("El objeto usuario no puede ser NULL");
             return false;
         }
     }
     
-    public boolean modificar(Usuario user){
-        return objDbORA.modificarUsuario(user);
+    public boolean modificar(Usuario user,String aux){
+        if("oracle".equals(aux)){
+            return objDbORA.modificarUsuario(user);
+        }else{
+            return objDbSQLS.modificarUsuario(user);
+        }
+        
     }
     
-    public boolean eliminar(int id){
-        return objDbORA.eliminarUsuario(id);
+    public boolean eliminar(int id,String aux){
+        if("oracle".equals(aux)){
+            return objDbORA.eliminarUsuario(id);
+        }else{
+            return objDbSQLS.eliminarUsuario(id);
+        }
     }
     
     public int getId() {
