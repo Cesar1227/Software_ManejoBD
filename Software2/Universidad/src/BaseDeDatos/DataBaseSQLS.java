@@ -29,12 +29,8 @@ public class DataBaseSQLS {
     public DataBaseSQLS() {
         objCone = new ConexionSQLS();
         con = objCone.conexion();
-        try {
-            con.setAutoCommit(false);
-            //this.trasaccionesImplicitas();
-        } catch (SQLException ex) {
-            Logger.getLogger(DataBaseSQLS.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        //con.setAutoCommit(false);
+        //this.trasaccionesImplicitas();
     }
 
     public boolean isConected() {

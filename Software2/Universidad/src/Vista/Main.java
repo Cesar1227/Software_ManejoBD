@@ -277,9 +277,9 @@ public class Main {
                     + "2. INSERTAR USUARIO\n"
                     + "3. ACTUALIZAR USUARIO\n"
                     + "4. ELIMINAR USUARIO\n"
-                    + "5. INICIAR TRANSACCIÓN"
+                    /*+ "5. INICIAR TRANSACCIÓN"
                     + "6. APLICAR TRANSACIÓN\n"
-                    + "7. DESCARTAR TRANSACIÓN\n"
+                    + "7. DESCARTAR TRANSACIÓN\n"*/
                     + "8. LLAMAR PROCEDIMIENTO 1\n"
                     + "9. LLAMAR FUNCIÓN 1\n"
                     + "0. VOLVER\n");

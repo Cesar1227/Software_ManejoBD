@@ -3,3 +3,5 @@ Software2/Universidad/dist/
 Software2/Universidad/nbproject/
 Software2/Universidad/src/BaseDeDatos/ConexionORA
 Software2/Universidad/src/BaseDeDatos/ConexionSQLS
+Software2/Universidad/src/BaseDeDatos/ConexionORA.java
+Software2/Universidad/src/BaseDeDatos/ConexionSQLS.java
