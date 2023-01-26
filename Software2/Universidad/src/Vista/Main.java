@@ -304,13 +304,14 @@ public class Main {
                     this.eliminarUsuario("sqlsserver");
                     break;
                 case 5:
-                    
+                    objControlSQLS.iniciarTransaccion();
+                    System.out.println("TRANSACCIÓN INICIADA...");
                     break;
                 case 6:
-                    
+                    objControlSQLS.aplicarTransaccion();
                     break;
                 case 7:
-                    
+                    objControlSQLS.descartarTransaccion();
                     break;
                 case 8:
                     procedimientoSSER1();

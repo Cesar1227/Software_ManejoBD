@@ -29,7 +29,7 @@ public class ControladorSQLS {
     }
     
     public void iniciarTransaccion(){
-       objDbSQLS.trasaccionesImplicitas(); 
+       //objDbSQLS.trasaccionesImplicitas(); 
     }
 
     public String procedimiento1(int num1, int num2){
@@ -66,6 +66,14 @@ public class ControladorSQLS {
 
     public boolean eliminarUsuario(int id) {
         return objUsuario.eliminar(id,"sqlsserver");
+    }
+
+    public void aplicarTransaccion() {
+        objDbSQLS.aplicarTrasaccion();
+    }
+
+    public void descartarTransaccion() {
+        objDbSQLS.descartarTransaccion();
     }
 
 }
