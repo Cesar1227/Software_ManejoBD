@@ -233,14 +233,15 @@ public class DataBaseSQLS {
         }
         return false;
     }
-    
+
     public boolean insertarUsuario(Usuario user) {
         PreparedStatement stm;
         try {
-            stm = con.prepareStatement("INSERT INTO usuario VALUES (AUTO_INC.NEXTVAL,?,?,?)");
-            stm.setString(1, user.getNombre());
-            stm.setInt(2, user.getEdad());
-            stm.setString(3, user.getProfesion());
+            stm = con.prepareStatement("INSERT INTO usuario VALUES (?,?,?,?)");
+            stm.setInt(1, user.getId());
+            stm.setString(2, user.getNombre());
+            stm.setInt(3, user.getEdad());
+            stm.setString(4, user.getProfesion());
 
             return (stm.executeUpdate() > 0);
 
