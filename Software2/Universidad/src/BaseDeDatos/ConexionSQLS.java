@@ -15,7 +15,7 @@ public class ConexionSQLS {
     public Connection conexion() {
         String bd = "EMPRESA";
         String user = "sa";
-        String pass = "cesar12";
+        String pass = "root";
         String url = "jdbc:sqlserver://localhost:1433;"
                 + "databaseName=" + bd + ";user=" + user + ";password=" + pass + ";TrustServerCertificate=True;";
 
@@ -31,5 +31,4 @@ public class ConexionSQLS {
 
         return con;
     }
-    
 }

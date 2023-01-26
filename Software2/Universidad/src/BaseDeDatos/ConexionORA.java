@@ -21,8 +21,8 @@ public class ConexionORA {
     public Connection conexion() {
 
         String url = "jdbc:oracle:thin:@localhost:1521:xe";  //jdbc:oracle:thin:[ip/localhost/]:[puerto]:xe
-        String user = "cesar";
-        String pass = "sistemas";
+        String user = "TALLER3";
+        String pass = "root";
         Connection con = null;
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");

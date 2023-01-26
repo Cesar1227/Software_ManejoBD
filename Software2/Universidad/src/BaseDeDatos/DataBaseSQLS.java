@@ -241,7 +241,10 @@ public class DataBaseSQLS {
 
     public boolean insertarUsuario(Usuario user) {
         PreparedStatement stm;
-        try {
+        if (existeUsuario(user.getId())){
+            System.err.println("\n:::: EL USUARIO CON ID " + user.getId() + " YA EXISTE\n");
+        }else {
+            try {
             stm = con.prepareStatement("INSERT INTO usuario VALUES (?,?,?,?)");
             stm.setInt(1, user.getId());
             stm.setString(2, user.getNombre());
@@ -250,9 +253,10 @@ public class DataBaseSQLS {
 
             return (stm.executeUpdate() > 0);
 
-        } catch (SQLException ex) {
-            Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
-            //con.rollback();
+            } catch (SQLException ex) {
+                Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
+                //con.rollback();
+            }
         }
         return false;
     }
