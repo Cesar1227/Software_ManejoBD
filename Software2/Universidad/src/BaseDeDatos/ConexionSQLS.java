@@ -32,5 +32,4 @@ public class ConexionSQLS {
         return con;
     }
     
-    public void ini
 }
