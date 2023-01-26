@@ -48,9 +48,9 @@ public class ControladorSQLS {
         return objUsuario.consultar("sqlsserver");
     }
 
-    public boolean insertarUsuario() {
+    /*public boolean insertarUsuario() {
         return objUsuario.insertar("sqlsserver");
-    }
+    }*/
 
     public boolean insertarUsuario(Usuario user) {
         return objUsuario.insertar(user,"sqlsserver");

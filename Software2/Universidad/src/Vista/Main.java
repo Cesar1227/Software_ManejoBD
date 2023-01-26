@@ -82,6 +82,41 @@ public class Main {
             }
         }
     }
+    void insertarUsuario(String aux) {
+        Usuario objUser;
+        objUser = new Usuario();
+
+        String nombre;
+        sc = new Scanner(System.in);
+        System.out.print("Ingrese el ID: ");
+        objUser.setId((sc.nextInt()));
+
+        System.out.print("Ingrese el NOMBRE: ");
+        nombre = sc.next();
+
+        System.out.print("Ingrese el APELLIDO: ");
+        nombre = nombre + " " + sc.next();
+        objUser.setNombre(nombre);
+
+        System.out.print("Ingrese la EDAD: ");
+        objUser.setEdad((sc.nextInt()));
+
+        System.out.print("Ingrese la PROFESIÓN: ");
+        objUser.setProfesion(sc.next());
+        if ("oracle".equals(aux)){
+            if (objControlORA.insertarUsuario(objUser)) {
+                System.out.println("Usuario con id " + objUser.getId() + " insertado correctamente");
+            } else {
+                System.out.println("NO FUE POSIBLE INSERTAR EL USUARIO");
+            }
+        }else{
+            if (objControlSQLS.insertarUsuario(objUser)) {
+                System.out.println("Usuario con id " + objUser.getId() + " insertado correctamente");
+            } else {
+                System.out.println("NO FUE POSIBLE INSERTAR EL USUARIO");
+            }
+        }
+    }
 
     void procedimientoORA1() {
         int num1, num2;
@@ -190,11 +225,7 @@ public class Main {
                     System.out.println(usuarios.toString());
                     break;
                 case 2:
-                    if(objControlORA.insertarUsuario()){
-                        System.out.println("Usuario ingresado correctamente");
-                    }else{
-                        System.out.println("No fue posible ingresar el usuario");
-                    }
+                    this.insertarUsuario("oracle");
                     break;
                 case 3:
                     this.modificarUsuario("oracle");
@@ -263,11 +294,7 @@ public class Main {
                     System.out.println(usuarios.toString());
                     break;
                 case 2:
-                    if(objControlSQLS.insertarUsuario()){
-                        System.out.println("Usuario ingresado correctamente");
-                    }else{
-                        System.out.println("No fue posible ingresar el usuario");
-                    }
+                    this.insertarUsuario("sqlsserver");
                     break;
                 case 3:
                     this.modificarUsuario("sqlsserver");

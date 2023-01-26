@@ -38,7 +38,7 @@ public class Usuario {
         this.objDbSQLS = new DataBaseSQLS();
     }
 
-    void llenarAleatorio() {
+    /*void llenarAleatorio() {
 
         String[] nombres = {"DANIEL", "FELIPE", "DAYANA", "MARCELA", "JULIAN", "SANDRA", "MARLON", "JHOANA", "ADRIAN", "MARTA"};
         String[] apellidos = {"DUARTE", "OLAYA", "VALVUENA", "ZAPATA", "CETINA", "ROMERO", "FLOREZ", "CUARTAS", "LOPEZ", "SALGADO"};
@@ -48,7 +48,7 @@ public class Usuario {
         this.setProfesion(profesiones[r.nextInt(profesiones.length)]);
         this.setEdad(r.nextInt(20) + 20);
 
-    }
+    }*/
 
     public List<Usuario> consultar(String aux) {
         if("oracle".equals(aux)){
@@ -61,7 +61,7 @@ public class Usuario {
         
     }
 
-    public boolean insertar(String aux) {
+    /*public boolean insertar(int id,String aux) {
         Usuario objUser;
         objUser = new Usuario();
         objUser.llenarAleatorio();
@@ -70,7 +70,8 @@ public class Usuario {
         }else{
             return objDbSQLS.insertarUsuario(objUser);
         }
-    }
+    }*/
+    
     
     public boolean insertar(Usuario user,String aux) {
         if (user != null) {

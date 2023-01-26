@@ -36,9 +36,9 @@ public class ControladorORA {
         return objUsuario.consultar("oracle");
     }
 
-    public boolean insertarUsuario() {
+    /*public boolean insertarUsuario() {
         return objUsuario.insertar("oracle");
-    }
+    }*/
 
     public boolean insertarUsuario(Usuario user) {
         return objUsuario.insertar(user,"oracle");
