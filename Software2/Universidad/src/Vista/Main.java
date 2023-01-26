@@ -28,7 +28,7 @@ public class Main {
         this.operar();
     }
 
-    void modificarUsuario() {
+    void modificarUsuario(String aux) {
         Usuario objUser;
         objUser = new Usuario();
 
@@ -49,7 +49,7 @@ public class Main {
 
         System.out.print("Ingrese la PROFESIÓN: ");
         objUser.setProfesion(sc.next());
-        if (objControlORA!=null){
+        if ("oracle".equals(aux)){
             if (objControlORA.modificarUsuario(objUser)) {
                 System.out.println("\nMODIFICADO EXITOSAMENTE");
             } else {
@@ -64,11 +64,11 @@ public class Main {
         }
     }
 
-    void eliminarUsuario() {
+    void eliminarUsuario(String aux) {
         System.out.print("Ingrese el ID del usuario a eliminar: ");
         int id;
         id = sc.nextInt();
-        if (objControlORA!=null){
+        if ("oracle".equals(aux)){
             if (objControlORA.eliminarUsuario(id)) {
                 System.out.println("Usuario con id " + id + " eliminado correctamente");
             } else {
@@ -197,10 +197,10 @@ public class Main {
                     }
                     break;
                 case 3:
-                    this.modificarUsuario();
+                    this.modificarUsuario("oracle");
                     break;
                 case 4:
-                    this.eliminarUsuario();
+                    this.eliminarUsuario("oracle");
                     break;
                 case 5:
                     if(objControlORA.aplicarTransacionORA()){
@@ -270,10 +270,10 @@ public class Main {
                     }
                     break;
                 case 3:
-                    this.modificarUsuario();
+                    this.modificarUsuario("sqlsserver");
                     break;
                 case 4:
-                    this.eliminarUsuario();
+                    this.eliminarUsuario("sqlsserver");
                     break;
                 case 5:
                     
