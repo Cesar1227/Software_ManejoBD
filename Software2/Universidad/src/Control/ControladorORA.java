@@ -1,7 +1,6 @@
 package Control;
 
 import BaseDeDatos.DataBaseORA;
-import BaseDeDatos.DataBaseSQLS;
 import Modelo.Estudiante;
 import Modelo.Usuario;
 import java.util.List;

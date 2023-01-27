@@ -12,18 +12,27 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ConexionORA {
+    
+    private static final ConexionORA singleton = new ConexionORA();
+    private static Connection con;
+    
+    private ConexionORA(){
+        con=conexion();
+    }
+    
+   
 
     /**
      * Conexión al motor de base de datos de Oracle
      *
      * @return Objeto de la conexión
      */
-    public Connection conexion() {
+    private static Connection conexion() {
 
         String url = "jdbc:oracle:thin:@localhost:1521:xe";  //jdbc:oracle:thin:[ip/localhost/]:[puerto]:xe
-        String user = "TALLER3";
-        String pass = "root";
-        Connection con = null;
+        String user = "cesar";
+        String pass = "sistemas";
+        con = null;
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             con = DriverManager.getConnection(url, user, pass);
@@ -33,4 +42,10 @@ public class ConexionORA {
         }
         return con;
     }
+    
+    public static Connection getIntance(){   
+        return con;        
+    }
+    
+    
 }

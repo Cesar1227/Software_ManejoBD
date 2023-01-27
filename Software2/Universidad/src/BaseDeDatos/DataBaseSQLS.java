@@ -8,7 +8,6 @@ package BaseDeDatos;
 import Modelo.Usuario;
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,8 +26,9 @@ public class DataBaseSQLS {
     ConexionSQLS objCone;
     
     public DataBaseSQLS() {
-        objCone = new ConexionSQLS();
-        con = objCone.conexion();
+        //objCone = new ConexionSQLS();
+        System.out.println("OBJETO CONEXIÓN SQL SERVER: "+objCone.getIntance());
+        con = objCone.getIntance();
         //con.setAutoCommit(false);
         //this.trasaccionesImplicitas();
     }

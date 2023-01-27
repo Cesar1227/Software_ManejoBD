@@ -12,14 +12,24 @@ import java.util.logging.Logger;
 
 
 public class ConexionSQLS {
-    public Connection conexion() {
+    
+    private static final ConexionSQLS singleton = new ConexionSQLS();
+    private static Connection con;
+    
+    
+    private ConexionSQLS(){
+        con = conexion();
+    }
+    
+    
+    private Connection conexion() {
         String bd = "EMPRESA";
         String user = "sa";
-        String pass = "root";
+        String pass = "cesar12";
         String url = "jdbc:sqlserver://localhost:1433;"
                 + "databaseName=" + bd + ";user=" + user + ";password=" + pass + ";TrustServerCertificate=True;";
 
-        Connection con = null;
+        con = null;
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             con = DriverManager.getConnection(url);
@@ -29,6 +39,10 @@ public class ConexionSQLS {
             Logger.getLogger(DataBaseSQLS.class.getName()).log(Level.SEVERE, null, ex);
         }    
 
+        return con;
+    }
+    
+    public static Connection getIntance(){
         return con;
     }
 }

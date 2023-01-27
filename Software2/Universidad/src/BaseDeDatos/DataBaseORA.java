@@ -27,8 +27,9 @@ public class DataBaseORA {
     ConexionORA objCone;
 
     public DataBaseORA() {
-        objCone = new ConexionORA();
-        con = objCone.conexion();
+        //objCone = new ConexionORA();
+        System.out.println("OBJETO CONEXIÓN ORACLE: "+objCone.getIntance());
+        con = objCone.getIntance();
         try {
             con.setAutoCommit(false);
         } catch (SQLException ex) {
