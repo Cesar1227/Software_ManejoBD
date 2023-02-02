@@ -27,9 +27,6 @@ public class UsuarioDAO {
 
     public UsuarioDAO(Class db) {
         this.setDataBase(db);
-        //objCone = new ConexionORA();
-        //System.out.println("OBJETO CONEXIÓN ORACLE: " + objConeORA.getIntance());
-        //con = objConeORA.getIntance();
 
     }
 
@@ -48,7 +45,6 @@ public class UsuarioDAO {
     }
 
     public List<UsuarioDTO> consultarDatos() {
-        //Connection con = conexion();
         ResultSet rslt = null;
         List<UsuarioDTO> usuarios = null;
         try {
@@ -57,7 +53,6 @@ public class UsuarioDAO {
 
             usuarios = new ArrayList<>();
             UsuarioDTO user;
-            //System.out.println(usuarios.size()+" size");
             while (rslt.next()) {
                 user = new UsuarioDTO();
                 user.setId(rslt.getInt(1));
@@ -70,12 +65,7 @@ public class UsuarioDAO {
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            /*try {
-                //con.close();
-                //rslt.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
-            }*/
+
         }
         return usuarios;
     }
@@ -164,6 +154,32 @@ public class UsuarioDAO {
             System.err.println("\n:::: EL USUARIO CON ID " + user.getId() + " NO EXISTE\n");
         }
         return false;
+    }
+
+    public UsuarioDTO buscarUsuario(UsuarioDTO user) {
+        ResultSet rslt = null;
+        try {
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM USUARIO WHERE id=?");
+            stmt.setInt(1, user.getId());
+            rslt = stmt.executeQuery();
+
+            if (rslt.next()) {
+                
+                user = new UsuarioDTO();
+                user.setId(rslt.getInt(1));
+                user.setNombre(rslt.getString(2));
+                user.setEdad(rslt.getInt(3));
+                user.setProfesion(rslt.getString(4));
+                System.out.println(user.toString());
+            }else{
+                UsuarioDTO user2 = null;
+                return user2;             
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return user;
     }
 
     

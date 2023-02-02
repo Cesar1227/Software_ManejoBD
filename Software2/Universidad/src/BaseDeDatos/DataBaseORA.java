@@ -5,15 +5,9 @@
  */
 package BaseDeDatos;
 
-import Modelo.DTO.EstudianteDTO;
-import Modelo.DTO.UsuarioDTO;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.CallableStatement;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -117,11 +111,9 @@ public class DataBaseORA {
             cstmt.setInt(2, num2);
             cstmt.registerOutParameter(3, java.sql.Types.VARCHAR);
             cstmt.execute();
-            //aca retorna el valor del procedimiento almacenado.
 
             res = cstmt.getString(3);
-            //System.out.println(res);
-            //con.close();
+
         } catch (SQLException ex) {
             Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
         }

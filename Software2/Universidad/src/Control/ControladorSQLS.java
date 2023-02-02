@@ -14,7 +14,6 @@ import Modelo.DTO.UsuarioDTO;
 import java.util.List;
 import java.util.Scanner;
 
-
 public class ControladorSQLS {
 
     DataBaseSQLS objDbSQLS;
@@ -30,13 +29,12 @@ public class ControladorSQLS {
             System.err.println("HA OCURRIDO UN ERROR, NO FUE POSIBLE CONECTARSE A LA BASE DE DATOS DE SQLSERVER");
         }
     }
-    
+
     /*
     public void iniciarTransaccion(){
        //objDbSQLS.trasaccionesImplicitas(); 
     }*/
-
-    public String func_compararDosNumeros(int num1, int num2){
+    public String func_compararDosNumeros(int num1, int num2) {
         String respuesta;
         respuesta = objDbSQLS.compararDosNumeros(num1, num2);
         if (respuesta.equals("iguales")) {
@@ -46,9 +44,10 @@ public class ControladorSQLS {
         }
     }
 
-    public Float proc_obtenerPromedio(EstudianteDTO est){
-        return objEstu.proc_obtenerPromedio(est);
+    public Float func_obtenerPromedio(EstudianteDTO est) {
+        return objEstu.func_obtenerPromedio(est);
     }
+
     public List<UsuarioDTO> consultarUsuarios() {
         return objUsuario.consultarDatos();
     }
@@ -63,6 +62,10 @@ public class ControladorSQLS {
 
     public boolean eliminarUsuario(UsuarioDTO user) {
         return objUsuario.eliminarUsuario(user);
+    }
+
+    public UsuarioDTO buscarUsuario(UsuarioDTO user) {
+        return objUsuario.buscarUsuario(user);
     }
 
     public void aplicarTransaccion() {

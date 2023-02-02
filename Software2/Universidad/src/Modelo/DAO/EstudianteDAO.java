@@ -9,6 +9,7 @@ import BaseDeDatos.ConexionORA;
 import BaseDeDatos.ConexionSQLS;
 import BaseDeDatos.DataBaseORA;
 import Modelo.DTO.EstudianteDTO;
+import Modelo.DTO.UsuarioDTO;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -69,7 +70,7 @@ public class EstudianteDAO {
 
     END
      */
-    public float proc_obtenerPromedio(EstudianteDTO est) {
+    public float func_obtenerPromedio(EstudianteDTO est) {
         float res = 0f;
         try {
             CallableStatement cstmt = con.prepareCall("{? = call promedio_est(?)}");
@@ -105,7 +106,7 @@ public class EstudianteDAO {
             return v_nombre;
         end nom_estudiante;
      */
-    public String proc_obtenerNombre(EstudianteDTO est) {
+    public String func_obtenerNombre(EstudianteDTO est) {
         String res = null;
         try {
             CallableStatement cstmt = con.prepareCall("{? = call nom_estudiante(?)}");
@@ -113,17 +114,15 @@ public class EstudianteDAO {
             cstmt.registerOutParameter(1, oracle.jdbc.OracleType.VARCHAR2);
             cstmt.setInt(2, est.getCodigo());
             cstmt.execute();
-            //aca retorna el valor del procedimiento almacenado.
 
             res = cstmt.getString(1);
-            //System.out.println(res);
-            //con.close();
         } catch (SQLException ex) {
             Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
         }
         return res;
     }
     
+    //PROCEDIMIENTO ORACLE
     public String proc_obtenerInformacionEst() {
         String res = null;
         try {
@@ -131,11 +130,8 @@ public class EstudianteDAO {
 
             cstmt.registerOutParameter(1, java.sql.Types.VARCHAR);
             cstmt.execute();
-            //aca retorna el valor del procedimiento almacenado.
 
             res = cstmt.getString(1);
-            //System.out.println(res);
-            //con.close();
         } catch (SQLException ex) {
             Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
         }

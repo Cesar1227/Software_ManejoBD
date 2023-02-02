@@ -7,6 +7,7 @@ package Vista;
 
 import Control.ControladorORA;
 import Control.ControladorSQLS;
+import Modelo.DTO.EstudianteDTO;
 import Modelo.DTO.UsuarioDTO;
 import java.util.List;
 import java.util.Scanner;
@@ -17,6 +18,7 @@ public class Main {
     ControladorORA objControlORA;
     ControladorSQLS objControlSQLS;
     UsuarioDTO objUser;
+    EstudianteDTO objEst;
 
     public static void main(String[] args) {
         //Main objMain = new Main();
@@ -80,11 +82,11 @@ public class Main {
                 System.out.println("NO FUE POSIBLE ELIMINAR EL USUARIO");
             }
         }else{
-           /* if (objControlSQLS.eliminarUsuario(id)) {
+           if (objControlSQLS.eliminarUsuario(objUser)) {
                 System.out.println("Usuario con id " + objUser.getId() + " eliminado correctamente");
             } else {
                 System.out.println("NO FUE POSIBLE ELIMINAR EL USUARIO");
-            }*/
+            }
         }
     }
     
@@ -169,9 +171,11 @@ public class Main {
         
         System.out.print("Ingrese el código del estudiante: ");
         codigo = sc.nextInt();
+        objUser=new UsuarioDTO();
+        objUser.setId(codigo);
         
-        //String respuesta = objControlORA.obtenerNomEstudiante(codigo);
-       //System.out.println("El nombre del estudiante con código " + codigo + " es " + respuesta);
+        String respuesta = objControlORA.func_obtenerNomEstudiante(objEst);
+       System.out.println("El nombre del estudiante con código " + codigo + " es " + respuesta);
     }
 
     void procedimientoSSER1() {
@@ -198,9 +202,10 @@ public class Main {
         
         System.out.print("Ingrese el código del estudiante: ");
         codigo = sc.nextInt();
-        
-        /*respuesta = String.valueOf(objControlSQLS.funcion1(codigo));
-        System.out.println("El promedio del estudiante con código " + codigo + " es " + respuesta);*/
+        objEst = new EstudianteDTO();
+        objEst.setCodigo(codigo);
+        respuesta = String.valueOf(objControlSQLS.func_obtenerPromedio(objEst));
+        System.out.println("El promedio del estudiante con código " + codigo + " es " + respuesta);
     }
 
     public void opcionesOracle() {

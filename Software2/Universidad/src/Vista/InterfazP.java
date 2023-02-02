@@ -29,7 +29,7 @@ public class InterfazP extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         objControlORA = new ControladorORA();
         objControlSQLS = new ControladorSQLS();
-        
+
     }
 
     /**
@@ -75,23 +75,30 @@ public class InterfazP extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         txtNombre = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
+        txtNum3 = new javax.swing.JTextField();
+        txtrest1 = new javax.swing.JTextField();
+        txtNum4 = new javax.swing.JTextField();
+        jLabel18 = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txtCodSQLS = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        txtPromSQLS = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel15 = new javax.swing.JLabel();
         txtNum1 = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         txtNum2 = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
-        rest = new javax.swing.JTextField();
+        txtrest2 = new javax.swing.JTextField();
+        btnLimpiarSQLS = new javax.swing.JButton();
+        btnLimpiarORA = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -189,7 +196,7 @@ public class InterfazP extends javax.swing.JFrame {
             }
         });
 
-        btnBuscar.setText("Listar");
+        btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
@@ -327,6 +334,7 @@ public class InterfazP extends javax.swing.JFrame {
 
         jTabbedPane2.addTab("CRUD", jPanel6);
 
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setText("Funciones y Procedimientos");
 
         jPanel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -342,7 +350,31 @@ public class InterfazP extends javax.swing.JFrame {
 
         jLabel9.setText("Nombre : ");
 
-        jLabel10.setText("Promedio : ");
+        jLabel17.setText("Número 1:");
+
+        jButton4.setText("COMPARAR");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        txtrest1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtrest1ActionPerformed(evt);
+            }
+        });
+
+        txtNum4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNum4ActionPerformed(evt);
+            }
+        });
+
+        jLabel18.setText("Número 2 : ");
+
+        jSeparator2.setBackground(new java.awt.Color(0, 0, 0));
+        jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -352,20 +384,32 @@ public class InterfazP extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel8Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtCod, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27)
                         .addComponent(jButton1))
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(134, Short.MAX_VALUE))
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton4)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(jLabel17)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtNum4, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(jLabel18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtNum3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtrest1, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -379,11 +423,22 @@ public class InterfazP extends javax.swing.JFrame {
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addGap(30, 30, 30)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21))
+                    .addComponent(jLabel17)
+                    .addComponent(txtNum4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel18)
+                    .addComponent(txtNum3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton4)
+                .addGap(18, 18, 18)
+                .addComponent(txtrest1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
+            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel8Layout.createSequentialGroup()
+                    .addGap(98, 98, 98)
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(120, Short.MAX_VALUE)))
         );
 
         jLabel11.setText("ORACLE");
@@ -403,9 +458,9 @@ public class InterfazP extends javax.swing.JFrame {
 
         jLabel14.setText("Promedio: ");
 
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        txtPromSQLS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                txtPromSQLSActionPerformed(evt);
             }
         });
 
@@ -429,6 +484,12 @@ public class InterfazP extends javax.swing.JFrame {
             }
         });
 
+        txtrest2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtrest2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
@@ -442,11 +503,11 @@ public class InterfazP extends javax.swing.JFrame {
                             .addGroup(jPanel9Layout.createSequentialGroup()
                                 .addComponent(jLabel14)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtPromSQLS, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel9Layout.createSequentialGroup()
                                 .addComponent(jLabel13)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtCodSQLS, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(31, 31, 31)
                                 .addComponent(jButton2))))
                     .addGroup(jPanel9Layout.createSequentialGroup()
@@ -461,7 +522,7 @@ public class InterfazP extends javax.swing.JFrame {
                                 .addComponent(jLabel16)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtNum2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(rest))))
+                            .addComponent(txtrest2))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
@@ -470,12 +531,12 @@ public class InterfazP extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCodSQLS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPromSQLS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(19, 19, 19)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -487,9 +548,23 @@ public class InterfazP extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton3)
                 .addGap(18, 18, 18)
-                .addComponent(rest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addComponent(txtrest2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(2, 2, 2))
         );
+
+        btnLimpiarSQLS.setText("LIMPIAR");
+        btnLimpiarSQLS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarSQLSActionPerformed(evt);
+            }
+        });
+
+        btnLimpiarORA.setText("LIMPIAR");
+        btnLimpiarORA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarORAActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -510,7 +585,16 @@ public class InterfazP extends javax.swing.JFrame {
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addComponent(btnLimpiarSQLS)
+                        .addGap(42, 42, 42))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addComponent(btnLimpiarORA)
+                        .addGap(35, 35, 35))))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -521,11 +605,14 @@ public class InterfazP extends javax.swing.JFrame {
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnLimpiarORA)
+                .addGap(4, 4, 4)
                 .addComponent(jLabel12)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnLimpiarSQLS))
         );
 
         jTabbedPane2.addTab("F & P", jPanel5);
@@ -541,9 +628,7 @@ public class InterfazP extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 589, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 12, Short.MAX_VALUE))
+            .addComponent(jTabbedPane2)
         );
 
         pack();
@@ -606,13 +691,13 @@ public class InterfazP extends javax.swing.JFrame {
                 default:
                     break;
             }
-            
+
             if (respuesta) {
                 JOptionPane.showMessageDialog(this, "USUARIO ELIMINADO CORRECTAMENTE", "MENSAJE", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(this, "ERROR AL ELIMINAR USUARIO CON ID " + user.getId(), "MENSAJE", JOptionPane.INFORMATION_MESSAGE);
             }
-            
+
             if (this.cmbDB.getSelectedItem().toString().equals("Oracle")) {
                 this.listarUsuarios("Oracle");
             } else {
@@ -688,10 +773,38 @@ public class InterfazP extends javax.swing.JFrame {
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        if (this.cmbDB.getSelectedItem().toString().equals("Oracle")) {
-            this.listarUsuarios("Oracle");
+        boolean respuesta = false;
+        if (this.txtid.getText().isBlank() || this.cmbDB.getSelectedIndex()==0) {
+            JOptionPane.showMessageDialog(this, "EL CAMPO ID Y EL MOTOR DE BASE DE DATOS ES OBLIGATORIO", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
         } else {
-            this.listarUsuarios("SQL Server");
+            UsuarioDTO user = new UsuarioDTO();
+            user.setId(Integer.valueOf(this.txtid.getText()));
+            System.out.println(this.cmbDB.getSelectedIndex());
+            switch (this.cmbDB.getSelectedIndex()) {
+                case 1:
+                    user = objControlORA.buscarUsuario(user);
+                    break;
+                case 2:
+                    user = objControlSQLS.buscarUsuario(user);
+                    break;
+                default:
+                    break;
+            }
+            //System.out.println(Integer.valueOf(user.getId()));
+            if (user!=null) {
+                DefaultTableModel model = (DefaultTableModel) this.tabla_usuarios.getModel();
+                model.setRowCount(0);
+                Object[] array = new Object[model.getColumnCount()];
+
+                array[0] = user.getId();
+                array[1] = user.getNombre();
+                array[2] = user.getEdad();
+                array[3] = user.getProfesion();
+                model.addRow(array);
+            } else {
+                JOptionPane.showMessageDialog(this, "USUARIO NO ENCONTRADO ", "MENSAJE", JOptionPane.INFORMATION_MESSAGE);
+            }
+
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -706,39 +819,115 @@ public class InterfazP extends javax.swing.JFrame {
     }//GEN-LAST:event_tabla_usuariosMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String nombre;
-        EstudianteDTO estudiante = new EstudianteDTO();
-        estudiante.setCodigo(Integer.valueOf(this.txtCod.getText()));
-        nombre=objControlORA.obtenerNomEstudiante(estudiante);
-        txtNombre.setText(nombre);
+        if (txtCod.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "EL CAMPO ID ES OBLIGATORIO", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+        } else {
+            String nombre;
+            float promedio;
+            EstudianteDTO estudiante = new EstudianteDTO();
+            estudiante.setCodigo(Integer.valueOf(this.txtCod.getText()));
+            nombre = objControlORA.func_obtenerNomEstudiante(estudiante);
+            txtNombre.setText(nombre);
+        }
+
+        //promedio = objControlORA
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        if (txtCodSQLS.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "EL CAMPO DEL CÓDIGO ES OBLIGATORIO", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+        } else {
+            float promedio;
+            EstudianteDTO estudiante = new EstudianteDTO();
+            estudiante.setCodigo(Integer.valueOf(this.txtCodSQLS.getText()));
+            promedio = objControlSQLS.func_obtenerPromedio(estudiante);
+            this.txtPromSQLS.setText(String.valueOf(promedio));
+        }
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void txtPromSQLSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPromSQLSActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_txtPromSQLSActionPerformed
 
     private void txtNum1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNum1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNum1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        int num1,num2;
-        String respuesta;
-        num1=(Integer.valueOf(this.txtNum1.getText()));
-        num2=(Integer.valueOf(this.txtNum2.getText()));
-        
-        respuesta = objControlSQLS.func_compararDosNumeros(num1, num2);
-        if (respuesta.equals("iguales")) {
-            rest.setText("Los números son iguales");
+        if (txtNum1.getText().isBlank() || txtNum2.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "SE DEBEN INGRESAR AMBOS NÚMEROS", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
         } else {
-            rest.setText("El número " + respuesta + " es el mayor");
+            int num1, num2;
+            String respuesta;
+            num1 = (Integer.valueOf(this.txtNum1.getText()));
+            num2 = (Integer.valueOf(this.txtNum2.getText()));
+
+            respuesta = objControlSQLS.func_compararDosNumeros(num1, num2);
+            if (respuesta.equals("iguales")) {
+                txtrest2.setText("Los números son iguales");
+            } else {
+                txtrest2.setText("El número " + respuesta + " es el mayor");
+            }
         }
-        
+
+
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void txtrest2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtrest2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtrest2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        if (txtNum4.getText().isBlank() || txtNum3.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "SE DEBEN INGRESAR AMBOS NÚMEROS", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+        } else {
+            int num1, num2;
+            String respuesta;
+            num1 = (Integer.valueOf(this.txtNum4.getText()));
+            num2 = (Integer.valueOf(this.txtNum3.getText()));
+
+            respuesta = objControlORA.compararDosNumeros(num1, num2);
+            if (respuesta.equals("iguales")) {
+                txtrest1.setText("Los números son iguales");
+            } else {
+                txtrest1.setText("El número " + respuesta + " es el mayor");
+            }
+        }
+
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void txtrest1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtrest1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtrest1ActionPerformed
+
+    private void txtNum4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNum4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNum4ActionPerformed
+
+    private void btnLimpiarORAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarORAActionPerformed
+        this.limpiarORA();
+    }//GEN-LAST:event_btnLimpiarORAActionPerformed
+
+    private void btnLimpiarSQLSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarSQLSActionPerformed
+        this.limpiarSQLS();
+    }//GEN-LAST:event_btnLimpiarSQLSActionPerformed
+
+    void limpiarORA() {
+        this.txtCod.setText("");
+        this.txtNombre.setText("");
+        this.txtNum3.setText("");
+        this.txtNum4.setText("");
+        this.txtrest1.setText("");
+    }
+
+    void limpiarSQLS() {
+        this.txtCodSQLS.setText("");
+        this.txtPromSQLS.setText("");
+        this.txtNum1.setText("");
+        this.txtNum2.setText("");
+        this.txtrest2.setText("");
+    }
 
     boolean validarCampos() {
         return (this.txtid.getText().isBlank() || this.txtnombre.getText().isBlank() || this.txtedad.getText().isBlank() || this.txtprofesion.getText().isBlank());
@@ -817,19 +1006,23 @@ public class InterfazP extends javax.swing.JFrame {
     private javax.swing.JButton btnCommit;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnInsertar;
+    private javax.swing.JButton btnLimpiarORA;
+    private javax.swing.JButton btnLimpiarSQLS;
     private javax.swing.JButton btnRollBack;
     private javax.swing.JComboBox<String> cmbDB;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -849,19 +1042,22 @@ public class InterfazP extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField rest;
     private javax.swing.JTable tabla_usuarios;
     private javax.swing.JTextField txtCod;
+    private javax.swing.JTextField txtCodSQLS;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtNum1;
     private javax.swing.JTextField txtNum2;
+    private javax.swing.JTextField txtNum3;
+    private javax.swing.JTextField txtNum4;
+    private javax.swing.JTextField txtPromSQLS;
     private javax.swing.JTextField txtedad;
     private javax.swing.JTextField txtid;
     private javax.swing.JTextField txtnombre;
     private javax.swing.JTextField txtprofesion;
+    private javax.swing.JTextField txtrest1;
+    private javax.swing.JTextField txtrest2;
     // End of variables declaration//GEN-END:variables
 }

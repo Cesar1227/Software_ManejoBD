@@ -66,9 +66,9 @@ public class ControladorORA {
         String respuesta;
         respuesta = objDbORA.llamarProcedimiento1(num1, num2);
         if (respuesta.equals("iguales")) {
-            return ("Los números son iguales");
+            return ("iguales");
         } else {
-            return ("El número " + respuesta + " es el mayor");
+            return (respuesta);
         }
     }
     
@@ -83,11 +83,13 @@ public class ControladorORA {
     }
 
     //FUNCIÓN 2
-    public String obtenerNomEstudiante(EstudianteDTO est) {
-        String respuesta = objEstu.proc_obtenerNombre(est);
+    public String func_obtenerNomEstudiante(EstudianteDTO est) {
+        String respuesta = objEstu.func_obtenerNombre(est);
         return respuesta;   
     }
 
-    
+    public UsuarioDTO buscarUsuario(UsuarioDTO user){
+        return objUsuario.buscarUsuario(user);
+    }
 
 }
