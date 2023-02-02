@@ -23,14 +23,12 @@ public class EstudianteDAO {
 
     Connection con;
 
-    public EstudianteDAO(Class db) {
-        this.setDataBase(db);
+    public EstudianteDAO(String db) {
+        this.setDataBase(db.toUpperCase());
     }
     
-    
-
-    private void setDataBase(Class db) {
-        if (db.equals(ConexionORA.class)) {
+    private void setDataBase(String db) {
+        if (db.equals("ORACLE")) {
             con = ConexionORA.getIntance();
             try {
                 con.setAutoCommit(false);
@@ -80,6 +78,7 @@ public class EstudianteDAO {
             //aca retorna el valor del procedimiento almacenado.
 
             res = cstmt.getFloat(1);
+            
             //System.out.println(res);
             //con.close();
         } catch (SQLException ex) {
@@ -105,7 +104,7 @@ public class EstudianteDAO {
             return v_nombre;
         end nom_estudiante;
      */
-    public String func_obtenerNombre(EstudianteDTO est) {
+    public EstudianteDTO func_obtenerNombre(EstudianteDTO est) {
         String res = null;
         try {
             CallableStatement cstmt = con.prepareCall("{? = call nom_estudiante(?)}");
@@ -115,10 +114,11 @@ public class EstudianteDAO {
             cstmt.execute();
 
             res = cstmt.getString(1);
+            est.setNombres(res);
         } catch (SQLException ex) {
             Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return res;
+        return est;
     }
     
     //PROCEDIMIENTO ORACLE
@@ -136,6 +136,14 @@ public class EstudianteDAO {
         }
 
         return res;
+    }
+    
+    public boolean aplicarTransacionORA() {
+        return ConexionORA.realizarCommit();
+    }
+
+    public boolean descartarTransacionORA() {
+        return ConexionORA.realizarRollback();
     }
     
 }

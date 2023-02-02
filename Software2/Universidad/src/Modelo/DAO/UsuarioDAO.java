@@ -25,13 +25,13 @@ public class UsuarioDAO {
 
     Connection con;
 
-    public UsuarioDAO(Class db) {
-        this.setDataBase(db);
+    public UsuarioDAO(String db) {
+        this.setDataBase(db.toUpperCase());
 
     }
 
-    private void setDataBase(Class db) {
-        if (db.equals(ConexionORA.class)) {
+    private void setDataBase(String db) {
+        if (db.equals("")) {
             con = ConexionORA.getIntance();
             try {
                 con.setAutoCommit(false);

@@ -5,42 +5,38 @@
  */
 package Control;
 
-import BaseDeDatos.ConexionSQLS;
-import BaseDeDatos.DataBaseSQLS;
 import Modelo.DAO.EstudianteDAO;
 import Modelo.DAO.UsuarioDAO;
 import Modelo.DTO.EstudianteDTO;
+import Modelo.DTO.LogicaDBDTO;
 import Modelo.DTO.UsuarioDTO;
+import Modelo.LOGICA.LogicaDB;
 import java.util.List;
 import java.util.Scanner;
 
 public class ControladorSQLS {
 
-    DataBaseSQLS objDbSQLS;
     UsuarioDAO objUsuario;
     EstudianteDAO objEstu;
+    LogicaDB objLogicDB;
     Scanner sc;
 
     public ControladorSQLS() {
-        objDbSQLS = new DataBaseSQLS();
-        objUsuario = new UsuarioDAO(ConexionSQLS.class);
-        objEstu = new EstudianteDAO(ConexionSQLS.class);
-        if (!objDbSQLS.isConected()) {
-            System.err.println("HA OCURRIDO UN ERROR, NO FUE POSIBLE CONECTARSE A LA BASE DE DATOS DE SQLSERVER");
-        }
+        objUsuario = new UsuarioDAO("SQLS");
+        objEstu = new EstudianteDAO("SQLS");
+        objLogicDB = new LogicaDB();
     }
 
     /*
     public void iniciarTransaccion(){
        //objDbSQLS.trasaccionesImplicitas(); 
     }*/
-    public String func_compararDosNumeros(int num1, int num2) {
-        String respuesta;
-        respuesta = objDbSQLS.compararDosNumeros(num1, num2);
-        if (respuesta.equals("iguales")) {
-            return ("iguales");
+    public LogicaDBDTO func_compararDosNumeros(LogicaDBDTO obj) {
+        obj = objLogicDB.comparar_numeros(obj);
+        if (obj.getRespString().equals("iguales")) {
+            return (obj);
         } else {
-            return (respuesta);
+            return (obj);
         }
     }
 
@@ -69,11 +65,11 @@ public class ControladorSQLS {
     }
 
     public void aplicarTransaccion() {
-        objDbSQLS.aplicarTrasaccion();
+        objLogicDB.realizarCommit();
     }
 
     public void descartarTransaccion() {
-        objDbSQLS.descartarTransaccion();
+        objLogicDB.realizarRollBack();
     }
 
 }

@@ -5,8 +5,6 @@
  */
 package Modelo.DTO;
 
-import BaseDeDatos.DataBaseORA;
-import BaseDeDatos.DataBaseSQLS;
 import java.util.Date;
 
 /**

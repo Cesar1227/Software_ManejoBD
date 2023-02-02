@@ -1,11 +1,11 @@
 package Control;
 
-import BaseDeDatos.ConexionORA;
-import BaseDeDatos.DataBaseORA;
-import Modelo.DAO.EstudianteDAO;
-import Modelo.DAO.UsuarioDAO;
+import Modelo.LOGICA.LogicaDB;
 import Modelo.DTO.EstudianteDTO;
+import Modelo.DTO.LogicaDBDTO;
 import Modelo.DTO.UsuarioDTO;
+import Modelo.LOGICA.Estudiante;
+import Modelo.LOGICA.Usuario;
 import java.util.List;
 import java.util.Scanner;
 
@@ -14,25 +14,21 @@ import java.util.Scanner;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 public class ControladorORA {
 
-    DataBaseORA objDbORA;
-    UsuarioDAO objUsuario;
-    EstudianteDAO objEstu;
+    Usuario objUsuario;
+    Estudiante objEstu;
+    LogicaDB objLogicDB;
     Scanner sc;
 
     public ControladorORA() {
-        objDbORA = new DataBaseORA();
-        objEstu = new EstudianteDAO(ConexionORA.class);
-        objUsuario = new UsuarioDAO(ConexionORA.class);
-        if (!objDbORA.isConected()) {
-            System.err.println("HA OCURRIDO UN ERROR, NO FUE POSIBLE CONECTARSE A LA BASE DE DATOS DE ORACLE");
-        }
+        objEstu = new Estudiante("ORACLE");
+        objUsuario = new Usuario("ORACLE");
+        objLogicDB = new LogicaDB();
     }
 
     public List<UsuarioDTO> consultarUsuarios() {
-        return objUsuario.consultarDatos();
+        return objUsuario.consultadorUsuarios();
     }
 
     public boolean insertarUsuario(UsuarioDTO user) {
@@ -48,47 +44,41 @@ public class ControladorORA {
     }
 
     public boolean aplicarTransacionORA() {
-        return ConexionORA.realizarCommit();
+        return objLogicDB.realizarCommit();
     }
 
     public boolean descartarTransacionORA() {
-        return ConexionORA.realizarRollback();
+        return objLogicDB.realizarRollBack();
     }
 
     /**
      * LLamar procedimiento de Oracle información de Estudiantes
      *
-     * @param num1
-     * @param num2
+     * @param obj
      * @return
      */
-    public String compararDosNumeros(int num1, int num2) {
-        String respuesta;
-        respuesta = objDbORA.llamarProcedimiento1(num1, num2);
-        if (respuesta.equals("iguales")) {
-            return ("iguales");
-        } else {
-            return (respuesta);
-        }
+    public LogicaDBDTO compararDosNumeros(LogicaDBDTO obj) {
+        obj = objLogicDB.comparar_numeros(obj);
+        return obj;
     }
-    
-    public String informacionEstudiantes(){
-        return objEstu.proc_obtenerInformacionEst();
+
+    public String informacionEstudiantes() {
+        return objEstu.obtenerInformacion();
     }
 
     //FUNCIÓN 1
-    public String func_cantOperaciones(String oper) {
-        String respuesta = String.valueOf(objDbORA.llamarFuncion1(oper));
-        return respuesta;
+    public LogicaDBDTO func_cantOperaciones(LogicaDBDTO obj) {
+        obj = (objLogicDB.cant_operaciones(obj));
+        return obj;
     }
 
     //FUNCIÓN 2
-    public String func_obtenerNomEstudiante(EstudianteDTO est) {
-        String respuesta = objEstu.func_obtenerNombre(est);
-        return respuesta;   
+    public EstudianteDTO func_obtenerNomEstudiante(EstudianteDTO est) {
+        return objEstu.obtenerNombre(est);
+        
     }
 
-    public UsuarioDTO buscarUsuario(UsuarioDTO user){
+    public UsuarioDTO buscarUsuario(UsuarioDTO user) {
         return objUsuario.buscarUsuario(user);
     }
 
