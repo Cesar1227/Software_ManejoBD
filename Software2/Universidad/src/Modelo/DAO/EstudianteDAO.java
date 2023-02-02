@@ -9,7 +9,6 @@ import BaseDeDatos.ConexionORA;
 import BaseDeDatos.ConexionSQLS;
 import BaseDeDatos.DataBaseORA;
 import Modelo.DTO.EstudianteDTO;
-import Modelo.DTO.UsuarioDTO;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
