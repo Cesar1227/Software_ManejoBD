@@ -80,11 +80,11 @@ public class Main {
                 System.out.println("NO FUE POSIBLE ELIMINAR EL USUARIO");
             }
         }else{
-            if (objControlSQLS.eliminarUsuario(id)) {
+           /* if (objControlSQLS.eliminarUsuario(id)) {
                 System.out.println("Usuario con id " + objUser.getId() + " eliminado correctamente");
             } else {
                 System.out.println("NO FUE POSIBLE ELIMINAR EL USUARIO");
-            }
+            }*/
         }
     }
     
@@ -170,8 +170,8 @@ public class Main {
         System.out.print("Ingrese el código del estudiante: ");
         codigo = sc.nextInt();
         
-        String respuesta = objControlORA.obtenerNomEstudiante(codigo);
-        System.out.println("El nombre del estudiante con código " + codigo + " es " + respuesta);
+        //String respuesta = objControlORA.obtenerNomEstudiante(codigo);
+       //System.out.println("El nombre del estudiante con código " + codigo + " es " + respuesta);
     }
 
     void procedimientoSSER1() {
@@ -199,8 +199,8 @@ public class Main {
         System.out.print("Ingrese el código del estudiante: ");
         codigo = sc.nextInt();
         
-        respuesta = String.valueOf(objControlSQLS.funcion1(codigo));
-        System.out.println("El promedio del estudiante con código " + codigo + " es " + respuesta);
+        /*respuesta = String.valueOf(objControlSQLS.funcion1(codigo));
+        System.out.println("El promedio del estudiante con código " + codigo + " es " + respuesta);*/
     }
 
     public void opcionesOracle() {
@@ -310,7 +310,7 @@ public class Main {
                     this.eliminarUsuario("sqlsserver");
                     break;
                 case 5:
-                    objControlSQLS.iniciarTransaccion();
+                    //objControlSQLS.iniciarTransaccion();
                     System.out.println("TRANSACCIÓN INICIADA...");
                     break;
                 case 6:
