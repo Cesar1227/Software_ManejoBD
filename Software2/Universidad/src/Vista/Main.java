@@ -19,7 +19,9 @@ public class Main {
     UsuarioDTO objUser;
 
     public static void main(String[] args) {
-        Main objMain = new Main();
+        //Main objMain = new Main();
+        InterfazP vista = new InterfazP();
+        vista.setVisible(true);
     }
 
     public Main() {
