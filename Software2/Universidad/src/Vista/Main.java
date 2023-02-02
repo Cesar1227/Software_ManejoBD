@@ -7,7 +7,7 @@ package Vista;
 
 import Control.ControladorORA;
 import Control.ControladorSQLS;
-import Modelo.Usuario;
+import Modelo.DTO.UsuarioDTO;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,6 +16,7 @@ public class Main {
     Scanner sc;
     ControladorORA objControlORA;
     ControladorSQLS objControlSQLS;
+    UsuarioDTO objUser;
 
     public static void main(String[] args) {
         Main objMain = new Main();
@@ -29,8 +30,8 @@ public class Main {
     }
 
     void modificarUsuario(String aux) {
-        Usuario objUser;
-        objUser = new Usuario();
+        UsuarioDTO objUser;
+        objUser = new UsuarioDTO();
 
         String nombre;
         sc = new Scanner(System.in);
@@ -68,23 +69,26 @@ public class Main {
         System.out.print("Ingrese el ID del usuario a eliminar: ");
         int id;
         id = sc.nextInt();
+        objUser = new UsuarioDTO();
+        objUser.setId(id);
         if ("oracle".equals(aux)){
-            if (objControlORA.eliminarUsuario(id)) {
-                System.out.println("Usuario con id " + id + " eliminado correctamente");
+            if (objControlORA.eliminarUsuario(objUser)) {
+                System.out.println("Usuario con id " + objUser.getId() + " eliminado correctamente");
             } else {
                 System.out.println("NO FUE POSIBLE ELIMINAR EL USUARIO");
             }
         }else{
             if (objControlSQLS.eliminarUsuario(id)) {
-                System.out.println("Usuario con id " + id + " eliminado correctamente");
+                System.out.println("Usuario con id " + objUser.getId() + " eliminado correctamente");
             } else {
                 System.out.println("NO FUE POSIBLE ELIMINAR EL USUARIO");
             }
         }
     }
+    
     void insertarUsuario(String aux) {
-        Usuario objUser;
-        objUser = new Usuario();
+        UsuarioDTO objUser;
+        objUser = new UsuarioDTO();
 
         String nombre;
         sc = new Scanner(System.in);
@@ -126,7 +130,7 @@ public class Main {
         System.out.print("Ingrese el segundo número a comparar: ");
         num2 = sc.nextInt();
         
-        String res = objControlORA.procedimiento1(num1, num2);
+        String res = objControlORA.compararDosNumeros(num1, num2);
         System.out.println(res);
     }
 
@@ -154,7 +158,7 @@ public class Main {
                 correct = false;
                 break;
         }
-        String respuesta = objControlORA.funcion1(operacion);
+        String respuesta = objControlORA.func_cantOperaciones(operacion);
         System.out.println("SE HAN REALIZADO " + respuesta + " operaciones DML sobre la tabla auditorias");
     }
 
@@ -178,7 +182,7 @@ public class Main {
         System.out.print("Ingrese el segundo número a comparar: ");
         num2 = sc.nextInt();
 
-        respuesta = objControlSQLS.procedimiento1(num1, num2);
+        respuesta = objControlSQLS.func_compararDosNumeros(num1, num2);
         if (respuesta.equals("iguales")) {
             System.out.println("Los números son iguales");
         } else {
@@ -220,7 +224,7 @@ public class Main {
             String resp;
             switch (entrada) {
                 case 1:
-                    List<Usuario> usuarios;
+                    List<UsuarioDTO> usuarios;
                     usuarios=objControlORA.consultarUsuarios();
                     System.out.println(usuarios.toString());
                     break;
@@ -290,7 +294,7 @@ public class Main {
             System.out.println("");
             switch (entrada) {
                 case 1:
-                    List<Usuario> usuarios;
+                    List<UsuarioDTO> usuarios;
                     usuarios=objControlSQLS.consultarUsuarios();
                     System.out.println(usuarios.toString());
                     break;

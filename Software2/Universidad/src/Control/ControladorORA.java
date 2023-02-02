@@ -1,8 +1,11 @@
 package Control;
 
+import BaseDeDatos.ConexionORA;
 import BaseDeDatos.DataBaseORA;
-import Modelo.Estudiante;
-import Modelo.Usuario;
+import Modelo.DAO.EstudianteDAO;
+import Modelo.DAO.UsuarioDAO;
+import Modelo.DTO.EstudianteDTO;
+import Modelo.DTO.UsuarioDTO;
 import java.util.List;
 import java.util.Scanner;
 
@@ -15,48 +18,41 @@ import java.util.Scanner;
 public class ControladorORA {
 
     DataBaseORA objDbORA;
-    Usuario objUsuario;
-    Estudiante objEstu;
+    UsuarioDAO objUsuario;
+    EstudianteDAO objEstu;
     Scanner sc;
 
     public ControladorORA() {
         objDbORA = new DataBaseORA();
-        objUsuario = new Usuario();
-        objEstu = new Estudiante();
+        objEstu = new EstudianteDAO();
+        objUsuario = new UsuarioDAO();
         if (!objDbORA.isConected()) {
             System.err.println("HA OCURRIDO UN ERROR, NO FUE POSIBLE CONECTARSE A LA BASE DE DATOS DE ORACLE");
         }
     }
 
-    public List<Usuario> consultarUsuarios() {
-        /*usuarios.forEach(user -> {
-            System.out.println(user.toString());
-        });*/
-        return objUsuario.consultar("oracle");
+    public List<UsuarioDTO> consultarUsuarios() {
+        return objUsuario.consultarDatos();
     }
 
-    /*public boolean insertarUsuario() {
-        return objUsuario.insertar("oracle");
-    }*/
-
-    public boolean insertarUsuario(Usuario user) {
-        return objUsuario.insertar(user,"oracle");
+    public boolean insertarUsuario(UsuarioDTO user) {
+        return objUsuario.insertarUsuario(user);
     }
 
-    public boolean modificarUsuario(Usuario user) {
-        return objUsuario.modificar(user,"oracle");
+    public boolean modificarUsuario(UsuarioDTO user) {
+        return objUsuario.modificarUsuario(user);
     }
 
-    public boolean eliminarUsuario(int id) {
-        return objUsuario.eliminar(id,"oracle");
+    public boolean eliminarUsuario(UsuarioDTO user) {
+        return objUsuario.eliminarUsuario(user);
     }
 
     public boolean aplicarTransacionORA() {
-        return objDbORA.realizarCommit();
+        return ConexionORA.realizarCommit();
     }
 
     public boolean descartarTransacionORA() {
-        return objDbORA.realizarRollBack();
+        return ConexionORA.realizarRollback();
     }
 
     /**
@@ -66,7 +62,7 @@ public class ControladorORA {
      * @param num2
      * @return
      */
-    public String procedimiento1(int num1, int num2) {
+    public String compararDosNumeros(int num1, int num2) {
         String respuesta;
         respuesta = objDbORA.llamarProcedimiento1(num1, num2);
         if (respuesta.equals("iguales")) {
@@ -77,18 +73,18 @@ public class ControladorORA {
     }
     
     public String informacionEstudiantes(){
-        return objEstu.obtenerInformacion();
+        return objEstu.proc_obtenerInformacionEst();
     }
 
     //FUNCIÓN 1
-    public String funcion1(String oper) {
+    public String func_cantOperaciones(String oper) {
         String respuesta = String.valueOf(objDbORA.llamarFuncion1(oper));
         return respuesta;
     }
 
     //FUNCIÓN 2
-    public String obtenerNomEstudiante(int codigo) {
-        String respuesta = objEstu.obtenerNombreEstudiante(codigo);
+    public String obtenerNomEstudiante(EstudianteDTO est) {
+        String respuesta = objEstu.proc_obtenerNombre(est);
         return respuesta;   
     }
 

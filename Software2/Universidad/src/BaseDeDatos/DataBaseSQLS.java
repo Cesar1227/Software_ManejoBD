@@ -5,7 +5,7 @@
  */
 package BaseDeDatos;
 
-import Modelo.Usuario;
+import Modelo.DTO.UsuarioDTO;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,12 +23,12 @@ import java.util.logging.Logger;
 public class DataBaseSQLS {
 
     Connection con;
-    ConexionSQLS objCone;
+    ConexionSQLS objConeSQLS;
     
     public DataBaseSQLS() {
         //objCone = new ConexionSQLS();
-        System.out.println("OBJETO CONEXIÓN SQL SERVER: "+objCone.getIntance());
-        con = objCone.getIntance();
+        System.out.println("OBJETO CONEXIÓN SQL SERVER: "+objConeSQLS.getIntance());
+        con = objConeSQLS.getIntance();
         //con.setAutoCommit(false);
         //this.trasaccionesImplicitas();
     }
@@ -76,7 +76,7 @@ public class DataBaseSQLS {
                             end
         end
     */
-    public String llamarProcedimiento1(int num1, int num2) {
+    public String compararDosNumeros(int num1, int num2) {
         String res = null;
         try {
             CallableStatement cstmt = con.prepareCall("{call comparar_numeros(?,?,?)}");
@@ -99,67 +99,24 @@ public class DataBaseSQLS {
         return res;
     }
 
-    /**
-     * 
-     * @param codigo
-     * @return 
-     */
-    
-    /*
-    USE [EMPRESA]
-    GO
-
-    SET ANSI_NULLS ON
-    GO
-    SET QUOTED_IDENTIFIER ON
-    GO
-    ALTER   FUNCTION [dbo].[promedio_est](@estcodigo int)
-    RETURNS float
-    AS
-    BEGIN
-            declare @promedio float;
-        select @promedio=avg(i.nota)
-        from inscripciones i 
-        where i.estudiante=@estcodigo and i.nota>=3;
-
-        return @promedio;
-
-    END
-    */
-    public float llamarFuncion1(int codigo) {
-        float res = 0f;
-        try {
-            CallableStatement cstmt = con.prepareCall("{? = call promedio_est(?)}");
-
-            cstmt.registerOutParameter(1, oracle.jdbc.OracleType.NUMBER);
-            cstmt.setInt(2, codigo);
-            cstmt.execute();
-            //aca retorna el valor del procedimiento almacenado.
-
-            res = cstmt.getFloat(1);
-            //System.out.println(res);
-            //con.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return res;
-    }
+ 
     //Métodos para tabla usuarios
     
     //Consultar 
-    public List<Usuario> consultarDatos() {
+    /*
+    public List<UsuarioDTO> consultarDatos() {
         //Connection con = conexion();
         ResultSet rslt = null;
-        List<Usuario> usuarios = null;
+        List<UsuarioDTO> usuarios = null;
         try {
             PreparedStatement stmt = con.prepareStatement("SELECT * FROM USUARIO");
             rslt = stmt.executeQuery();
 
             usuarios = new ArrayList<>();
-            Usuario user;
+            UsuarioDTO user;
             //System.out.println(usuarios.size()+" size");
             while (rslt.next()) {
-                user = new Usuario();
+                user = new UsuarioDTO();
                 user.setId(rslt.getInt(1));
                 user.setNombre(rslt.getString(2));
                 user.setEdad(rslt.getInt(3));
@@ -172,7 +129,7 @@ public class DataBaseSQLS {
         }
         return usuarios;
     }
-    public boolean modificarUsuario(Usuario user) {
+    public boolean modificarUsuario(UsuarioDTO user) {
         PreparedStatement stm;
 
         if (existeUsuario(user.getId())) {
@@ -235,7 +192,7 @@ public class DataBaseSQLS {
         return false;
     }
 
-    public boolean insertarUsuario(Usuario user) {
+    public boolean insertarUsuario(UsuarioDTO user) {
         PreparedStatement stm;
         if (existeUsuario(user.getId())){
             System.err.println("\n:::: EL USUARIO CON ID " + user.getId() + " YA EXISTE\n");
@@ -256,6 +213,7 @@ public class DataBaseSQLS {
         }
         return false;
     }
+*/
 
     public void trasaccionesImplicitas() {
         PreparedStatement stm;

@@ -18,9 +18,7 @@ public class ConexionORA {
     
     private ConexionORA(){
         con=conexion();
-    }
-    
-   
+    }   
 
     /**
      * Conexión al motor de base de datos de Oracle
@@ -47,5 +45,26 @@ public class ConexionORA {
         return con;        
     }
     
+    public static boolean realizarCommit(){
+        try {
+            con.commit();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ConexionORA.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Ha ocurrido un problema al realizar el Commit");
+        }
+        return false;
+    }
+    
+    public static boolean realizarRollback(){
+        try {
+            con.rollback();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ConexionORA.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Ha ocurrido un problema al realizar el RollBack");
+        }
+        return false;
+    }
     
 }

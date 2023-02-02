@@ -5,8 +5,8 @@
  */
 package BaseDeDatos;
 
-import Modelo.Estudiante;
-import Modelo.Usuario;
+import Modelo.DTO.EstudianteDTO;
+import Modelo.DTO.UsuarioDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -89,125 +89,6 @@ public class DataBaseORA {
         return true;
     }
 
-    //Métodos para tabla usuarios
-    public List<Usuario> consultarDatos() {
-        //Connection con = conexion();
-        ResultSet rslt = null;
-        List<Usuario> usuarios = null;
-        try {
-            PreparedStatement stmt = con.prepareStatement("SELECT * FROM USUARIO");
-            rslt = stmt.executeQuery();
-
-            usuarios = new ArrayList<>();
-            Usuario user;
-            //System.out.println(usuarios.size()+" size");
-            while (rslt.next()) {
-                user = new Usuario();
-                user.setId(rslt.getInt(1));
-                user.setNombre(rslt.getString(2));
-                user.setEdad(rslt.getInt(3));
-                user.setProfesion(rslt.getString(4));
-                usuarios.add(user);
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            /*try {
-                //con.close();
-                //rslt.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
-            }*/
-        }
-        return usuarios;
-    }
-
-    public boolean insertarUsuario(Usuario user) {
-        PreparedStatement stm;
-        if (existeUsuario(user.getId())){
-            System.err.println("\n:::: EL USUARIO CON ID " + user.getId() + " YA EXISTE\n");
-        }else {
-            try {
-            stm = con.prepareStatement("INSERT INTO usuario VALUES (?,?,?,?)");
-            stm.setInt(1, user.getId());
-            stm.setString(2, user.getNombre());
-            stm.setInt(3, user.getEdad());
-            stm.setString(4, user.getProfesion());
-
-            return (stm.executeUpdate() > 0);
-
-            } catch (SQLException ex) {
-                Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
-                //con.rollback();
-            }
-        }
-        return false;
-    }
-
-    public boolean modificarUsuario(Usuario user) {
-        PreparedStatement stm;
-
-        if (existeUsuario(user.getId())) {
-            String sql = "UPDATE usuario SET nombre=?, edad=?, profesion=? "
-                    + "WHERE id=?";
-
-            try {
-                stm = con.prepareStatement(sql);
-                stm.setString(1, user.getNombre());
-                stm.setInt(2, user.getEdad());
-                stm.setString(3, user.getProfesion());
-                stm.setInt(4, user.getId());
-
-                return stm.executeUpdate() > 0;
-
-            } catch (SQLException ex) {
-                Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            System.err.println("\n:::: EL USUARIO CON ID " + user.getId() + " NO EXISTE\n");
-        }
-        return false;
-    }
-
-    boolean existeUsuario(int id) {
-        PreparedStatement stm;
-        String sql = "SELECT * FROM usuario WHERE id=?";
-        ResultSet rslt = null;
-
-        try {
-            stm = con.prepareStatement(sql);
-            stm.setInt(1, id);
-            rslt = stm.executeQuery();
-
-            return rslt.next();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return false;
-    }
-
-    public boolean eliminarUsuario(int id) {
-        PreparedStatement stm;
-        if (existeUsuario(id)) {
-            String sql = "DELETE FROM usuario WHERE id=?";
-            try {
-
-                stm = con.prepareStatement(sql);
-                stm.setInt(1, id);
-
-                return stm.executeUpdate() > 0;
-
-            } catch (SQLException ex) {
-                Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            System.err.println("\n:::: EL USUARIO CON ID " + id + " NO EXISTE\n");
-        }
-        return false;
-    }
 
     /**
      * LLamar un procedimiento almacenado en la base de datos de Oracle
@@ -247,24 +128,7 @@ public class DataBaseORA {
         return res;
     }
     
-    public String llamarProcedimiento2(){
-        String res = null;
-        try {
-            CallableStatement cstmt = con.prepareCall("{call info_usuarios(?)}");
 
-            cstmt.registerOutParameter(1, java.sql.Types.VARCHAR);
-            cstmt.execute();
-            //aca retorna el valor del procedimiento almacenado.
-
-            res = cstmt.getString(1);
-            //System.out.println(res);
-            //con.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        return res;      
-    }
 
     /**
      * Retorna la cantidad de operaciones DML realizadas (INSERT, UPDATE,
@@ -304,40 +168,6 @@ public class DataBaseORA {
         return res;
     }
 
-    /**
-     * Retorna el nombre del estudiante a partir del código
-     *
-     * @param codigo
-     * @return
-     */
-    /*
-    create or replace FUNCTION nom_estudiante(micodigo number) return varchar2 is
-            v_nombre varchar2(100);
-        BEGIN
-            SELECT e.nombres ||' '|| e.apellido1||' '||e.apellido2 into v_nombre
-            from estudiante e
-            where e.codigo=micodigo;
-
-            return v_nombre;
-        end nom_estudiante;
-     */
-    public String llamarFuncion2(int codigo) {
-        String res = null;
-        try {
-            CallableStatement cstmt = con.prepareCall("{? = call nom_estudiante(?)}");
-
-            cstmt.registerOutParameter(1, oracle.jdbc.OracleType.VARCHAR2);
-            cstmt.setInt(2, codigo);
-            cstmt.execute();
-            //aca retorna el valor del procedimiento almacenado.
-
-            res = cstmt.getString(1);
-            //System.out.println(res);
-            //con.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return res;
-    }
+ 
 
 }

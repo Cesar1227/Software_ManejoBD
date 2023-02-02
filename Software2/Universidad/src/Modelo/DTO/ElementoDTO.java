@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Modelo;
+package Modelo.DTO;
 
 /**
  *
  * @author Cesar Bonilla
  */
-public class Elemento {
+public class ElementoDTO {
     private float codigo;
     private String elemento;
     private String devolutivo;
@@ -25,19 +25,19 @@ public class Elemento {
     private float unidad;
     private String ruta;
 
-    public Elemento(float codigo, String elemento) {
+    public ElementoDTO(float codigo, String elemento) {
         this.codigo = codigo;
         this.elemento = elemento;
     }
 
-    public Elemento(float codigo, String elemento, String devolutivo, String talla) {
+    public ElementoDTO(float codigo, String elemento, String devolutivo, String talla) {
         this.codigo = codigo;
         this.elemento = elemento;
         this.devolutivo = devolutivo;
         this.talla = talla;
     }
 
-    public Elemento(float codigo, String elemento, String devolutivo, String talla, String uso, String materiales, String mantenimiento, String usos, String norma, String atenuacion, String serial, String tallas, float unidad, String ruta) {
+    public ElementoDTO(float codigo, String elemento, String devolutivo, String talla, String uso, String materiales, String mantenimiento, String usos, String norma, String atenuacion, String serial, String tallas, float unidad, String ruta) {
         this.codigo = codigo;
         this.elemento = elemento;
         this.devolutivo = devolutivo;
