@@ -5,6 +5,8 @@
  */
 package Modelo.DTO;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Cesar Bonilla
@@ -17,7 +19,6 @@ public class UsuarioDTO {
     private String profesion;
     //private Random r;
 
-  
     public UsuarioDTO() {
 
     }
@@ -42,7 +43,7 @@ public class UsuarioDTO {
 
     }*/
 
-    /*
+ /*
     public List<UsuarioDTO> consultar(String aux) {
         if("oracle".equals(aux)){
             List<UsuarioDTO> usuarios = objDbORA.consultarDatos();
@@ -54,7 +55,7 @@ public class UsuarioDTO {
         
     }*/
 
-    /*public boolean insertar(int id,String aux) {
+ /*public boolean insertar(int id,String aux) {
         UsuarioDTO objUser;
         objUser = new UsuarioDTO();
         objUser.llenarAleatorio();
@@ -64,8 +65,7 @@ public class UsuarioDTO {
             return objDbSQLS.insertarUsuario(objUser);
         }
     }*/
-    
-    /*
+ /*
     public boolean insertar(UsuarioDTO user,String aux) {
         if (user != null) {
             if("oracle".equals(aux)){
@@ -95,7 +95,7 @@ public class UsuarioDTO {
             return objDbSQLS.eliminarUsuario(id);
         }
     }
-    */
+     */
     public int getId() {
         return id;
     }
@@ -131,5 +131,15 @@ public class UsuarioDTO {
     @Override
     public String toString() {
         return "{" + "id= " + id + ", nombre= " + nombre + ", edad= " + edad + ", profesion= " + profesion + "}";
+    }
+
+    public Object[] toVector() {
+        Object[] vector = new Object[4];
+        vector[0] = this.getId();
+        vector[1] = this.getNombre();
+        vector[2] = this.getEdad();
+        vector[3] = this.getProfesion();
+
+        return vector;
     }
 }

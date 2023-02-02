@@ -4,11 +4,21 @@
  */
 package Vista;
 
+import Control.ControladorORA;
+import Control.ControladorSQLS;
+import Modelo.DTO.UsuarioDTO;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author milto
  */
 public class InterfazP extends javax.swing.JFrame {
+
+    ControladorORA objControlORA;
+    ControladorSQLS objControlSQLS;
 
     /**
      * Creates new form InterfazP
@@ -16,6 +26,8 @@ public class InterfazP extends javax.swing.JFrame {
     public InterfazP() {
         initComponents();
         setLocationRelativeTo(null);
+        objControlORA = new ControladorORA();
+        objControlSQLS = new ControladorSQLS();
     }
 
     /**
@@ -41,16 +53,18 @@ public class InterfazP extends javax.swing.JFrame {
         txtedad = new javax.swing.JTextField();
         txtprofesion = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnInsertar = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabla_usuarios = new javax.swing.JTable();
         jPanel7 = new javax.swing.JPanel();
-        txtBase = new javax.swing.JComboBox<>();
+        cmbDB = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
+        btnCommit = new javax.swing.JButton();
+        btnRollBack = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -95,16 +109,16 @@ public class InterfazP extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtid, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
                         .addComponent(jLabel5)))
-                .addGap(13, 13, 13)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(4, 4, 4)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtprofesion, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtprofesion))
-                    .addComponent(txtedad, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(22, 22, 22))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtedad, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(35, 35, 35))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -113,14 +127,14 @@ public class InterfazP extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtedad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
+                    .addComponent(jLabel5)
+                    .addComponent(txtprofesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtprofesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(txtedad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
 
@@ -128,23 +142,33 @@ public class InterfazP extends javax.swing.JFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jButton1.setText("Insertar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnInsertar.setText("Insertar");
+        btnInsertar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnInsertarActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Actualizar");
-
-        jButton3.setText("Eliminar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnActualizarActionPerformed(evt);
             }
         });
 
-        jButton4.setText("Buscar");
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
+        btnBuscar.setText("Listar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -152,13 +176,13 @@ public class InterfazP extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
-                .addComponent(jButton1)
+                .addComponent(btnInsertar)
                 .addGap(42, 42, 42)
-                .addComponent(jButton2)
+                .addComponent(btnActualizar)
                 .addGap(40, 40, 40)
-                .addComponent(jButton3)
+                .addComponent(btnEliminar)
                 .addGap(34, 34, 34)
-                .addComponent(jButton4)
+                .addComponent(btnBuscar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -166,10 +190,10 @@ public class InterfazP extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
+                    .addComponent(btnInsertar)
+                    .addComponent(btnActualizar)
+                    .addComponent(btnEliminar)
+                    .addComponent(btnBuscar))
                 .addContainerGap(40, Short.MAX_VALUE))
         );
 
@@ -177,7 +201,7 @@ public class InterfazP extends javax.swing.JFrame {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabla_usuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null}
             },
@@ -185,7 +209,12 @@ public class InterfazP extends javax.swing.JFrame {
                 "ID", "NOMBRE", "EDAD", "PROFESIÓN"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tabla_usuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabla_usuariosMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tabla_usuarios);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -208,14 +237,37 @@ public class InterfazP extends javax.swing.JFrame {
 
         jPanel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        txtBase.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-------------", "Oracle", "SQL Server" }));
-        txtBase.addActionListener(new java.awt.event.ActionListener() {
+        cmbDB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-------------", "Oracle", "SQL Server" }));
+        cmbDB.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbDBItemStateChanged(evt);
+            }
+        });
+        cmbDB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtBaseActionPerformed(evt);
+                cmbDBActionPerformed(evt);
             }
         });
 
         jLabel6.setText("Motor de base de datos :  ");
+
+        btnCommit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Commit.jpg"))); // NOI18N
+        btnCommit.setToolTipText("COMMIT");
+        btnCommit.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnCommit.setIconTextGap(0);
+        btnCommit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCommitActionPerformed(evt);
+            }
+        });
+
+        btnRollBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Rollback.jpg"))); // NOI18N
+        btnRollBack.setIconTextGap(0);
+        btnRollBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRollBackActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -225,16 +277,23 @@ public class InterfazP extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addComponent(jLabel6)
                 .addGap(28, 28, 28)
-                .addComponent(txtBase, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(183, Short.MAX_VALUE))
+                .addComponent(cmbDB, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(58, 58, 58)
+                .addComponent(btnCommit, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(btnRollBack, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(67, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap(10, Short.MAX_VALUE)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtBase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnRollBack, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(btnCommit, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cmbDB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel6)))
                 .addContainerGap())
         );
 
@@ -278,17 +337,188 @@ public class InterfazP extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtidActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
+        boolean respuesta = false;
+        if (validarCampos()) {
+            JOptionPane.showMessageDialog(this, "TODOS LOS CAMPOS SON OBLIGATORIOS", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+        } else if (this.cmbDB.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(this, "DEBE ESCOGER UN MOTOR DE BASE DE DATOS", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+        } else {
+            UsuarioDTO user = new UsuarioDTO();
+            user.setId(Integer.valueOf(this.txtid.getText()));
+            user.setNombre(this.txtnombre.getText());
+            user.setEdad(Integer.valueOf(this.txtedad.getText()));
+            user.setProfesion(this.txtprofesion.getText());
+            switch (this.cmbDB.getSelectedIndex()) {
+                case 1:
+                    respuesta = objControlORA.insertarUsuario(user);
+                    break;
+                case 2:
+                    respuesta = objControlSQLS.insertarUsuario(user);
+                    break;
+                default:
+                    break;
+            }
+            if (respuesta) {
+                JOptionPane.showMessageDialog(this, "USUARIO INSERTADO CORRECTAMENTE", "MENSAJE", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "ERROR AL INSERTAR USUARIO CON ID " + user.getId(), "MENSAJE", JOptionPane.INFORMATION_MESSAGE);
+            }
+            if (this.cmbDB.getSelectedItem().toString().equals("Oracle")) {
+                this.listarUsuarios("Oracle");
+            } else {
+                this.listarUsuarios("SQL Server");
+            }
+        }
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnInsertarActionPerformed
 
-    private void txtBaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBaseActionPerformed
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        boolean respuesta = false;
+        if (this.txtid.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "EL CAMPO ID ES OBLIGATORIO", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+        } else {
+            UsuarioDTO user = new UsuarioDTO();
+            user.setId(Integer.valueOf(this.txtid.getText()));
+            switch (this.cmbDB.getSelectedIndex()) {
+                case 1:
+                    respuesta = objControlORA.eliminarUsuario(user);
+                    break;
+                case 2:
+                    respuesta = objControlSQLS.eliminarUsuario(user);
+                    break;
+                default:
+                    break;
+            }
+            
+            if (respuesta) {
+                JOptionPane.showMessageDialog(this, "USUARIO ELIMINADO CORRECTAMENTE", "MENSAJE", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "ERROR AL ELIMINAR USUARIO CON ID " + user.getId(), "MENSAJE", JOptionPane.INFORMATION_MESSAGE);
+            }
+            
+            if (this.cmbDB.getSelectedItem().toString().equals("Oracle")) {
+                this.listarUsuarios("Oracle");
+            } else {
+                this.listarUsuarios("SQL Server");
+            }
+        }
+
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void cmbDBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbDBActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtBaseActionPerformed
+    }//GEN-LAST:event_cmbDBActionPerformed
+
+    private void cmbDBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbDBItemStateChanged
+
+        if (this.cmbDB.getSelectedItem().toString().equals("Oracle")) {
+            this.listarUsuarios("Oracle");
+        } else {
+            this.listarUsuarios("SQL Server");
+        }
+
+    }//GEN-LAST:event_cmbDBItemStateChanged
+
+    private void btnCommitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCommitActionPerformed
+        if (objControlORA.aplicarTransacionORA()) {
+            JOptionPane.showMessageDialog(this, "COMMIT REALIZADO CORRECTAMENTE", "MENSAJE", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "ERROR AL REALIZAR COMMIT", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnCommitActionPerformed
+
+    private void btnRollBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRollBackActionPerformed
+        if (objControlORA.descartarTransacionORA()) {
+            JOptionPane.showMessageDialog(this, "ROLLBACK REALIZADO CORRECTAMENTE", "MENSAJE", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "ERROR AL REALIZAR ROLLBACK", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnRollBackActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        boolean respuesta = false;
+        if (this.validarCampos()) {
+            JOptionPane.showMessageDialog(this, "TODOS LOS CAMPOS SON OBLIGATORIOS", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+        } else if (this.cmbDB.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(this, "DEBE ESCOGER UN MOTOR DE BASE DE DATOS", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+        } else {
+            UsuarioDTO user = new UsuarioDTO();
+            user.setId(Integer.valueOf(this.txtid.getText()));
+            user.setNombre(this.txtnombre.getText());
+            user.setEdad(Integer.valueOf(this.txtedad.getText()));
+            user.setProfesion(this.txtprofesion.getText());
+            switch (this.cmbDB.getSelectedIndex()) {
+                case 1:
+                    respuesta = objControlORA.modificarUsuario(user);
+                    break;
+                case 2:
+                    respuesta = objControlSQLS.modificarUsuario(user);
+                    break;
+                default:
+                    break;
+            }
+            if (respuesta) {
+                JOptionPane.showMessageDialog(this, "USUARIO ACTUALIZADO CORRECTAMENTE", "MENSAJE", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "ERROR AL ACTUALIZAR USUARIO CON ID " + user.getId(), "MENSAJE", JOptionPane.INFORMATION_MESSAGE);
+            }
+            if (this.cmbDB.getSelectedItem().toString().equals("Oracle")) {
+                this.listarUsuarios("Oracle");
+            } else {
+                this.listarUsuarios("SQL Server");
+            }
+        }
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        if (this.cmbDB.getSelectedItem().toString().equals("Oracle")) {
+            this.listarUsuarios("Oracle");
+        } else {
+            this.listarUsuarios("SQL Server");
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void tabla_usuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_usuariosMouseClicked
+        int seleccion = this.tabla_usuarios.getSelectedRow();
+        if (seleccion >= 0) {
+            this.txtid.setText(String.valueOf(this.tabla_usuarios.getValueAt(seleccion, 0)));
+            this.txtnombre.setText((String) this.tabla_usuarios.getValueAt(seleccion, 1));
+            this.txtedad.setText(String.valueOf(this.tabla_usuarios.getValueAt(seleccion, 2)));
+            this.txtprofesion.setText((String) this.tabla_usuarios.getValueAt(seleccion, 3));
+        }
+    }//GEN-LAST:event_tabla_usuariosMouseClicked
+
+    boolean validarCampos() {
+        return (this.txtid.getText().isBlank() || this.txtnombre.getText().isBlank() || this.txtedad.getText().isBlank() || this.txtprofesion.getText().isBlank());
+    }
+
+    void listarUsuarios(String db) {
+        List<UsuarioDTO> usuarios;
+        if (db.equals("Oracle")) {
+            usuarios = objControlORA.consultarUsuarios();
+            this.btnCommit.setVisible(true);
+            this.btnRollBack.setVisible(true);
+        } else {
+            usuarios = objControlSQLS.consultarUsuarios();
+            this.btnCommit.setVisible(false);
+            this.btnRollBack.setVisible(false);
+        }
+        this.llenarTabla(usuarios);
+    }
+
+    void llenarTabla(List<UsuarioDTO> usuarios) {
+        DefaultTableModel model = (DefaultTableModel) this.tabla_usuarios.getModel();
+        model.setRowCount(0);
+        Object[] array = new Object[model.getColumnCount()];
+        for (UsuarioDTO usuario : usuarios) {
+            array[0] = usuario.getId();
+            array[1] = usuario.getNombre();
+            array[2] = usuario.getEdad();
+            array[3] = usuario.getProfesion();
+            model.addRow(array);
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -304,16 +534,21 @@ public class InterfazP extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(InterfazP.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InterfazP.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(InterfazP.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InterfazP.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(InterfazP.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InterfazP.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(InterfazP.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InterfazP.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -326,10 +561,13 @@ public class InterfazP extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnCommit;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnInsertar;
+    private javax.swing.JButton btnRollBack;
+    private javax.swing.JComboBox<String> cmbDB;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -345,8 +583,7 @@ public class InterfazP extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JComboBox<String> txtBase;
+    private javax.swing.JTable tabla_usuarios;
     private javax.swing.JTextField txtedad;
     private javax.swing.JTextField txtid;
     private javax.swing.JTextField txtnombre;

@@ -7,9 +7,7 @@ package Modelo.DAO;
 
 import BaseDeDatos.ConexionORA;
 import BaseDeDatos.ConexionSQLS;
-import BaseDeDatos.DataBaseORA;
 import Modelo.DTO.UsuarioDTO;
-import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,20 +25,21 @@ public class UsuarioDAO {
 
     Connection con;
 
-    public UsuarioDAO() {
+    public UsuarioDAO(Class db) {
+        this.setDataBase(db);
         //objCone = new ConexionORA();
         //System.out.println("OBJETO CONEXIÓN ORACLE: " + objConeORA.getIntance());
         //con = objConeORA.getIntance();
 
     }
 
-    public void setDataBase(Class db) {
-        if (db.equals(DataBaseORA.class)) {
+    private void setDataBase(Class db) {
+        if (db.equals(ConexionORA.class)) {
             con = ConexionORA.getIntance();
             try {
                 con.setAutoCommit(false);
             } catch (SQLException ex) {
-                Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             con = ConexionSQLS.getIntance();
@@ -69,7 +68,7 @@ public class UsuarioDAO {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             /*try {
                 //con.close();
@@ -96,7 +95,7 @@ public class UsuarioDAO {
                 return (stm.executeUpdate() > 0);
 
             } catch (SQLException ex) {
-                Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
                 //con.rollback();
             }
         }
@@ -120,7 +119,7 @@ public class UsuarioDAO {
                 return stm.executeUpdate() > 0;
 
             } catch (SQLException ex) {
-                Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             System.err.println("\n:::: EL USUARIO CON ID " + user.getId() + " NO EXISTE\n");
@@ -141,7 +140,7 @@ public class UsuarioDAO {
             return rslt.next();
 
         } catch (SQLException ex) {
-            Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return false;
@@ -159,7 +158,7 @@ public class UsuarioDAO {
                 return stm.executeUpdate() > 0;
 
             } catch (SQLException ex) {
-                Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             System.err.println("\n:::: EL USUARIO CON ID " + user.getId() + " NO EXISTE\n");

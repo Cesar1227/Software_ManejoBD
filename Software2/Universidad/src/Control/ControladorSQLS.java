@@ -5,6 +5,7 @@
  */
 package Control;
 
+import BaseDeDatos.ConexionSQLS;
 import BaseDeDatos.DataBaseSQLS;
 import Modelo.DAO.EstudianteDAO;
 import Modelo.DAO.UsuarioDAO;
@@ -23,8 +24,8 @@ public class ControladorSQLS {
 
     public ControladorSQLS() {
         objDbSQLS = new DataBaseSQLS();
-        objUsuario = new UsuarioDAO();
-        objEstu = new EstudianteDAO();
+        objUsuario = new UsuarioDAO(ConexionSQLS.class);
+        objEstu = new EstudianteDAO(ConexionSQLS.class);
         if (!objDbSQLS.isConected()) {
             System.err.println("HA OCURRIDO UN ERROR, NO FUE POSIBLE CONECTARSE A LA BASE DE DATOS DE SQLSERVER");
         }

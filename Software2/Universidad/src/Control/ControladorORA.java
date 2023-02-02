@@ -24,8 +24,8 @@ public class ControladorORA {
 
     public ControladorORA() {
         objDbORA = new DataBaseORA();
-        objEstu = new EstudianteDAO();
-        objUsuario = new UsuarioDAO();
+        objEstu = new EstudianteDAO(ConexionORA.class);
+        objUsuario = new UsuarioDAO(ConexionORA.class);
         if (!objDbORA.isConected()) {
             System.err.println("HA OCURRIDO UN ERROR, NO FUE POSIBLE CONECTARSE A LA BASE DE DATOS DE ORACLE");
         }

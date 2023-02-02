@@ -23,8 +23,14 @@ public class EstudianteDAO {
 
     Connection con;
 
-    public void setDataBase(Class db) {
-        if (db.equals(DataBaseORA.class)) {
+    public EstudianteDAO(Class db) {
+        this.setDataBase(db);
+    }
+    
+    
+
+    private void setDataBase(Class db) {
+        if (db.equals(ConexionORA.class)) {
             con = ConexionORA.getIntance();
             try {
                 con.setAutoCommit(false);
