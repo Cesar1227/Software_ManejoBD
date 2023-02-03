@@ -8,6 +8,7 @@ package Modelo.DAO;
 import BaseDeDatos.ConexionORA;
 import BaseDeDatos.ConexionSQLS;
 import Modelo.DTO.UsuarioDTO;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -41,7 +42,10 @@ public class UsuarioDAO {
         } else {
             con = ConexionSQLS.getIntance();
         }
+    }
 
+    public boolean isConected() {
+        return con != null;
     }
 
     public List<UsuarioDTO> consultarDatos() {
@@ -164,23 +168,22 @@ public class UsuarioDAO {
             rslt = stmt.executeQuery();
 
             if (rslt.next()) {
-                
+
                 user = new UsuarioDTO();
                 user.setId(rslt.getInt(1));
                 user.setNombre(rslt.getString(2));
                 user.setEdad(rslt.getInt(3));
                 user.setProfesion(rslt.getString(4));
                 System.out.println(user.toString());
-            }else{
+            } else {
                 UsuarioDTO user2 = null;
-                return user2;             
+                return user2;
             }
 
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
         return user;
     }
 
-    
 }

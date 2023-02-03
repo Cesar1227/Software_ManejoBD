@@ -7,6 +7,7 @@ package Vista;
 import Control.ControladorORA;
 import Control.ControladorSQLS;
 import Modelo.DTO.EstudianteDTO;
+import Modelo.DTO.LogicaDBDTO;
 import Modelo.DTO.UsuarioDTO;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -826,8 +827,8 @@ public class InterfazP extends javax.swing.JFrame {
             float promedio;
             EstudianteDTO estudiante = new EstudianteDTO();
             estudiante.setCodigo(Integer.valueOf(this.txtCod.getText()));
-            nombre = objControlORA.func_obtenerNomEstudiante(estudiante);
-            txtNombre.setText(nombre);
+            estudiante = objControlORA.func_obtenerNomEstudiante(estudiante);
+            txtNombre.setText(estudiante.getNombres());
         }
 
         //promedio = objControlORA
@@ -862,12 +863,14 @@ public class InterfazP extends javax.swing.JFrame {
             String respuesta;
             num1 = (Integer.valueOf(this.txtNum1.getText()));
             num2 = (Integer.valueOf(this.txtNum2.getText()));
-
-            respuesta = objControlSQLS.func_compararDosNumeros(num1, num2);
-            if (respuesta.equals("iguales")) {
+            LogicaDBDTO objLogic = new LogicaDBDTO();
+            objLogic.setNum1(num1);
+            objLogic.setNum2(num2);
+            objLogic = objControlSQLS.func_compararDosNumeros(objLogic);
+            if (objLogic.getRespString().equals("iguales")) {
                 txtrest2.setText("Los números son iguales");
             } else {
-                txtrest2.setText("El número " + respuesta + " es el mayor");
+                txtrest2.setText("El número " + objLogic.getRespString() + " es el mayor");
             }
         }
 
@@ -886,12 +889,14 @@ public class InterfazP extends javax.swing.JFrame {
             String respuesta;
             num1 = (Integer.valueOf(this.txtNum4.getText()));
             num2 = (Integer.valueOf(this.txtNum3.getText()));
-
-            respuesta = objControlORA.compararDosNumeros(num1, num2);
-            if (respuesta.equals("iguales")) {
+            LogicaDBDTO objLogic = new LogicaDBDTO();
+            objLogic.setNum1(num1);
+            objLogic.setNum2(num2);
+            objLogic = objControlORA.compararDosNumeros(objLogic);
+            if (objLogic.getRespString().equals("iguales")) {
                 txtrest1.setText("Los números son iguales");
             } else {
-                txtrest1.setText("El número " + respuesta + " es el mayor");
+                txtrest1.setText("El número " + objLogic.getRespString() + " es el mayor");
             }
         }
 

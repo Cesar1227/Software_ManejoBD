@@ -7,8 +7,8 @@ package Modelo.DAO;
 
 import BaseDeDatos.ConexionORA;
 import BaseDeDatos.ConexionSQLS;
-import BaseDeDatos.DataBaseORA;
 import Modelo.DTO.EstudianteDTO;
+
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -26,19 +26,23 @@ public class EstudianteDAO {
     public EstudianteDAO(String db) {
         this.setDataBase(db.toUpperCase());
     }
-    
+
     private void setDataBase(String db) {
         if (db.equals("ORACLE")) {
             con = ConexionORA.getIntance();
             try {
                 con.setAutoCommit(false);
             } catch (SQLException ex) {
-                Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(EstudianteDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             con = ConexionSQLS.getIntance();
         }
 
+    }
+
+    public boolean isConected() {
+        return con != null;
     }
 
     /**
@@ -78,11 +82,11 @@ public class EstudianteDAO {
             //aca retorna el valor del procedimiento almacenado.
 
             res = cstmt.getFloat(1);
-            
+
             //System.out.println(res);
             //con.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EstudianteDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return res;
     }
@@ -116,11 +120,11 @@ public class EstudianteDAO {
             res = cstmt.getString(1);
             est.setNombres(res);
         } catch (SQLException ex) {
-            Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EstudianteDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return est;
     }
-    
+
     //PROCEDIMIENTO ORACLE
     public String proc_obtenerInformacionEst() {
         String res = null;
@@ -132,12 +136,12 @@ public class EstudianteDAO {
 
             res = cstmt.getString(1);
         } catch (SQLException ex) {
-            Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EstudianteDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return res;
     }
-    
+
     public boolean aplicarTransacionORA() {
         return ConexionORA.realizarCommit();
     }
@@ -145,5 +149,5 @@ public class EstudianteDAO {
     public boolean descartarTransacionORA() {
         return ConexionORA.realizarRollback();
     }
-    
+
 }

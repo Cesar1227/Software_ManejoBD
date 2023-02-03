@@ -36,7 +36,7 @@ public class ConexionORA {
             con = DriverManager.getConnection(url, user, pass);
 
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ConexionORA.class.getName()).log(Level.SEVERE, null, ex);
         }
         return con;
     }

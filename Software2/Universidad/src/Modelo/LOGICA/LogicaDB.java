@@ -5,12 +5,8 @@
  */
 package Modelo.LOGICA;
 
-import BaseDeDatos.DataBaseORA;
 import Modelo.DAO.LogicaDBDAO;
 import Modelo.DTO.LogicaDBDTO;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *

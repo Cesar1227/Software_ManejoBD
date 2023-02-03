@@ -7,7 +7,6 @@ package Modelo.DAO;
 
 import BaseDeDatos.ConexionORA;
 import BaseDeDatos.ConexionSQLS;
-import BaseDeDatos.DataBaseORA;
 import Modelo.DTO.LogicaDBDTO;
 import Modelo.LOGICA.LogicaDB;
 import java.sql.CallableStatement;
@@ -21,25 +20,30 @@ import java.util.logging.Logger;
  * @author Cesar Bonilla
  */
 public class LogicaDBDAO {
+
     Connection con;
 
     public LogicaDBDAO(String db) {
         this.setDataBase(db);
     }
-    
+
     private void setDataBase(String db) {
         if (db.equals("ORACLE")) {
             con = ConexionORA.getIntance();
             try {
                 con.setAutoCommit(false);
             } catch (SQLException ex) {
-                Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(LogicaDBDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             con = ConexionSQLS.getIntance();
         }
-
     }
+
+    public boolean isConected() {
+        return con != null;
+    }
+
     /**
      * LLamar un procedimiento almacenado en la base de datos de Oracle
      * Procedimiento que compara si un número es mayor que otro
@@ -56,8 +60,8 @@ public class LogicaDBDAO {
      * res:=num2; else dbms_output.put_line('Los números son iguales');
      * res:='iguales'; end if; end;
      *
-     */    
-    public LogicaDBDTO comparar_numeros(LogicaDBDTO obj) {       
+     */
+    public LogicaDBDTO comparar_numeros(LogicaDBDTO obj) {
         try {
             CallableStatement cstmt = con.prepareCall("{call comparar_numeros(?,?,?)}");
 
@@ -69,11 +73,11 @@ public class LogicaDBDAO {
             obj.setRespString(cstmt.getString(3));
 
         } catch (SQLException ex) {
-            Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LogicaDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return obj;
     }
-    
+
     /**
      * Retorna la cantidad de operaciones DML realizadas (INSERT, UPDATE,
      * DELETE)
@@ -108,11 +112,11 @@ public class LogicaDBDAO {
             //System.out.println(res);
             //con.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DataBaseORA.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LogicaDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return res;
     }
-    
+
     //PROCEDIMIENTO EN BASE DE DATOS
     /*   
     USE [EMPRESA]
@@ -143,8 +147,8 @@ public class LogicaDBDAO {
                                     set @res=-1;
                             end
         end
-    */
-    /*
+     */
+ /*
     public String compararDosNumeros(LogicaDBDTO obj) {
         String res = null;
         try {
@@ -167,14 +171,13 @@ public class LogicaDBDAO {
         }
         return res;
     }*/
-    
     /**
      * Realizar commit a transación en proceso
      *
      * @return Estado de la transación
      */
     public boolean realizarCommit() {
-        
+
         try {
             con.commit();
             return true;
@@ -206,5 +209,5 @@ public class LogicaDBDAO {
 
         return true;
     }
-    
+
 }
