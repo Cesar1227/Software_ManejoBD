@@ -85,6 +85,7 @@ public class UsuarioDAO {
                 stm.setString(2, user.getNombre());
                 stm.setInt(3, user.getEdad());
                 stm.setString(4, user.getProfesion());
+                //FALTA LA FOTO
 
                 return (stm.executeUpdate() > 0);
 

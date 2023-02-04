@@ -28,6 +28,10 @@ public class ControladorORA {
         objLogicDB = new LogicaDB();
     }
 
+    /*
+        Usuarios
+    */
+    
     public List<UsuarioDTO> consultarUsuarios() {
         return objUsuario.consultadorUsuarios();
     }
@@ -43,6 +47,20 @@ public class ControladorORA {
     public boolean eliminarUsuario(UsuarioDTO user) {
         return objUsuario.eliminarUsuario(user);
     }
+    
+    public UsuarioDTO buscarUsuario(UsuarioDTO user) {
+        return objUsuario.buscarUsuario(user);
+    }
+    
+    public UsuarioDTO guardarImagen(){
+        
+        return null;
+        
+    }
+    
+    /*
+        Transacciones
+    */
 
     public boolean aplicarTransacionORA() {
         return objLogicDB.realizarCommit();
@@ -79,8 +97,6 @@ public class ControladorORA {
         
     }
 
-    public UsuarioDTO buscarUsuario(UsuarioDTO user) {
-        return objUsuario.buscarUsuario(user);
-    }
+    
 
 }
