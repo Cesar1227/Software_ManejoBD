@@ -25,7 +25,7 @@ public class ControladorORA {
     public ControladorORA() {
         objEstu = new Estudiante("ORACLE");
         objUsuario = new Usuario("ORACLE");
-        objLogicDB = new LogicaDB();
+        objLogicDB = new LogicaDB("ORACLE");
     }
 
     /*

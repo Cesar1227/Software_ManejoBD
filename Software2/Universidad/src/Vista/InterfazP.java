@@ -845,6 +845,8 @@ public class InterfazP extends javax.swing.JFrame {
             this.txtnombre.setText((String) this.tabla_usuarios.getValueAt(seleccion, 1));
             this.txtedad.setText(String.valueOf(this.tabla_usuarios.getValueAt(seleccion, 2)));
             this.txtprofesion.setText((String) this.tabla_usuarios.getValueAt(seleccion, 3));
+            this.lblFoto.setIcon(null);
+            this.lblRuta.setText("");
         }
     }//GEN-LAST:event_tabla_usuariosMouseClicked
 
@@ -989,17 +991,27 @@ public class InterfazP extends javax.swing.JFrame {
     }
 
     void listarUsuarios(String db) {
-        List<UsuarioDTO> usuarios;
-        if (db.equals("Oracle")) {
-            usuarios = objControlORA.consultarUsuarios();
-            this.btnCommit.setVisible(true);
-            this.btnRollBack.setVisible(true);
-        } else {
-            usuarios = objControlSQLS.consultarUsuarios();
-            this.btnCommit.setVisible(false);
-            this.btnRollBack.setVisible(false);
+        List<UsuarioDTO> usuarios = null;
+        switch (db) {
+            case "Oracle":
+                usuarios = objControlORA.consultarUsuarios();
+                this.btnCommit.setVisible(true);
+                this.btnRollBack.setVisible(true);
+                System.err.println("ORACLE");
+                break;
+            case "SQL Server":
+                usuarios = objControlSQLS.consultarUsuarios();
+                this.btnCommit.setVisible(false);
+                this.btnRollBack.setVisible(false);
+                System.err.println("SQL SERVER");
+                break;
+            default:
+                System.err.println("NO SE HA ESCOGIDO EL MOTOR DE BASE DE DATOS");
+                break;
         }
-        this.llenarTabla(usuarios);
+        if (usuarios!=null){
+            this.llenarTabla(usuarios);
+        }
     }
 
     void llenarTabla(List<UsuarioDTO> usuarios) {

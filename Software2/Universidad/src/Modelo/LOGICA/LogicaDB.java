@@ -16,7 +16,8 @@ public class LogicaDB {
 
     LogicaDBDAO objLogic;
 
-    public LogicaDB() {
+    public LogicaDB(String db) {
+        objLogic = new LogicaDBDAO(db);
     }
     
     

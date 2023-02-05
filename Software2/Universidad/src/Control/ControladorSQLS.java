@@ -25,7 +25,7 @@ public class ControladorSQLS {
     public ControladorSQLS() {
         objUsuario = new UsuarioDAO("SQLS");
         objEstu = new EstudianteDAO("SQLS");
-        objLogicDB = new LogicaDB();
+        objLogicDB = new LogicaDB("SQLS");
     }
 
     /*

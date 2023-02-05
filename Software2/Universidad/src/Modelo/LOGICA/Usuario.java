@@ -34,7 +34,12 @@ public class Usuario {
     }
 
     public boolean insertarUsuario(UsuarioDTO user) {
-        return objUserDAO.insertarUsuario(user);
+        boolean insert=objUserDAO.insertarUsuario(user);
+        if(insert){
+            this.guardarFotoEnLocal(user);
+            return true;
+        }
+        return false;
     }
 
     public boolean modificarUsuario(UsuarioDTO user) {
@@ -48,14 +53,17 @@ public class Usuario {
     public UsuarioDTO buscarUsuario(UsuarioDTO user) {
         return objUserDAO.buscarUsuario(user);
     }
-
+    
+    private void guardarFotoEnLocal(UsuarioDTO user){
+        this.guardarImagen(user.getFoto().getPath(), user.getId()+"."+user.getNombre());
+    }
     
     /*
         copiar un archivo del sistema en otra carpeta
      */
     private void guardarImagen(String ruta, String id) {
 
-        String destino = "C:/softSPORT/Image/";
+        String destino = new File (".").getAbsolutePath() + "\\src\\Resources\\Usuarios";
         String archivo = destino + "" + id + ".png";
 
         File folder = new File(id);

@@ -8,6 +8,8 @@ package Modelo.DAO;
 import BaseDeDatos.ConexionORA;
 import BaseDeDatos.ConexionSQLS;
 import Modelo.DTO.UsuarioDTO;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -32,7 +34,7 @@ public class UsuarioDAO {
     }
 
     private void setDataBase(String db) {
-        if (db.equals("")) {
+        if (db.equals("ORACLE")) {
             con = ConexionORA.getIntance();
             try {
                 con.setAutoCommit(false);
@@ -79,17 +81,19 @@ public class UsuarioDAO {
         if (existeUsuario(user)) {
             System.err.println("\n:::: EL USUARIO CON ID " + user.getId() + " YA EXISTE\n");
         } else {
+            FileInputStream fis = null;
             try {
-                stm = con.prepareStatement("INSERT INTO usuario VALUES (?,?,?,?)");
+                stm = con.prepareStatement("INSERT INTO usuario VALUES (?,?,?,?,?)");
                 stm.setInt(1, user.getId());
                 stm.setString(2, user.getNombre());
                 stm.setInt(3, user.getEdad());
                 stm.setString(4, user.getProfesion());
-                //FALTA LA FOTO
+                fis = new FileInputStream(user.getFoto().getPath());
+                stm.setBinaryStream(5,fis , user.getFoto().length());
 
                 return (stm.executeUpdate() > 0);
 
-            } catch (SQLException ex) {
+            } catch (SQLException | FileNotFoundException ex) {
                 Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
                 //con.rollback();
             }
