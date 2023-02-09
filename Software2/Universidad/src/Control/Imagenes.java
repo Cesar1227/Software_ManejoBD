@@ -10,9 +10,37 @@ import javax.swing.JLabel;
  * @author Cesar Bonilla
  */
 public class Imagenes {
-    
-    
 
+    public static ImageIcon ConverImagen(int height, int width, String ruta) {
+        ImageIcon icon = null;
+        try {
+
+            ImageIcon image = new ImageIcon(ruta);
+            icon = new ImageIcon(image.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
+            //label.setIcon(icon);
+
+        } catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return icon;
+    }
+
+    public static ImageIcon ConverImagen(int height, int width, ImageIcon image) {
+        ImageIcon icon = null;
+        try {
+
+            //ImageIcon image = new ImageIcon(ruta);
+            icon = new ImageIcon(image.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
+            //label.setIcon(icon);
+
+        } catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return icon;
+    }
+    
     public static ImageIcon ConverImagen(JLabel label, String ruta) {
         ImageIcon icon = null;
         try {
@@ -33,20 +61,20 @@ public class Imagenes {
         try {
 
             icon = new ImageIcon(image.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_DEFAULT));
-            
+
         } catch (NullPointerException e) {
             System.out.println(e.getMessage());
         }
 
         return icon;
     }
-    
+
     public static ImageIcon ConverImagen(JButton boton, ImageIcon image) {
         ImageIcon icon = null;
         try {
 
             icon = new ImageIcon(image.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_DEFAULT));
-            
+
         } catch (NullPointerException e) {
             System.out.println(e.getMessage());
         }
@@ -54,7 +82,9 @@ public class Imagenes {
         return icon;
     }
     
-    }
+    
+
+}
 
 
 /*
@@ -87,4 +117,4 @@ public class Imagenes extends javax.swing.JPanel {
     }
 
 }
-*/
+ */

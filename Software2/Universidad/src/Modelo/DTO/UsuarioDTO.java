@@ -6,6 +6,7 @@
 package Modelo.DTO;
 
 import java.io.File;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -18,7 +19,7 @@ public class UsuarioDTO {
     private int edad;
     private String profesion;
     private File foto;
-    //private Random r;
+    private ImageIcon fotoIcon;
 
     public UsuarioDTO() {
 
@@ -69,6 +70,14 @@ public class UsuarioDTO {
 
     public void setFoto(File foto) {
         this.foto = foto;
+    }
+
+    public ImageIcon getFotoIcon() {
+        return fotoIcon;
+    }
+
+    public void setFotoIcon(ImageIcon fotoIcon) {
+        this.fotoIcon = fotoIcon;
     }
 
     @Override

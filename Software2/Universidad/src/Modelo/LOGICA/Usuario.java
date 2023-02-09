@@ -7,6 +7,7 @@ package Modelo.LOGICA;
 
 import Modelo.DAO.UsuarioDAO;
 import Modelo.DTO.UsuarioDTO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.CopyOption;
@@ -15,6 +16,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
 /**
@@ -43,7 +45,7 @@ public class Usuario {
     }
 
     public boolean modificarUsuario(UsuarioDTO user) {
-        return objUserDAO.insertarUsuario(user);
+        return objUserDAO.modificarUsuario(user);
     }
 
     public boolean eliminarUsuario(UsuarioDTO user) {
@@ -56,6 +58,12 @@ public class Usuario {
     
     private void guardarFotoEnLocal(UsuarioDTO user){
         this.guardarImagen(user.getFoto().getPath(), user.getId()+"."+user.getNombre());
+    }
+    
+    private void crearFicheroDesdeImg(UsuarioDTO user){
+        //BufferedImage image = new BufferedImage();
+        //image.createGraphics().
+        //ImageIO.write(image, formatName, output)
     }
     
     /*

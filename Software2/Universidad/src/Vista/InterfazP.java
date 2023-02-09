@@ -6,16 +6,24 @@ package Vista;
 
 import Control.ControladorORA;
 import Control.ControladorSQLS;
+import Control.ImageTableModel;
 import Control.Imagenes;
 import Modelo.DTO.EstudianteDTO;
 import Modelo.DTO.LogicaDBDTO;
 import Modelo.DTO.UsuarioDTO;
+import java.awt.Component;
 import java.io.File;
 import java.util.List;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 
 /**
  *
@@ -263,10 +271,10 @@ public class InterfazP extends javax.swing.JFrame {
 
         tabla_usuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null}
+                {null, null, null, null, null}
             },
             new String [] {
-                "ID", "NOMBRE", "EDAD", "PROFESIÓN"
+                "ID", "NOMBRE", "EDAD", "PROFESIÓN", "FOTO"
             }
         ));
         tabla_usuarios.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -282,7 +290,7 @@ public class InterfazP extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -293,7 +301,7 @@ public class InterfazP extends javax.swing.JFrame {
                 .addGap(94, 94, 94))
         );
 
-        jPanel6.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 480, 200));
+        jPanel6.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 580, 200));
 
         jPanel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -779,6 +787,8 @@ public class InterfazP extends javax.swing.JFrame {
             user.setNombre(this.txtnombre.getText());
             user.setEdad(Integer.valueOf(this.txtedad.getText()));
             user.setProfesion(this.txtprofesion.getText());
+            user.setFotoIcon((ImageIcon) this.lblFoto.getIcon());
+
             switch (this.cmbDB.getSelectedIndex()) {
                 case 1:
                     respuesta = objControlORA.modificarUsuario(user);
@@ -845,7 +855,8 @@ public class InterfazP extends javax.swing.JFrame {
             this.txtnombre.setText((String) this.tabla_usuarios.getValueAt(seleccion, 1));
             this.txtedad.setText(String.valueOf(this.tabla_usuarios.getValueAt(seleccion, 2)));
             this.txtprofesion.setText((String) this.tabla_usuarios.getValueAt(seleccion, 3));
-            this.lblFoto.setIcon(null);
+            JLabel lblIcon = (JLabel) this.tabla_usuarios.getValueAt(seleccion, 4);
+            this.lblFoto.setIcon(lblIcon.getIcon());
             this.lblRuta.setText("");
         }
     }//GEN-LAST:event_tabla_usuariosMouseClicked
@@ -1015,15 +1026,22 @@ public class InterfazP extends javax.swing.JFrame {
     }
 
     void llenarTabla(List<UsuarioDTO> usuarios) {
+        
+        this.tabla_usuarios.setDefaultRenderer(Object.class, new ImageTableModel());
         DefaultTableModel model = (DefaultTableModel) this.tabla_usuarios.getModel();
-        model.setRowCount(0);
+        model.setNumRows(0);
+           
         Object[] array = new Object[model.getColumnCount()];
         for (UsuarioDTO usuario : usuarios) {
             array[0] = usuario.getId();
             array[1] = usuario.getNombre();
             array[2] = usuario.getEdad();
             array[3] = usuario.getProfesion();
+            usuario.setFotoIcon(Imagenes.ConverImagen(60, 90, usuario.getFotoIcon()));
+            array[4] = new JLabel(usuario.getFotoIcon());
             model.addRow(array);
+            //System.out.println("ALTURA: "+usuario.getFotoIcon().getIconHeight());
+            this.tabla_usuarios.setRowHeight(70);
         }
     }
 
