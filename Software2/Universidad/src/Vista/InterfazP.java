@@ -675,7 +675,7 @@ public class InterfazP extends javax.swing.JFrame {
     }//GEN-LAST:event_txtidActionPerformed
 
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
-        boolean respuesta = false;
+          boolean respuesta = false;
         if (validarCampos()) {
             JOptionPane.showMessageDialog(this, "TODOS LOS CAMPOS SON OBLIGATORIOS", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
         } else if (this.cmbDB.getSelectedIndex() == 0) {
@@ -787,7 +787,8 @@ public class InterfazP extends javax.swing.JFrame {
             user.setNombre(this.txtnombre.getText());
             user.setEdad(Integer.valueOf(this.txtedad.getText()));
             user.setProfesion(this.txtprofesion.getText());
-            user.setFotoIcon((ImageIcon) this.lblFoto.getIcon());
+            user.setFoto(new File(lblRuta.getText()));
+            //user.setFotoIcon((ImageIcon) this.lblFoto.getIcon());
 
             switch (this.cmbDB.getSelectedIndex()) {
                 case 1:
@@ -840,6 +841,7 @@ public class InterfazP extends javax.swing.JFrame {
                 array[1] = user.getNombre();
                 array[2] = user.getEdad();
                 array[3] = user.getProfesion();
+                array[4] = user.getFoto();
                 model.addRow(array);
             } else {
                 JOptionPane.showMessageDialog(this, "USUARIO NO ENCONTRADO ", "MENSAJE", JOptionPane.INFORMATION_MESSAGE);

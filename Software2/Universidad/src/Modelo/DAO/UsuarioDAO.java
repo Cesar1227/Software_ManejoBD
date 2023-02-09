@@ -130,10 +130,10 @@ public class UsuarioDAO {
                 stm.setInt(2, user.getEdad());
                 stm.setString(3, user.getProfesion());
                 //fis = new FileInputStream(user.getFoto().getPath());
-                System.out.println(" - "+ user.getFoto().getAbsoluteFile());
-                fis = new FileInputStream(user.getFoto());
-                stm.setBlob(4, fis);
-                //stm.setBinaryStream(4, fis, user.getFoto().length());
+                //System.out.println(" - "+ user.getFoto().getAbsoluteFile());
+                fis = new FileInputStream(user.getFoto().getPath());
+                //stm.setBlob(4, fis);
+                stm.setBinaryStream(4, fis, user.getFoto().length());
                 stm.setInt(5, user.getId());                
 
                 return stm.executeUpdate() > 0;
@@ -188,6 +188,7 @@ public class UsuarioDAO {
 
     public UsuarioDTO buscarUsuario(UsuarioDTO user) {
         ResultSet rslt = null;
+        Blob blob;
         try {
             PreparedStatement stmt = con.prepareStatement("SELECT * FROM USUARIO WHERE id=?");
             stmt.setInt(1, user.getId());
@@ -200,6 +201,8 @@ public class UsuarioDAO {
                 user.setNombre(rslt.getString(2));
                 user.setEdad(rslt.getInt(3));
                 user.setProfesion(rslt.getString(4));
+                blob = rslt.getBlob(5);
+                user.setFotoIcon(this.crearImagenFromDB(blob));
                 System.out.println(user.toString());
             } else {
                 UsuarioDTO user2 = null;
