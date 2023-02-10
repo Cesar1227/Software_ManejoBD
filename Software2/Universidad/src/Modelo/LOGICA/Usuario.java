@@ -5,9 +5,11 @@
  */
 package Modelo.LOGICA;
 
+import Control.Imagenes;
 import Modelo.DAO.UsuarioDAO;
 import Modelo.DTO.UsuarioDTO;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.CopyOption;
@@ -16,6 +18,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
@@ -36,8 +40,8 @@ public class Usuario {
     }
 
     public boolean insertarUsuario(UsuarioDTO user) {
-        boolean insert=objUserDAO.insertarUsuario(user);
-        if(insert){
+        boolean insert = objUserDAO.insertarUsuario(user);
+        if (insert) {
             this.guardarFotoEnLocal(user);
             return true;
         }
@@ -45,6 +49,7 @@ public class Usuario {
     }
 
     public boolean modificarUsuario(UsuarioDTO user) {
+        //user.setBaos(this.crearOutputStream(user));
         return objUserDAO.modificarUsuario(user);
     }
 
@@ -55,24 +60,47 @@ public class Usuario {
     public UsuarioDTO buscarUsuario(UsuarioDTO user) {
         return objUserDAO.buscarUsuario(user);
     }
-    
-    private void guardarFotoEnLocal(UsuarioDTO user){
-        this.guardarImagen(user.getFoto().getPath(), user.getId()+"."+user.getNombre());
+
+    private void guardarFotoEnLocal(UsuarioDTO user) {
+        this.guardarImagen(user.getFoto().getPath(), String.valueOf(user.getId()));
     }
-    
-    private void crearFicheroDesdeImg(UsuarioDTO user){
-        //BufferedImage image = new BufferedImage();
-        //image.createGraphics().
-        //ImageIO.write(image, formatName, output)
+
+    private ByteArrayOutputStream crearOutputStream(UsuarioDTO user) {
+        BufferedImage bi = Imagenes.getBufferedImage(user.getFotoIcon().getImage());
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+        String destino = new File("").getAbsolutePath() + "\\src\\Resources\\Usuario";
+        String archivo = destino + user.getId() + ".png";
+        try {
+            ImageIO.write(bi, "jpg", new File(archivo));
+            user.setFoto(new File(archivo));
+        } catch (IOException ex) {
+            Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return baos;
     }
-    
+
+    private File crearOutputStream(UsuarioDTO user, boolean respuestaFile) {
+        BufferedImage bi = Imagenes.getBufferedImage(user.getFotoIcon().getImage());
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+        String destino = new File("").getAbsolutePath() + "\\src\\Resources\\Usuario";
+        String archivo = destino + user.getId() + ".png";
+        try {
+            ImageIO.write(bi, "jpg", new File(archivo));
+        } catch (IOException ex) {
+            Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new File(archivo);
+    }
+
     /*
         copiar un archivo del sistema en otra carpeta
      */
     private void guardarImagen(String ruta, String id) {
 
-        String destino = new File (".").getAbsolutePath() + "\\src\\Resources\\Usuarios";
-        String archivo = destino + "" + id + ".png";
+        String destino = new File("").getAbsolutePath() + "\\src\\Resources\\Usuario";
+        String archivo = destino + id + ".png";
 
         File folder = new File(id);
 
@@ -101,10 +129,10 @@ public class Usuario {
             };
 
             Files.copy(from, to, options);
-            JOptionPane.showMessageDialog(null, "Imagen Guardada");
+            JOptionPane.showMessageDialog(null, "Imagen Guardada en local");
 
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Error al guardar datos");
+            JOptionPane.showMessageDialog(null, "Error al guardar imagen en local");
             System.err.println(e.toString());
         }
 

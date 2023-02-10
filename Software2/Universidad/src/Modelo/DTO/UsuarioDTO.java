@@ -5,6 +5,7 @@
  */
 package Modelo.DTO;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import javax.swing.ImageIcon;
 
@@ -20,6 +21,7 @@ public class UsuarioDTO {
     private String profesion;
     private File foto;
     private ImageIcon fotoIcon;
+    private ByteArrayOutputStream baos;
 
     public UsuarioDTO() {
 
@@ -80,6 +82,14 @@ public class UsuarioDTO {
         this.fotoIcon = fotoIcon;
     }
 
+    public ByteArrayOutputStream getBaos() {
+        return baos;
+    }
+
+    public void setBaos(ByteArrayOutputStream baos) {
+        this.baos = baos;
+    }
+    
     @Override
     public String toString() {
         return "{" + "id= " + id + ", nombre= " + nombre + ", edad= " + edad + ", profesion= " + profesion + "}";

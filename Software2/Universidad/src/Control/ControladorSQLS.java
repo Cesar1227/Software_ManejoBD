@@ -6,24 +6,24 @@
 package Control;
 
 import Modelo.DAO.EstudianteDAO;
-import Modelo.DAO.UsuarioDAO;
 import Modelo.DTO.EstudianteDTO;
 import Modelo.DTO.LogicaDBDTO;
 import Modelo.DTO.UsuarioDTO;
 import Modelo.LOGICA.LogicaDB;
+import Modelo.LOGICA.Usuario;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class ControladorSQLS {
 
-    UsuarioDAO objUsuario;
+    Usuario objUsuario;
     EstudianteDAO objEstu;
     LogicaDB objLogicDB;
     Scanner sc;
 
     public ControladorSQLS() {
-        objUsuario = new UsuarioDAO("SQLS");
+        objUsuario = new Usuario("SQLS");
         objEstu = new EstudianteDAO("SQLS");
         objLogicDB = new LogicaDB("SQLS");
     }
@@ -46,7 +46,7 @@ public class ControladorSQLS {
     }
 
     public List<UsuarioDTO> consultarUsuarios() {
-        return objUsuario.consultarDatos();
+        return objUsuario.consultadorUsuarios();
     }
 
     public boolean insertarUsuario(UsuarioDTO user) {

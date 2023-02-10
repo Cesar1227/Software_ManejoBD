@@ -13,6 +13,7 @@ import Modelo.DTO.LogicaDBDTO;
 import Modelo.DTO.UsuarioDTO;
 import java.awt.Component;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -675,7 +676,7 @@ public class InterfazP extends javax.swing.JFrame {
     }//GEN-LAST:event_txtidActionPerformed
 
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
-          boolean respuesta = false;
+        boolean respuesta = false;
         if (validarCampos()) {
             JOptionPane.showMessageDialog(this, "TODOS LOS CAMPOS SON OBLIGATORIOS", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
         } else if (this.cmbDB.getSelectedIndex() == 0) {
@@ -687,7 +688,7 @@ public class InterfazP extends javax.swing.JFrame {
             user.setEdad(Integer.valueOf(this.txtedad.getText()));
             user.setProfesion(this.txtprofesion.getText());
             user.setFoto(new File(lblRuta.getText()));
-            
+
             switch (this.cmbDB.getSelectedIndex()) {
                 case 1:
                     respuesta = objControlORA.insertarUsuario(user);
@@ -787,8 +788,12 @@ public class InterfazP extends javax.swing.JFrame {
             user.setNombre(this.txtnombre.getText());
             user.setEdad(Integer.valueOf(this.txtedad.getText()));
             user.setProfesion(this.txtprofesion.getText());
-            user.setFoto(new File(lblRuta.getText()));
-            //user.setFotoIcon((ImageIcon) this.lblFoto.getIcon());
+            //user.setFoto(new File(lblRuta.getText()));
+            if (!this.lblRuta.getText().isBlank()) {
+                user.setFotoIcon((ImageIcon) this.lblFoto.getIcon());
+            } else {
+                user.setFotoIcon(null);
+            }
 
             switch (this.cmbDB.getSelectedIndex()) {
                 case 1:
@@ -815,7 +820,7 @@ public class InterfazP extends javax.swing.JFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         boolean respuesta = false;
-        if (this.txtid.getText().isBlank() || this.cmbDB.getSelectedIndex()==0) {
+        if (this.txtid.getText().isBlank() || this.cmbDB.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(this, "EL CAMPO ID Y EL MOTOR DE BASE DE DATOS ES OBLIGATORIO", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
         } else {
             UsuarioDTO user = new UsuarioDTO();
@@ -832,8 +837,14 @@ public class InterfazP extends javax.swing.JFrame {
                     break;
             }
             //System.out.println(Integer.valueOf(user.getId()));
-            if (user!=null) {
+            if (user != null) {
+                ArrayList listU = new ArrayList<UsuarioDTO>();
+                listU.add(user);
+                this.llenarTabla(listU);
+                
+                /*this.tabla_usuarios.setDefaultRenderer(Object.class, new ImageTableModel());
                 DefaultTableModel model = (DefaultTableModel) this.tabla_usuarios.getModel();
+                //DefaultTableModel model = (DefaultTableModel) this.tabla_usuarios.getModel();
                 model.setRowCount(0);
                 Object[] array = new Object[model.getColumnCount()];
 
@@ -841,8 +852,9 @@ public class InterfazP extends javax.swing.JFrame {
                 array[1] = user.getNombre();
                 array[2] = user.getEdad();
                 array[3] = user.getProfesion();
+                
                 array[4] = user.getFoto();
-                model.addRow(array);
+                model.addRow(array);*/
             } else {
                 JOptionPane.showMessageDialog(this, "USUARIO NO ENCONTRADO ", "MENSAJE", JOptionPane.INFORMATION_MESSAGE);
             }
@@ -964,7 +976,7 @@ public class InterfazP extends javax.swing.JFrame {
 
     private void btnCargarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarFotoActionPerformed
 
-        try{
+        try {
             JFileChooser jfile = new JFileChooser();
             FileNameExtensionFilter filtro = new FileNameExtensionFilter("Jpg", "JPEG", "JPG", "jpeg", "png", "PNG");
             jfile.setAcceptAllFileFilterUsed(false);
@@ -973,11 +985,11 @@ public class InterfazP extends javax.swing.JFrame {
 
             File fichero;
             if (jfile.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-                fichero = jfile.getSelectedFile();               
+                fichero = jfile.getSelectedFile();
                 this.lblFoto.setIcon(Imagenes.ConverImagen(lblFoto, fichero.getPath()));
                 this.lblRuta.setText(fichero.toString());
             }
-            
+
         } catch (NullPointerException e) {
             //JOptionPane.showMessageDialog(this, e.getMessage());
         }
@@ -1022,17 +1034,17 @@ public class InterfazP extends javax.swing.JFrame {
                 System.err.println("NO SE HA ESCOGIDO EL MOTOR DE BASE DE DATOS");
                 break;
         }
-        if (usuarios!=null){
+        if (usuarios != null) {
             this.llenarTabla(usuarios);
         }
     }
 
     void llenarTabla(List<UsuarioDTO> usuarios) {
-        
+
         this.tabla_usuarios.setDefaultRenderer(Object.class, new ImageTableModel());
         DefaultTableModel model = (DefaultTableModel) this.tabla_usuarios.getModel();
         model.setNumRows(0);
-           
+
         Object[] array = new Object[model.getColumnCount()];
         for (UsuarioDTO usuario : usuarios) {
             array[0] = usuario.getId();

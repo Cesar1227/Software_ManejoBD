@@ -9,14 +9,8 @@ import BaseDeDatos.ConexionORA;
 import BaseDeDatos.ConexionSQLS;
 import Modelo.DTO.UsuarioDTO;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
 import java.sql.Blob;
 
 import java.sql.Connection;
@@ -27,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 /**
@@ -98,20 +91,35 @@ public class UsuarioDAO {
             System.err.println("\n:::: EL USUARIO CON ID " + user.getId() + " YA EXISTE\n");
         } else {
             FileInputStream fis = null;
-            try {
-                stm = con.prepareStatement("INSERT INTO usuario VALUES (?,?,?,?,?)");
-                stm.setInt(1, user.getId());
-                stm.setString(2, user.getNombre());
-                stm.setInt(3, user.getEdad());
-                stm.setString(4, user.getProfesion());
-                fis = new FileInputStream(user.getFoto().getPath());
-                stm.setBinaryStream(5, fis, user.getFoto().length());
+            if (user.getFotoIcon() != null) {
+                try {
+                    stm = con.prepareStatement("INSERT INTO usuario VALUES (?,?,?,?,?)");
+                    stm.setInt(1, user.getId());
+                    stm.setString(2, user.getNombre());
+                    stm.setInt(3, user.getEdad());
+                    stm.setString(4, user.getProfesion());
+                    fis = new FileInputStream(user.getFoto().getPath());
+                    stm.setBinaryStream(5, fis, user.getFoto().length());
 
-                return (stm.executeUpdate() > 0);
+                    return (stm.executeUpdate() > 0);
 
-            } catch (SQLException | FileNotFoundException ex) {
-                Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
-                //con.rollback();
+                } catch (SQLException | FileNotFoundException ex) {
+                    Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    //con.rollback();
+                }
+            }else{
+                try {
+                    stm = con.prepareStatement("INSERT INTO usuario(ID,NOMBRE,EDAD,PROFESION) VALUES (?,?,?,?)"); //con.rollback();
+                    stm.setInt(1, user.getId());
+                    stm.setString(2, user.getNombre());
+                    stm.setInt(3, user.getEdad());
+                    stm.setString(4, user.getProfesion());
+                    //fis = new FileInputStream(user.getFoto().getPath());
+                    //stm.setBinaryStream(5, fis, user.getFoto().length());
+                    return (stm.executeUpdate() > 0);
+                } catch (SQLException ex) {
+                    Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
         return false;
@@ -121,26 +129,59 @@ public class UsuarioDAO {
         PreparedStatement stm;
 
         if (existeUsuario(user)) {
-            String sql = "UPDATE usuario SET nombre=?, edad=?, profesion=?, Foto=? "
-                    + "WHERE id=?";
+            String sql = "";
             FileInputStream fis = null;
-            try {
+            if (user.getFotoIcon() != null) {
+                sql = "UPDATE usuario SET nombre=?, edad=?, profesion=?, Foto=? "
+                        + "WHERE id=?";
+                try {
+                    stm = con.prepareStatement(sql);
+                    stm.setString(1, user.getNombre());
+                    stm.setInt(2, user.getEdad());
+                    stm.setString(3, user.getProfesion());
+                    fis = new FileInputStream(user.getFoto());
+                    stm.setBinaryStream(4, fis, user.getFoto().length());
+                    stm.setInt(5, user.getId());
+                    return stm.executeUpdate() > 0;
+                } catch (SQLException | FileNotFoundException ex) {
+                    Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                sql = "UPDATE usuario SET nombre=?, edad=?, profesion=? "
+                        + "WHERE id=?";
+                try {
+                    stm = con.prepareStatement(sql);
+                    stm.setString(1, user.getNombre());
+                    stm.setInt(2, user.getEdad());
+                    stm.setString(3, user.getProfesion());
+                    stm.setInt(4, user.getId());
+                    return stm.executeUpdate() > 0;
+                } catch (SQLException ex) {
+                    Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            /*try {
                 stm = con.prepareStatement(sql);
                 stm.setString(1, user.getNombre());
                 stm.setInt(2, user.getEdad());
                 stm.setString(3, user.getProfesion());
-                //fis = new FileInputStream(user.getFoto().getPath());
+                fis = new FileInputStream(user.getFoto());
                 //System.out.println(" - "+ user.getFoto().getAbsoluteFile());
-                fis = new FileInputStream(user.getFoto().getPath());
+                //fis = new FileInputStream(user.getFoto().getPath());
+
+                //ByteArrayOutputStream baos = user.getBaos();
+                //byte[] byteArray= baos.toByteArray();
                 //stm.setBlob(4, fis);
+                //stm.setBlob(4, );
                 stm.setBinaryStream(4, fis, user.getFoto().length());
-                stm.setInt(5, user.getId());                
+                stm.setInt(5, user.getId());
 
                 return stm.executeUpdate() > 0;
 
             } catch (SQLException | FileNotFoundException ex) {
                 Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
-            } 
+            }*/
         } else {
             System.err.println("\n:::: EL USUARIO CON ID " + user.getId() + " NO EXISTE\n");
         }
@@ -216,7 +257,7 @@ public class UsuarioDAO {
     }
 
     public ImageIcon crearImagenFromDB(Blob blob) {
-        if(blob==null){
+        if (blob == null) {
             return null;
         }
         byte[] data;
@@ -228,7 +269,7 @@ public class UsuarioDAO {
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return img;
     }
 
