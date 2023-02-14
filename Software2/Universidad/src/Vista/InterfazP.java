@@ -687,7 +687,13 @@ public class InterfazP extends javax.swing.JFrame {
             user.setNombre(this.txtnombre.getText());
             user.setEdad(Integer.valueOf(this.txtedad.getText()));
             user.setProfesion(this.txtprofesion.getText());
-            user.setFoto(new File(lblRuta.getText()));
+            
+            if(!this.lblRuta.getText().isBlank()){
+                user.setFoto(new File(lblRuta.getText()));
+                System.out.println("CON RUTA DE FOTO");
+            }else{
+                System.out.println("RUTA NO ESPECIFICADA: "+this.lblRuta.getText());
+            }            
 
             switch (this.cmbDB.getSelectedIndex()) {
                 case 1:
@@ -788,9 +794,10 @@ public class InterfazP extends javax.swing.JFrame {
             user.setNombre(this.txtnombre.getText());
             user.setEdad(Integer.valueOf(this.txtedad.getText()));
             user.setProfesion(this.txtprofesion.getText());
-            //user.setFoto(new File(lblRuta.getText()));
+            
             if (!this.lblRuta.getText().isBlank()) {
                 user.setFotoIcon((ImageIcon) this.lblFoto.getIcon());
+                user.setFoto(new File(lblRuta.getText()));
             } else {
                 user.setFotoIcon(null);
             }
@@ -841,7 +848,7 @@ public class InterfazP extends javax.swing.JFrame {
                 ArrayList listU = new ArrayList<UsuarioDTO>();
                 listU.add(user);
                 this.llenarTabla(listU);
-                
+
                 /*this.tabla_usuarios.setDefaultRenderer(Object.class, new ImageTableModel());
                 DefaultTableModel model = (DefaultTableModel) this.tabla_usuarios.getModel();
                 //DefaultTableModel model = (DefaultTableModel) this.tabla_usuarios.getModel();

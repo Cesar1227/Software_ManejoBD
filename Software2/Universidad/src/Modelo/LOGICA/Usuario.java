@@ -41,16 +41,22 @@ public class Usuario {
 
     public boolean insertarUsuario(UsuarioDTO user) {
         boolean insert = objUserDAO.insertarUsuario(user);
-        if (insert) {
+        if (insert && user.getFotoIcon()!=null && user.getFoto()!=null) {
             this.guardarFotoEnLocal(user);
             return true;
         }
-        return false;
+        return insert;
     }
 
     public boolean modificarUsuario(UsuarioDTO user) {
-        //user.setBaos(this.crearOutputStream(user));
-        return objUserDAO.modificarUsuario(user);
+        boolean update = objUserDAO.modificarUsuario(user);
+        if(update && user.getFotoIcon()!=null && user.getFoto()!=null){
+            System.out.println(user.getFoto());
+            System.out.println(user.getFotoIcon());
+            this.guardarFotoEnLocal(user);
+            return true;
+        }
+        return update;
     }
 
     public boolean eliminarUsuario(UsuarioDTO user) {
@@ -99,8 +105,8 @@ public class Usuario {
      */
     private void guardarImagen(String ruta, String id) {
 
-        String destino = new File("").getAbsolutePath() + "\\src\\Resources\\Usuario";
-        String archivo = destino + id + ".png";
+        String destino = new File("").getAbsolutePath() + "\\src\\Resources\\";
+        String archivo = destino + "Usuario_"+ id + ".png";
 
         File folder = new File(id);
 

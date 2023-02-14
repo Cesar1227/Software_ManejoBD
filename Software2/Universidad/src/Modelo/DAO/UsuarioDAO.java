@@ -91,7 +91,8 @@ public class UsuarioDAO {
             System.err.println("\n:::: EL USUARIO CON ID " + user.getId() + " YA EXISTE\n");
         } else {
             FileInputStream fis = null;
-            if (user.getFotoIcon() != null) {
+            if (user.getFotoIcon() != null && user.getFoto() != null) {
+                System.out.println("INSERTANDO CON FOTO");
                 try {
                     stm = con.prepareStatement("INSERT INTO usuario VALUES (?,?,?,?,?)");
                     stm.setInt(1, user.getId());
@@ -107,7 +108,8 @@ public class UsuarioDAO {
                     Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
                     //con.rollback();
                 }
-            }else{
+            } else {
+                System.out.println("INSERTANDO SIN FOTO");
                 try {
                     stm = con.prepareStatement("INSERT INTO usuario(ID,NOMBRE,EDAD,PROFESION) VALUES (?,?,?,?)"); //con.rollback();
                     stm.setInt(1, user.getId());
