@@ -7,7 +7,10 @@ package Vista;
 
 import Control.ControladorORA;
 import Control.ControladorSQLS;
-import Modelo.Usuario;
+import Modelo.DTO.EstudianteDTO;
+import Modelo.DTO.LogicaDBDTO;
+import Modelo.DTO.UsuarioDTO;
+import Modelo.LOGICA.LogicaDB;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,11 +19,13 @@ public class Main {
     Scanner sc;
     ControladorORA objControlORA;
     ControladorSQLS objControlSQLS;
+    UsuarioDTO objUser;
+    EstudianteDTO objEst;
 
     public static void main(String[] args) {
         //Main objMain = new Main();
         InterfazP vista = new InterfazP();
-        vista.setVisible (true);
+        vista.setVisible(true);
     }
 
     public Main() {
@@ -31,8 +36,8 @@ public class Main {
     }
 
     void modificarUsuario(String aux) {
-        Usuario objUser;
-        objUser = new Usuario();
+        UsuarioDTO objUser;
+        objUser = new UsuarioDTO();
 
         String nombre;
         sc = new Scanner(System.in);
@@ -51,13 +56,13 @@ public class Main {
 
         System.out.print("Ingrese la PROFESIÓN: ");
         objUser.setProfesion(sc.next());
-        if ("oracle".equals(aux)){
+        if ("oracle".equals(aux)) {
             if (objControlORA.modificarUsuario(objUser)) {
                 System.out.println("\nMODIFICADO EXITOSAMENTE");
             } else {
                 System.out.println("\nERROR AL MODIFICAR");
             }
-        }else{
+        } else {
             if (objControlSQLS.modificarUsuario(objUser)) {
                 System.out.println("\nMODIFICADO EXITOSAMENTE");
             } else {
@@ -70,23 +75,26 @@ public class Main {
         System.out.print("Ingrese el ID del usuario a eliminar: ");
         int id;
         id = sc.nextInt();
-        if ("oracle".equals(aux)){
-            if (objControlORA.eliminarUsuario(id)) {
-                System.out.println("Usuario con id " + id + " eliminado correctamente");
+        objUser = new UsuarioDTO();
+        objUser.setId(id);
+        if ("oracle".equals(aux)) {
+            if (objControlORA.eliminarUsuario(objUser)) {
+                System.out.println("Usuario con id " + objUser.getId() + " eliminado correctamente");
             } else {
                 System.out.println("NO FUE POSIBLE ELIMINAR EL USUARIO");
             }
-        }else{
-            if (objControlSQLS.eliminarUsuario(id)) {
-                System.out.println("Usuario con id " + id + " eliminado correctamente");
+        } else {
+            if (objControlSQLS.eliminarUsuario(objUser)) {
+                System.out.println("Usuario con id " + objUser.getId() + " eliminado correctamente");
             } else {
                 System.out.println("NO FUE POSIBLE ELIMINAR EL USUARIO");
             }
         }
     }
+
     void insertarUsuario(String aux) {
-        Usuario objUser;
-        objUser = new Usuario();
+        UsuarioDTO objUser;
+        objUser = new UsuarioDTO();
 
         String nombre;
         sc = new Scanner(System.in);
@@ -105,13 +113,13 @@ public class Main {
 
         System.out.print("Ingrese la PROFESIÓN: ");
         objUser.setProfesion(sc.next());
-        if ("oracle".equals(aux)){
+        if ("oracle".equals(aux)) {
             if (objControlORA.insertarUsuario(objUser)) {
                 System.out.println("Usuario con id " + objUser.getId() + " insertado correctamente");
             } else {
                 System.out.println("NO FUE POSIBLE INSERTAR EL USUARIO");
             }
-        }else{
+        } else {
             if (objControlSQLS.insertarUsuario(objUser)) {
                 System.out.println("Usuario con id " + objUser.getId() + " insertado correctamente");
             } else {
@@ -124,12 +132,15 @@ public class Main {
         int num1, num2;
         System.out.print("Ingrese el primer número a comparar: ");
         num1 = sc.nextInt();
-        
+
         System.out.print("Ingrese el segundo número a comparar: ");
         num2 = sc.nextInt();
-        
-        String res = objControlORA.procedimiento1(num1, num2);
-        System.out.println(res);
+        LogicaDBDTO objLog = new LogicaDBDTO();
+        objLog.setNum1(num1);
+        objLog.setNum2(num2);
+
+        objLog = objControlORA.compararDosNumeros(objLog);
+        System.out.println(objLog.getRespString());
     }
 
     void funcionORA1() {
@@ -139,7 +150,7 @@ public class Main {
                 + "2. UPDATE\n"
                 + "3. DELETE\n");
         int opc = sc.nextInt();
-        
+
         String operacion = null;
         switch (opc) {
             case 1:
@@ -156,46 +167,52 @@ public class Main {
                 correct = false;
                 break;
         }
-        String respuesta = objControlORA.funcion1(operacion);
-        System.out.println("SE HAN REALIZADO " + respuesta + " operaciones DML sobre la tabla auditorias");
+        LogicaDBDTO objLog = new LogicaDBDTO();
+        objLog.setOperacion(operacion);
+        objLog = objControlORA.func_cantOperaciones(objLog);
+        System.out.println("SE HAN REALIZADO " + objLog.getRespString() + " operaciones DML sobre la tabla auditorias");
     }
 
     void funcionORA2() {
         int codigo;
-        
+
         System.out.print("Ingrese el código del estudiante: ");
         codigo = sc.nextInt();
-        
-        String respuesta = objControlORA.obtenerNomEstudiante(codigo);
-        System.out.println("El nombre del estudiante con código " + codigo + " es " + respuesta);
+        objEst = new EstudianteDTO();
+        objEst.setCodigo(codigo);
+
+        objEst = objControlORA.func_obtenerNomEstudiante(objEst);
+        System.out.println("El nombre del estudiante con código " + objEst.getCodigo() + " es " + objEst.getNombres());
     }
 
     void procedimientoSSER1() {
         int num1, num2;
-        String respuesta;
-        
+
         System.out.print("Ingrese el primer número a comparar: ");
         num1 = sc.nextInt();
 
         System.out.print("Ingrese el segundo número a comparar: ");
         num2 = sc.nextInt();
-
-        respuesta = objControlSQLS.procedimiento1(num1, num2);
-        if (respuesta.equals("iguales")) {
+        LogicaDBDTO objLog = new LogicaDBDTO();
+        objLog.setNum1(num1);
+        objLog.setNum2(num2);
+        objLog = objControlSQLS.func_compararDosNumeros(objLog);
+        if (objLog.getRespString().equals("iguales")) {
             System.out.println("Los números son iguales");
         } else {
-            System.out.println("El número " + respuesta + " es el mayor");
+            System.out.println("El número " + objLog.getRespString() + " es el mayor");
         }
     }
 
     void funcionSSER1() {
         String respuesta;
         int codigo;
-        
+
         System.out.print("Ingrese el código del estudiante: ");
         codigo = sc.nextInt();
-        
-        respuesta = String.valueOf(objControlSQLS.funcion1(codigo));
+        objEst = new EstudianteDTO();
+        objEst.setCodigo(codigo);
+        respuesta = String.valueOf(objControlSQLS.func_obtenerPromedio(objEst));
         System.out.println("El promedio del estudiante con código " + codigo + " es " + respuesta);
     }
 
@@ -217,13 +234,13 @@ public class Main {
 
             System.out.print(">>: ");
             entrada = sc.nextInt();
-            
+
             System.out.println("");
             String resp;
             switch (entrada) {
                 case 1:
-                    List<Usuario> usuarios;
-                    usuarios=objControlORA.consultarUsuarios();
+                    List<UsuarioDTO> usuarios;
+                    usuarios = objControlORA.consultarUsuarios();
                     System.out.println(usuarios.toString());
                     break;
                 case 2:
@@ -236,16 +253,16 @@ public class Main {
                     this.eliminarUsuario("oracle");
                     break;
                 case 5:
-                    if(objControlORA.aplicarTransacionORA()){
+                    if (objControlORA.aplicarTransacionORA()) {
                         System.out.println("Transacción realizada");
-                    }else{
+                    } else {
                         System.out.println("No fue posible realizar la transacción");
                     }
                     break;
                 case 6:
-                    if(objControlORA.descartarTransacionORA()){
+                    if (objControlORA.descartarTransacionORA()) {
                         System.out.println("Rollback realizada");
-                    }else{
+                    } else {
                         System.out.println("No fue posible realizar el rollback");
                     }
                     break;
@@ -288,12 +305,12 @@ public class Main {
 
             System.out.print(">>: ");
             entrada = sc.nextInt();
-            
+
             System.out.println("");
             switch (entrada) {
                 case 1:
-                    List<Usuario> usuarios;
-                    usuarios=objControlSQLS.consultarUsuarios();
+                    List<UsuarioDTO> usuarios;
+                    usuarios = objControlSQLS.consultarUsuarios();
                     System.out.println(usuarios.toString());
                     break;
                 case 2:
@@ -306,7 +323,7 @@ public class Main {
                     this.eliminarUsuario("sqlsserver");
                     break;
                 case 5:
-                    objControlSQLS.iniciarTransaccion();
+                    //objControlSQLS.iniciarTransaccion();
                     System.out.println("TRANSACCIÓN INICIADA...");
                     break;
                 case 6:

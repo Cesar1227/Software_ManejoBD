@@ -3,17 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Modelo;
+package Modelo.DTO;
 
-import BaseDeDatos.DataBaseORA;
-import BaseDeDatos.DataBaseSQLS;
 import java.util.Date;
 
 /**
  *
  * @author Cesar Bonilla
  */
-public class Estudiante {
+public class EstudianteDTO {
     private int codigo;
     private String nombres;
     private String apellido1;
@@ -22,15 +20,12 @@ public class Estudiante {
     private int facultad;
     private int programa;
     private Date fecha_inicio;
-    private DataBaseORA objDbORA;
-    private DataBaseSQLS objDbSQLS;
 
-    public Estudiante() {
-        objDbORA = new DataBaseORA();
-        objDbSQLS = new DataBaseSQLS();
+    public EstudianteDTO() {
+
     }
 
-    public Estudiante(int codigo, String nombres, String apellido1, String apellido2, String telefono, int facultad, int programa, Date fecha_inicio) {
+    public EstudianteDTO(int codigo, String nombres, String apellido1, String apellido2, String telefono, int facultad, int programa, Date fecha_inicio) {
         this.codigo = codigo;
         this.nombres = nombres;
         this.apellido1 = apellido1;
@@ -39,10 +34,9 @@ public class Estudiante {
         this.facultad = facultad;
         this.programa = programa;
         this.fecha_inicio = fecha_inicio;
-        objDbORA = new DataBaseORA();
-        objDbSQLS = new DataBaseSQLS();
     }
     
+    /*
     public String obtenerInformacion(){
         return objDbORA.llamarProcedimiento2();
     }
@@ -50,9 +44,10 @@ public class Estudiante {
     public String obtenerNombreEstudiante(int codigo){
         return String.valueOf(objDbORA.llamarFuncion2(codigo));
     }
+*/
     
     //FUNCIÓN SQLSERVER
-    public float obtenerPromedio(int codigo, String motor){ 
+    /*public float obtenerPromedio(int codigo, String motor){ 
         if(motor.equals("SQLS")){
             return objDbSQLS.llamarFuncion1(codigo);   
         }else if(motor.equals("ORA")){
@@ -61,7 +56,7 @@ public class Estudiante {
             System.err.println("Motor de base de datos no reconocido.");
             return 0.0f;
         }        
-    }
+    }*/
 
     public int getCodigo() {
         return codigo;
@@ -129,7 +124,7 @@ public class Estudiante {
 
     @Override
     public String toString() {
-        return "Estudiante{" + "codigo=" + codigo + ", nombres=" + nombres + ", apellido1=" + apellido1 + ", apellido2=" + apellido2 + ", telefono=" + telefono + ", facultad=" + facultad + ", programa=" + programa + ", fecha_inicio=" + fecha_inicio + ", objDbORA=" + objDbORA + '}';
+        return "Estudiante{" + "codigo=" + codigo + ", nombres=" + nombres + ", apellido1=" + apellido1 + ", apellido2=" + apellido2 + ", telefono=" + telefono + ", facultad=" + facultad + ", programa=" + programa + ", fecha_inicio=" + fecha_inicio+ '}';
     }
     
 }

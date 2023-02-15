@@ -5,75 +5,72 @@
  */
 package Control;
 
-import BaseDeDatos.DataBaseSQLS;
-import Modelo.Estudiante;
-import Modelo.Usuario;
+import Modelo.DAO.EstudianteDAO;
+import Modelo.DTO.EstudianteDTO;
+import Modelo.DTO.LogicaDBDTO;
+import Modelo.DTO.UsuarioDTO;
+import Modelo.LOGICA.LogicaDB;
+import Modelo.LOGICA.Usuario;
+
 import java.util.List;
 import java.util.Scanner;
 
-
 public class ControladorSQLS {
 
-    DataBaseSQLS objDbSQLS;
     Usuario objUsuario;
-    Estudiante objEstu;
+    EstudianteDAO objEstu;
+    LogicaDB objLogicDB;
     Scanner sc;
 
     public ControladorSQLS() {
-        objDbSQLS = new DataBaseSQLS();
-        objUsuario = new Usuario();
-        objEstu = new Estudiante();
-        if (!objDbSQLS.isConected()) {
-            System.err.println("HA OCURRIDO UN ERROR, NO FUE POSIBLE CONECTARSE A LA BASE DE DATOS DE SQLSERVER");
-        }
+        objUsuario = new Usuario("SQLS");
+        objEstu = new EstudianteDAO("SQLS");
+        objLogicDB = new LogicaDB("SQLS");
     }
-    
+
+    /*
     public void iniciarTransaccion(){
        //objDbSQLS.trasaccionesImplicitas(); 
-    }
-
-    public String procedimiento1(int num1, int num2){
-        String respuesta;
-        respuesta = objDbSQLS.llamarProcedimiento1(num1, num2);
-        if (respuesta.equals("iguales")) {
-            return ("iguales");
+    }*/
+    public LogicaDBDTO func_compararDosNumeros(LogicaDBDTO obj) {
+        obj = objLogicDB.comparar_numeros(obj);
+        if (obj.getRespString().equals("iguales")) {
+            return (obj);
         } else {
-            return (respuesta);
+            return (obj);
         }
     }
 
-    public Float funcion1(int codigo){
-        return objEstu.obtenerPromedio(codigo, "SQLS");
-    }
-    public List<Usuario> consultarUsuarios() {
-        /*usuarios.forEach(user -> {
-            System.out.println(user.toString());
-        });*/
-        return objUsuario.consultar("sqlsserver");
+    public Float func_obtenerPromedio(EstudianteDTO est) {
+        return objEstu.func_obtenerPromedio(est);
     }
 
-    /*public boolean insertarUsuario() {
-        return objUsuario.insertar("sqlsserver");
-    }*/
-
-    public boolean insertarUsuario(Usuario user) {
-        return objUsuario.insertar(user,"sqlsserver");
+    public List<UsuarioDTO> consultarUsuarios() {
+        return objUsuario.consultadorUsuarios();
     }
 
-    public boolean modificarUsuario(Usuario user) {
-        return objUsuario.modificar(user,"sqlsserver");
+    public boolean insertarUsuario(UsuarioDTO user) {
+        return objUsuario.insertarUsuario(user);
     }
 
-    public boolean eliminarUsuario(int id) {
-        return objUsuario.eliminar(id,"sqlsserver");
+    public boolean modificarUsuario(UsuarioDTO user) {
+        return objUsuario.modificarUsuario(user);
+    }
+
+    public boolean eliminarUsuario(UsuarioDTO user) {
+        return objUsuario.eliminarUsuario(user);
+    }
+
+    public UsuarioDTO buscarUsuario(UsuarioDTO user) {
+        return objUsuario.buscarUsuario(user);
     }
 
     public void aplicarTransaccion() {
-        objDbSQLS.aplicarTrasaccion();
+        objLogicDB.realizarCommit();
     }
 
     public void descartarTransaccion() {
-        objDbSQLS.descartarTransaccion();
+        objLogicDB.realizarRollBack();
     }
 
 }

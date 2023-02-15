@@ -1,8 +1,12 @@
 package Control;
 
-import BaseDeDatos.DataBaseORA;
-import Modelo.Estudiante;
-import Modelo.Usuario;
+import Modelo.DTO.EstudianteDTO;
+import Modelo.DTO.LogicaDBDTO;
+import Modelo.DTO.UsuarioDTO;
+import Modelo.LOGICA.Estudiante;
+import Modelo.LOGICA.Usuario;
+import Modelo.LOGICA.LogicaDB;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -11,85 +15,86 @@ import java.util.Scanner;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 public class ControladorORA {
 
-    DataBaseORA objDbORA;
     Usuario objUsuario;
     Estudiante objEstu;
+    LogicaDB objLogicDB;
     Scanner sc;
 
     public ControladorORA() {
-        objDbORA = new DataBaseORA();
-        objUsuario = new Usuario();
-        objEstu = new Estudiante();
-        if (!objDbORA.isConected()) {
-            System.err.println("HA OCURRIDO UN ERROR, NO FUE POSIBLE CONECTARSE A LA BASE DE DATOS DE ORACLE");
-        }
+        objEstu = new Estudiante("ORACLE");
+        objUsuario = new Usuario("ORACLE");
+        objLogicDB = new LogicaDB("ORACLE");
     }
 
-    public List<Usuario> consultarUsuarios() {
-        /*usuarios.forEach(user -> {
-            System.out.println(user.toString());
-        });*/
-        return objUsuario.consultar("oracle");
+    /*
+        Usuarios
+    */
+    
+    public List<UsuarioDTO> consultarUsuarios() {
+        return objUsuario.consultadorUsuarios();
     }
 
-    /*public boolean insertarUsuario() {
-        return objUsuario.insertar("oracle");
-    }*/
-
-    public boolean insertarUsuario(Usuario user) {
-        return objUsuario.insertar(user,"oracle");
+    public boolean insertarUsuario(UsuarioDTO user) {
+        return objUsuario.insertarUsuario(user);
     }
 
-    public boolean modificarUsuario(Usuario user) {
-        return objUsuario.modificar(user,"oracle");
+    public boolean modificarUsuario(UsuarioDTO user) {
+        return objUsuario.modificarUsuario(user);
     }
 
-    public boolean eliminarUsuario(int id) {
-        return objUsuario.eliminar(id,"oracle");
+    public boolean eliminarUsuario(UsuarioDTO user) {
+        return objUsuario.eliminarUsuario(user);
     }
+    
+    public UsuarioDTO buscarUsuario(UsuarioDTO user) {
+        return objUsuario.buscarUsuario(user);
+    }
+    
+    public UsuarioDTO guardarImagen(){
+        
+        return null;
+        
+    }
+    
+    /*
+        Transacciones
+    */
 
     public boolean aplicarTransacionORA() {
-        return objDbORA.realizarCommit();
+        return objLogicDB.realizarCommit();
     }
 
     public boolean descartarTransacionORA() {
-        return objDbORA.realizarRollBack();
+        return objLogicDB.realizarRollBack();
     }
 
     /**
      * LLamar procedimiento de Oracle información de Estudiantes
      *
-     * @param num1
-     * @param num2
+     * @param obj
      * @return
      */
-    public String procedimiento1(int num1, int num2) {
-        String respuesta;
-        respuesta = objDbORA.llamarProcedimiento1(num1, num2);
-        if (respuesta.equals("iguales")) {
-            return ("Los números son iguales");
-        } else {
-            return ("El número " + respuesta + " es el mayor");
-        }
+    public LogicaDBDTO compararDosNumeros(LogicaDBDTO obj) {
+        obj = objLogicDB.comparar_numeros(obj);
+        return obj;
     }
-    
-    public String informacionEstudiantes(){
+
+    public String informacionEstudiantes() {
         return objEstu.obtenerInformacion();
     }
 
     //FUNCIÓN 1
-    public String funcion1(String oper) {
-        String respuesta = String.valueOf(objDbORA.llamarFuncion1(oper));
-        return respuesta;
+    public LogicaDBDTO func_cantOperaciones(LogicaDBDTO obj) {
+        obj = (objLogicDB.cant_operaciones(obj));
+        return obj;
     }
 
     //FUNCIÓN 2
-    public String obtenerNomEstudiante(int codigo) {
-        String respuesta = objEstu.obtenerNombreEstudiante(codigo);
-        return respuesta;   
+    public EstudianteDTO func_obtenerNomEstudiante(EstudianteDTO est) {
+        return objEstu.obtenerNombre(est);
+        
     }
 
     
