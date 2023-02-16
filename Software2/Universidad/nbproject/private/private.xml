@@ -11,14 +11,6 @@
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/D:/CesarBonilla/Unillanos/Software2/TrabajosSoftware/Software2/Universidad/src/Modelo/DTO/UsuarioDTO.java</file>
-            <file>file:/D:/CesarBonilla/Unillanos/Software2/TrabajosSoftware/Software2/Universidad/src/Control/ControladorSQLS.java</file>
-            <file>file:/D:/CesarBonilla/Unillanos/Software2/TrabajosSoftware/Software2/Universidad/src/Modelo/LOGICA/Usuario.java</file>
-            <file>file:/D:/CesarBonilla/Unillanos/Software2/TrabajosSoftware/Software2/Universidad/src/Modelo/DAO/UsuarioDAO.java</file>
-            <file>file:/D:/CesarBonilla/Unillanos/Software2/TrabajosSoftware/Software2/Universidad/src/Control/Imagenes.java</file>
-            <file>file:/D:/CesarBonilla/Unillanos/Software2/TrabajosSoftware/Software2/Universidad/src/Control/ControladorORA.java</file>
-            <file>file:/D:/CesarBonilla/Unillanos/Software2/TrabajosSoftware/Software2/Universidad/src/Vista/InterfazP.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

@@ -5,11 +5,9 @@
  */
 package Modelo.LOGICA;
 
-import Control.Imagenes;
 import Modelo.DAO.UsuarioDAO;
 import Modelo.DTO.UsuarioDTO;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.CopyOption;
@@ -18,9 +16,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
 /**
@@ -71,7 +66,8 @@ public class Usuario {
         this.guardarImagen(user.getFoto().getPath(), String.valueOf(user.getId()));
     }
 
-    private ByteArrayOutputStream crearOutputStream(UsuarioDTO user) {
+    //RETORNA ByteArray
+    /*private ByteArrayOutputStream crearOutputStream(UsuarioDTO user) {
         BufferedImage bi = Imagenes.getBufferedImage(user.getFotoIcon().getImage());
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
@@ -84,9 +80,10 @@ public class Usuario {
             Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
         }
         return baos;
-    }
+    }*/
 
-    private File crearOutputStream(UsuarioDTO user, boolean respuestaFile) {
+    //RETORNA FILE
+    /*private File crearOutputStream(UsuarioDTO user, boolean respuestaFile) {
         BufferedImage bi = Imagenes.getBufferedImage(user.getFotoIcon().getImage());
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
@@ -98,7 +95,7 @@ public class Usuario {
             Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
         }
         return new File(archivo);
-    }
+    }*/
 
     /*
         copiar un archivo del sistema en otra carpeta
@@ -107,13 +104,6 @@ public class Usuario {
 
         String destino = new File("").getAbsolutePath() + "\\src\\Resources\\";
         String archivo = destino + "Usuario_"+ id + ".png";
-
-        File folder = new File(id);
-
-        if (!folder.exists()) {
-
-            folder.mkdirs();
-        }
 
         copyFile_java(ruta, archivo);
 

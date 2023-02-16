@@ -10,7 +10,7 @@ import Control.ControladorSQLS;
 import Modelo.DTO.EstudianteDTO;
 import Modelo.DTO.LogicaDBDTO;
 import Modelo.DTO.UsuarioDTO;
-import Modelo.LOGICA.LogicaDB;
+
 import java.util.List;
 import java.util.Scanner;
 
