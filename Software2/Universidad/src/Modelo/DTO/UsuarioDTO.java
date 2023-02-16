@@ -109,12 +109,7 @@ public class UsuarioDTO {
         } catch (IOException ex) {
             Logger.getLogger(UsuarioDTO.class.getName()).log(Level.SEVERE, null, ex);
         }
-<<<<<<< Updated upstream
         return printText ;
-        
-=======
-        return printText ;        
->>>>>>> Stashed changes
     }
 
     public Object[] toVector() {
