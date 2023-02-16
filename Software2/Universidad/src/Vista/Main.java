@@ -23,9 +23,9 @@ public class Main {
     EstudianteDTO objEst;
 
     public static void main(String[] args) {
-        //Main objMain = new Main();
-        InterfazP vista = new InterfazP();
-        vista.setVisible(true);
+        Main objMain = new Main();
+        //InterfazP vista = new InterfazP();
+        //vista.setVisible(true);
     }
 
     public Main() {
@@ -241,7 +241,8 @@ public class Main {
                 case 1:
                     List<UsuarioDTO> usuarios;
                     usuarios = objControlORA.consultarUsuarios();
-                    System.out.println(usuarios.toString());
+                    System.out.printf("%10s %20s %2s %2s", "ID", "NOMBRE", "EDAD", "PROFESION");
+                    usuarios.toString();
                     break;
                 case 2:
                     this.insertarUsuario("oracle");
@@ -311,7 +312,8 @@ public class Main {
                 case 1:
                     List<UsuarioDTO> usuarios;
                     usuarios = objControlSQLS.consultarUsuarios();
-                    System.out.println(usuarios.toString());
+                    System.out.printf("%10s %20s %5s %5s", "ID", "NOMBRE", "EDAD", "PROFESION");
+                    usuarios.toString();
                     break;
                 case 2:
                     this.insertarUsuario("sqlsserver");
