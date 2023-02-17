@@ -32,7 +32,9 @@ public class Main {
         objControlORA = new ControladorORA();
         objControlSQLS = new ControladorSQLS();
         sc = new Scanner(System.in);
+        System.out.println(objControlORA.imprimir());
         this.operar();
+        System.out.println("");
     }
 
     void modificarUsuario(String aux) {
