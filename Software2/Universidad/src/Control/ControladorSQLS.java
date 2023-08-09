@@ -5,10 +5,10 @@
  */
 package Control;
 
-import Modelo.DAO.EstudianteDAO;
 import Modelo.DTO.EstudianteDTO;
 import Modelo.DTO.LogicaDBDTO;
 import Modelo.DTO.UsuarioDTO;
+import Modelo.LOGICA.Estudiante;
 import Modelo.LOGICA.LogicaDB;
 import Modelo.LOGICA.Usuario;
 
@@ -18,13 +18,13 @@ import java.util.Scanner;
 public class ControladorSQLS {
 
     Usuario objUsuario;
-    EstudianteDAO objEstu;
+    Estudiante objEstu;
     LogicaDB objLogicDB;
     Scanner sc;
 
     public ControladorSQLS() {
         objUsuario = new Usuario("SQLS");
-        objEstu = new EstudianteDAO("SQLS");
+        objEstu = new Estudiante("SQLS");
         objLogicDB = new LogicaDB("SQLS");
     }
 
@@ -42,7 +42,7 @@ public class ControladorSQLS {
     }
 
     public Float func_obtenerPromedio(EstudianteDTO est) {
-        return objEstu.func_obtenerPromedio(est);
+        return objEstu.obtenerPromedio(est);
     }
 
     public List<UsuarioDTO> consultarUsuarios() {

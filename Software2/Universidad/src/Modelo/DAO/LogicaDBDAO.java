@@ -8,7 +8,7 @@ package Modelo.DAO;
 import BaseDeDatos.ConexionORA;
 import BaseDeDatos.ConexionSQLS;
 import Modelo.DTO.LogicaDBDTO;
-import Modelo.LOGICA.LogicaDB;
+
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;

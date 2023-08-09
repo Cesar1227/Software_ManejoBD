@@ -37,7 +37,7 @@ public class ConexionSQLS {
             //System.out.println("Conectado...");
         } catch (Exception ex) {
             System.out.println("Error al conectar al motor de bases de datos SQLSERVER " + ex.toString());
-            Logger.getLogger(DataBaseSQLS.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ConexionSQLS.class.getName()).log(Level.SEVERE, null, ex);
         }    
 
         return con;

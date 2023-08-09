@@ -38,7 +38,7 @@ public class Imagenes {
             //label.setIcon(icon);
 
         } catch (NullPointerException e) {
-            System.out.println(e.getMessage());
+            //System.err.println(e.getMessage());
         }
 
         return icon;
@@ -53,7 +53,7 @@ public class Imagenes {
             //label.setIcon(icon);
 
         } catch (NullPointerException e) {
-            System.out.println(e.getMessage());
+            //System.err.println(e.getMessage());
         }
 
         return icon;
@@ -68,7 +68,7 @@ public class Imagenes {
             //label.setIcon(icon);
 
         } catch (NullPointerException e) {
-            System.out.println(e.getMessage());
+            //System.err.println(e.getMessage());
         }
 
         return icon;
@@ -81,7 +81,7 @@ public class Imagenes {
             icon = new ImageIcon(image.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_DEFAULT));
 
         } catch (NullPointerException e) {
-            System.out.println(e.getMessage());
+            //System.err.println(e.getMessage());
         }
 
         return icon;
@@ -94,13 +94,11 @@ public class Imagenes {
             icon = new ImageIcon(image.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_DEFAULT));
 
         } catch (NullPointerException e) {
-            System.out.println(e.getMessage());
+            //System.err.println(e.getMessage());
         }
 
         return icon;
     }
-
-    
 
 }
 

@@ -5,16 +5,22 @@
  */
 package Modelo.DTO;
 
-import java.io.ByteArrayOutputStream;
+
 import java.io.File;
 import javax.swing.ImageIcon;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Cesar Bonilla
  */
 public class UsuarioDTO {
-
+    private String printText;
     private int id;
     private String nombre;
     private int edad;
@@ -22,6 +28,7 @@ public class UsuarioDTO {
     private File foto;
     private ImageIcon fotoIcon;
     private ByteArrayOutputStream baos;
+    private static final String UTF8_NAME = StandardCharsets.UTF_8.name();
 
     public UsuarioDTO() {
 
@@ -92,7 +99,17 @@ public class UsuarioDTO {
     
     @Override
     public String toString() {
-        return "{" + "id= " + id + ", nombre= " + nombre + ", edad= " + edad + ", profesion= " + profesion + "}";
+        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+             PrintStream printStream = new PrintStream(outputStream, true, UTF8_NAME))
+        {
+            System.out.format("\n %10d %20s %2s %2s ",id, nombre, edad, profesion);
+            printStream.println("");
+
+            printText = outputStream.toString();
+        } catch (IOException ex) {
+            Logger.getLogger(UsuarioDTO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return printText ;
     }
 
     public Object[] toVector() {

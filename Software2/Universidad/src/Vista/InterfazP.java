@@ -11,20 +11,16 @@ import Control.Imagenes;
 import Modelo.DTO.EstudianteDTO;
 import Modelo.DTO.LogicaDBDTO;
 import Modelo.DTO.UsuarioDTO;
-import java.awt.Component;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
 
 /**
  *
@@ -886,8 +882,8 @@ public class InterfazP extends javax.swing.JFrame {
         if (txtCod.getText().isBlank()) {
             JOptionPane.showMessageDialog(this, "EL CAMPO ID ES OBLIGATORIO", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
         } else {
-            String nombre;
-            float promedio;
+            //String nombre;
+            //float promedio;
             EstudianteDTO estudiante = new EstudianteDTO();
             estudiante.setCodigo(Integer.valueOf(this.txtCod.getText()));
             estudiante = objControlORA.func_obtenerNomEstudiante(estudiante);
@@ -923,7 +919,7 @@ public class InterfazP extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "SE DEBEN INGRESAR AMBOS NÚMEROS", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
         } else {
             int num1, num2;
-            String respuesta;
+            //String respuesta;
             num1 = (Integer.valueOf(this.txtNum1.getText()));
             num2 = (Integer.valueOf(this.txtNum2.getText()));
             LogicaDBDTO objLogic = new LogicaDBDTO();
@@ -949,7 +945,7 @@ public class InterfazP extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "SE DEBEN INGRESAR AMBOS NÚMEROS", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
         } else {
             int num1, num2;
-            String respuesta;
+            //String respuesta;
             num1 = (Integer.valueOf(this.txtNum4.getText()));
             num2 = (Integer.valueOf(this.txtNum3.getText()));
             LogicaDBDTO objLogic = new LogicaDBDTO();
